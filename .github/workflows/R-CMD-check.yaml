@@ -15,10 +15,18 @@ jobs:
     - name: Set up R
       uses: r-lib/actions/setup-r@v2
 
+    - name: Set environment variables
+      run: |
+        echo "R_LIBS_USER=/__w/_temp/Library" >> $GITHUB_ENV
+        echo "TZ=UTC" >> $GITHUB_ENV
+        echo "_R_CHECK_SYSTEM_CLOCK_=FALSE" >> $GITHUB_ENV
+        echo "NOT_CRAN=true" >> $GITHUB_ENV
+
     - name: Install remotes and renv
       run: |
         install.packages('remotes')
         install.packages('renv')
+      shell: Rscript {0}
 
     - name: Restore R package dependencies
       run: R -e 'renv::restore()'
