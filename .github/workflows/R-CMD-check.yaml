@@ -22,14 +22,13 @@ jobs:
         echo "_R_CHECK_SYSTEM_CLOCK_=FALSE" >> $GITHUB_ENV
         echo "NOT_CRAN=true" >> $GITHUB_ENV
 
-    - name: Install remotes and renv
-      run: |
-        install.packages('remotes')
-        install.packages('renv')
-      shell: Rscript {0}
-
     - name: Restore R package dependencies
       run: R -e 'renv::restore()'
+
+    - name: Install devtools
+      run: |
+        renv::install('devtools')
+      shell: Rscript {0}
 
     - name: Install the package
       run: R CMD INSTALL .
