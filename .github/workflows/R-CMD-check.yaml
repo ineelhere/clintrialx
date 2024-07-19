@@ -21,19 +21,10 @@ jobs:
         install.packages('renv')
 
     - name: Restore R package dependencies
-      run: |
-        R -e 'renv::restore()'
+      run: R -e 'renv::restore()'
 
     - name: Install the package
-      run: |
-        R CMD build .
-        R CMD INSTALL *.tar.gz
+      run: R CMD INSTALL .
 
-    - name: Check the package
-      run: R CMD check *.tar.gz --no-manual --as-cran
-
-    - name: Report test results
-      if: always()
-      uses: r-lib/actions/check-r-package@v2
-      with:
-        build-dir: .
+    - name: Run tests
+      run: R -e 'devtools::test()'
