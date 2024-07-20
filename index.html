@@ -37,6 +37,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ineelhere/clintrialx" aria-label="GitHub"><span class="fa fa-github"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
@@ -53,15 +54,17 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="clintrialx">clintrialx<a class="anchor" aria-label="anchor" href="#clintrialx"></a>
+<div class="page-header"><h1 id="clintrialx">
+<code>ClinTrialX</code><a class="anchor" aria-label="anchor" href="#clintrialx"></a>
 </h1></div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <p>The goal of <a href="http://ineelhere.github.io/clintrialx/">clintrialx</a> is to fetch clinical trials data from freely available registries. Currently, it supports the ClinicalTrials.gov registry using its <a href="https://clinicaltrials.gov/data-api/api" class="external-link">V2 API</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install this package from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install this package from <a href="https://github.com/ineelhere/clintrialx" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ineelhere/clintrialx"</span><span class="op">)</span></span></code></pre></div>
@@ -104,16 +107,14 @@
 <span><span class="co">#&gt; #   `Primary Completion Date` &lt;chr&gt;, `Completion Date` &lt;chr&gt;, …</span></span></code></pre></div>
 <p>Fetch only a few/specific fields:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="st">"NCT04000165"</span>, fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT Number"</span>, <span class="st">"Study Title"</span>, <span class="st">"Study Status"</span>, <span class="st">"Sponsor"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="st">"NCT04000165"</span>, fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT Number"</span>, <span class="st">"Study Title"</span>, <span class="st">"Study Status"</span>, <span class="st">"Sponsor"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 4</span></span>
 <span><span class="co">#&gt;   `NCT Number` `Study Title`                              `Study Status` Sponsor</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;                                      &lt;chr&gt;          &lt;chr&gt;  </span></span>
 <span><span class="co">#&gt; 1 NCT04000165  A Dose-Finding Study of AG-348 in Sickle … COMPLETED      Nation…</span></span></code></pre></div>
 <p>You can also download data for multiple NCT IDs:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [=================&gt;--------------------------] 2/5 ( 40%) Fetching</span></span>
 <span><span class="co">#&gt; NCT04000165[=========================&gt;------------------] 3/5 ( 60%) Fetching</span></span>
 <span><span class="co">#&gt; NCT01007279[==================================&gt;---------] 4/5 ( 80%) Fetching</span></span>
@@ -136,8 +137,7 @@
 <span><span class="co">#&gt; #   `Primary Completion Date` &lt;chr&gt;, `Completion Date` &lt;chr&gt;, …</span></span></code></pre></div>
 <p>Similarly, you can query only desired fields:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span>,</span>
 <span>                          fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT Number"</span>, <span class="st">"Study Title"</span>, <span class="st">"Study Status"</span>, <span class="st">"Sponsor"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [=================&gt;--------------------------] 2/5 ( 40%) Fetching</span></span>
 <span><span class="co">#&gt; NCT04000165[=========================&gt;------------------] 3/5 ( 60%) Fetching</span></span>
@@ -158,17 +158,16 @@
 </h2>
 <p>You can fetch version information directly from the package:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/version_info.html">version_info</a></span><span class="op">(</span>source <span class="op">=</span> <span class="st">"clinicaltrials.gov"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/version_info.html">version_info</a></span><span class="op">(</span>source <span class="op">=</span> <span class="st">"clinicaltrials.gov"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Clinicaltrials.gov API version: 2.0.3</span></span>
 <span><span class="co">#&gt; Timestamp: 2024-07-19 11:12:14</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="get-involved">Get Involved<a class="anchor" aria-label="anchor" href="#get-involved"></a>
 </h2>
-<p>🚀 <strong>Ready to contribute?</strong> We welcome contributions to make <code>clintrialx</code> even better. Check out <a href="https://github.com/ineelhere/clintrialx/blob/main/CONTRIBUTING.md" class="external-link">contributing guidelines</a> to get started.</p>
-<p>💬 <strong>Questions or Feedback?</strong> Feel free to open an issue on <a href="https://github.com/ineelhere/clintrialx/issues" class="external-link">GitHub Issues page</a>.</p>
-<p>🌟 <strong>Enjoying <code>clintrialx</code>?</strong> Please consider giving a star on <a href="https://github.com/ineelhere/clintrialx" class="external-link">GitHub</a>! Your support helps this project grow and improve.</p>
+<p>🚀 <strong>Ready to contribute?</strong> We welcome contributions to make <code>clintrialx</code> even better. Check out our <a href="https://github.com/ineelhere/clintrialx/blob/main/CONTRIBUTING.md" class="external-link">contributing guidelines</a> to get started.</p>
+<p>💬 <strong>Questions or Feedback?</strong> Feel free to open an issue on our <a href="https://github.com/ineelhere/clintrialx/issues" class="external-link">GitHub Issues page</a>.</p>
+<p>🌟 <strong>Enjoying <code>clintrialx</code>?</strong> Please consider giving us a star on <a href="https://github.com/ineelhere/clintrialx" class="external-link">GitHub</a>! Your support helps us grow and improve.</p>
 <p>More updates to come. Happy coding! 🎉</p>
 </div>
 </div>
@@ -214,7 +213,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Indraneel Chakraborty.</p>
+  <p>Developed by <a href="https://www.linkedin.com/in/indraneelchakraborty/" target="_blank" class="external-link">Indraneel Chakraborty </a></p>
 </div>
 
 <div class="pkgdown-footer-right">
