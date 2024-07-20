@@ -68,12 +68,18 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ineelhere/clintrialx"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="check-installation">Check installation<a class="anchor" aria-label="anchor" href="#check-installation"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="query-data-based-on-nct-ids">Query Data based on NCT IDs<a class="anchor" aria-label="anchor" href="#query-data-based-on-nct-ids"></a>
 </h2>
-<p>This is a basic example that shows how to download data based on NCT ID(s):</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>Fetch one or multiple trial records based on NCT IDs. You can opt to fetch some specific fields or all fields available at source (default).</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: httr</span></span>
 <span><span class="co">#&gt; Loading required package: lubridate</span></span>
@@ -93,52 +99,9 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="co">#&gt; Loading required package: progress</span></span>
-<span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="st">"NCT04000165"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1 × 30</span></span>
-<span><span class="co">#&gt;   `NCT Number` `Study Title`  `Study URL` Acronym `Study Status` `Brief Summary`</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;          </span></span>
-<span><span class="co">#&gt; 1 NCT04000165  A Dose-Findin… https://cl… &lt;NA&gt;    COMPLETED      "Background:\n…</span></span>
-<span><span class="co">#&gt; # ℹ 24 more variables: `Study Results` &lt;chr&gt;, Conditions &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   Interventions &lt;chr&gt;, `Primary Outcome Measures` &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   `Secondary Outcome Measures` &lt;chr&gt;, `Other Outcome Measures` &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   Sponsor &lt;chr&gt;, Collaborators &lt;chr&gt;, Sex &lt;chr&gt;, Age &lt;chr&gt;, Phases &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   Enrollment &lt;chr&gt;, `Funder Type` &lt;chr&gt;, `Study Type` &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   `Study Design` &lt;chr&gt;, `Other IDs` &lt;chr&gt;, `Start Date` &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   `Primary Completion Date` &lt;chr&gt;, `Completion Date` &lt;chr&gt;, …</span></span></code></pre></div>
-<p>Fetch only a few/specific fields:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="st">"NCT04000165"</span>, fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT Number"</span>, <span class="st">"Study Title"</span>, <span class="st">"Study Status"</span>, <span class="st">"Sponsor"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1 × 4</span></span>
-<span><span class="co">#&gt;   `NCT Number` `Study Title`                              `Study Status` Sponsor</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;                                      &lt;chr&gt;          &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt; 1 NCT04000165  A Dose-Finding Study of AG-348 in Sickle … COMPLETED      Nation…</span></span></code></pre></div>
-<p>You can also download data for multiple NCT IDs:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [=================&gt;--------------------------] 2/5 ( 40%) Fetching</span></span>
-<span><span class="co">#&gt; NCT04000165[=========================&gt;------------------] 3/5 ( 60%) Fetching</span></span>
-<span><span class="co">#&gt; NCT01007279[==================================&gt;---------] 4/5 ( 80%) Fetching</span></span>
-<span><span class="co">#&gt; NCT02376244[============================================] 5/5 (100%) Fetching</span></span>
-<span><span class="co">#&gt; NCT01179776</span></span>
-<span><span class="co">#&gt; # A tibble: 5 × 30</span></span>
-<span><span class="co">#&gt;   `NCT Number` `Study Title`  `Study URL` Acronym `Study Status` `Brief Summary`</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;          </span></span>
-<span><span class="co">#&gt; 1 NCT02967965  CARdioprotect… https://cl… CARIM   ACTIVE_NOT_RE… "CARIM is a pr…</span></span>
-<span><span class="co">#&gt; 2 NCT04000165  A Dose-Findin… https://cl… &lt;NA&gt;    COMPLETED      "Background:\n…</span></span>
-<span><span class="co">#&gt; 3 NCT01007279  Rosuvastatin … https://cl… ROMA    COMPLETED      "An increase i…</span></span>
-<span><span class="co">#&gt; 4 NCT02376244  The Health Im… https://cl… &lt;NA&gt;    COMPLETED      "Cardiac rehab…</span></span>
-<span><span class="co">#&gt; 5 NCT01179776  Ilomedin Trea… https://cl… &lt;NA&gt;    COMPLETED      "Acute myocard…</span></span>
-<span><span class="co">#&gt; # ℹ 24 more variables: `Study Results` &lt;chr&gt;, Conditions &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   Interventions &lt;chr&gt;, `Primary Outcome Measures` &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   `Secondary Outcome Measures` &lt;chr&gt;, `Other Outcome Measures` &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   Sponsor &lt;chr&gt;, Collaborators &lt;chr&gt;, Sex &lt;chr&gt;, Age &lt;chr&gt;, Phases &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   Enrollment &lt;chr&gt;, `Funder Type` &lt;chr&gt;, `Study Type` &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   `Study Design` &lt;chr&gt;, `Other IDs` &lt;chr&gt;, `Start Date` &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   `Primary Completion Date` &lt;chr&gt;, `Completion Date` &lt;chr&gt;, …</span></span></code></pre></div>
-<p>Similarly, you can query only desired fields:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span>,</span>
+<span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span>,</span>
 <span>                          fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT Number"</span>, <span class="st">"Study Title"</span>, <span class="st">"Study Status"</span>, <span class="st">"Sponsor"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [=================&gt;--------------------------] 2/5 ( 40%) Fetching</span></span>
 <span><span class="co">#&gt; NCT04000165[=========================&gt;------------------] 3/5 ( 60%) Fetching</span></span>
 <span><span class="co">#&gt; NCT01007279[==================================&gt;---------] 4/5 ( 80%) Fetching</span></span>
@@ -154,10 +117,46 @@
 <span><span class="co">#&gt; 5 NCT01179776  Ilomedin Treatment for Patients Having Un… COMPLETED      Thromb…</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="query-data-based-on-fileds">Query Data based on fileds<a class="anchor" aria-label="anchor" href="#query-data-based-on-fileds"></a>
+</h2>
+<p>Supports filtering by condition, location, title keywords, intervention, and overall status.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/query_clinical_trials.html">query_clinical_trials</a></span><span class="op">(</span></span>
+<span>     condition <span class="op">=</span> <span class="st">"Cancer"</span>,</span>
+<span>     location <span class="op">=</span> <span class="st">"Kolkata"</span>,</span>
+<span>     title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>     intervention <span class="op">=</span> <span class="st">"Drug"</span>,</span>
+<span>     status <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ACTIVE_NOT_RECRUITING"</span>, <span class="st">"RECRUITING"</span><span class="op">)</span>,</span>
+<span>     page_size <span class="op">=</span> <span class="fl">10</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; The Query matches 82 trial records in the ClinicalTrials.gov records.</span></span>
+<span><span class="co">#&gt; Your query returned 10 trial records.</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 30</span></span>
+<span><span class="co">#&gt;    `NCT Number` `Study Title` `Study URL` Acronym `Study Status` `Brief Summary`</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;          </span></span>
+<span><span class="co">#&gt;  1 NCT05348876  A Study to L… https://cl… &lt;NA&gt;    RECRUITING     "Researchers a…</span></span>
+<span><span class="co">#&gt;  2 NCT05952557  An Adjuvant … https://cl… CAMBRI… RECRUITING     "This is a Pha…</span></span>
+<span><span class="co">#&gt;  3 NCT05687266  Phase III, O… https://cl… AVANZAR RECRUITING     "This is a Pha…</span></span>
+<span><span class="co">#&gt;  4 NCT02763566  A Study of A… https://cl… MONARC… ACTIVE_NOT_RE… "The main purp…</span></span>
+<span><span class="co">#&gt;  5 NCT04821622  Study of Tal… https://cl… &lt;NA&gt;    ACTIVE_NOT_RE… "The purpose o…</span></span>
+<span><span class="co">#&gt;  6 NCT03875235  Durvalumab o… https://cl… TOPAZ-1 ACTIVE_NOT_RE… "Durvalumab or…</span></span>
+<span><span class="co">#&gt;  7 NCT03110562  Bortezomib, … https://cl… BOSTON  ACTIVE_NOT_RE… "This Phase 3,…</span></span>
+<span><span class="co">#&gt;  8 NCT06120491  Saruparib (A… https://cl… EvoPAR… RECRUITING     "The intention…</span></span>
+<span><span class="co">#&gt;  9 NCT04884360  D9319C00001-… https://cl… MONO-O… RECRUITING     "This is a Pha…</span></span>
+<span><span class="co">#&gt; 10 NCT04873362  A Study Eval… https://cl… Astefa… RECRUITING     "This is a Pha…</span></span>
+<span><span class="co">#&gt; # ℹ 24 more variables: `Study Results` &lt;chr&gt;, Conditions &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Interventions &lt;chr&gt;, `Primary Outcome Measures` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   `Secondary Outcome Measures` &lt;chr&gt;, `Other Outcome Measures` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Sponsor &lt;chr&gt;, Collaborators &lt;chr&gt;, Sex &lt;chr&gt;, Age &lt;chr&gt;, Phases &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Enrollment &lt;dbl&gt;, `Funder Type` &lt;chr&gt;, `Study Type` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   `Study Design` &lt;chr&gt;, `Other IDs` &lt;chr&gt;, `Start Date` &lt;date&gt;,</span></span>
+<span><span class="co">#&gt; #   `Primary Completion Date` &lt;date&gt;, `Completion Date` &lt;date&gt;, …</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="data-sources">Data Sources<a class="anchor" aria-label="anchor" href="#data-sources"></a>
 </h2>
 <p>You can fetch version information directly from the package:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/version_info.html">version_info</a></span><span class="op">(</span>source <span class="op">=</span> <span class="st">"clinicaltrials.gov"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Clinicaltrials.gov API version: 2.0.3</span></span>
 <span><span class="co">#&gt; Timestamp: 2024-07-19 11:12:14</span></span></code></pre></div>
