@@ -25,7 +25,7 @@ The goal of `{clintrialx}` is to fetch clinical trials data from freely availabl
 
 ## Installation
 
-You can install this package from [GitHub](https://github.com/) with:
+You can install this package from [GitHub](https://github.com/ineelhere/clintrialx) with:
 
 ```r
 # install.packages("devtools")

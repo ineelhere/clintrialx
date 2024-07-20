@@ -11,4 +11,4 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 4.0.0), httr, lubridate, readr, dplyr, progress
 RoxygenNote: 7.3.2
-URL: http://www.indraneelchakraborty.com/clintrialx/
+URL: http://ineelhere.github.io/clintrialx/
