@@ -4,14 +4,20 @@
 # clintrialx
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml)
+[![License:
+Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![pkgdown](https://img.shields.io/badge/pkgdown-docs-blue.svg)](https://ineelhere.github.io/clintrialx/)
 <!-- badges: end -->
 
-The goal of clintrialx is to …
+The goal of `{clintrialx}` is to fetch clinical trials data from freely
+available registries. Currently, it supports the ClinicalTrials.gov
+registry using its [V2 API](https://clinicaltrials.gov/data-api/api).
 
 ## Installation
 
-You can install the development version of clintrialx from
-[GitHub](https://github.com/) with:
+You can install this package from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -20,7 +26,8 @@ devtools::install_github("ineelhere/clintrialx")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example that shows how to download data based on NCT
+ID(s):
 
 ``` r
 library(clintrialx)
@@ -42,29 +49,102 @@ library(clintrialx)
 #> 
 #>     intersect, setdiff, setequal, union
 #> Loading required package: progress
-## basic example code
+fetch_specific_trial_data("NCT04000165")
+#> # A tibble: 1 × 30
+#>   `NCT Number` `Study Title`  `Study URL` Acronym `Study Status` `Brief Summary`
+#>   <chr>        <chr>          <chr>       <chr>   <chr>          <chr>          
+#> 1 NCT04000165  A Dose-Findin… https://cl… <NA>    COMPLETED      "Background:\n…
+#> # ℹ 24 more variables: `Study Results` <chr>, Conditions <chr>,
+#> #   Interventions <chr>, `Primary Outcome Measures` <chr>,
+#> #   `Secondary Outcome Measures` <chr>, `Other Outcome Measures` <chr>,
+#> #   Sponsor <chr>, Collaborators <chr>, Sex <chr>, Age <chr>, Phases <chr>,
+#> #   Enrollment <chr>, `Funder Type` <chr>, `Study Type` <chr>,
+#> #   `Study Design` <chr>, `Other IDs` <chr>, `Start Date` <chr>,
+#> #   `Primary Completion Date` <chr>, `Completion Date` <chr>, …
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+Fetch only a few/specific fields:
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+library(clintrialx)
+fetch_specific_trial_data("NCT04000165", fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
+#> # A tibble: 1 × 4
+#>   `NCT Number` `Study Title`                              `Study Status` Sponsor
+#>   <chr>        <chr>                                      <chr>          <chr>  
+#> 1 NCT04000165  A Dose-Finding Study of AG-348 in Sickle … COMPLETED      Nation…
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+You can also download data for multiple NCT IDs:
 
-You can also embed plots, for example:
+``` r
+library(clintrialx)
+fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"))
+#> [=================>--------------------------] 2/5 ( 40%) Fetching
+#> NCT04000165[=========================>------------------] 3/5 ( 60%) Fetching
+#> NCT01007279[==================================>---------] 4/5 ( 80%) Fetching
+#> NCT02376244[============================================] 5/5 (100%) Fetching
+#> NCT01179776
+#> # A tibble: 5 × 30
+#>   `NCT Number` `Study Title`  `Study URL` Acronym `Study Status` `Brief Summary`
+#>   <chr>        <chr>          <chr>       <chr>   <chr>          <chr>          
+#> 1 NCT02967965  CARdioprotect… https://cl… CARIM   ACTIVE_NOT_RE… "CARIM is a pr…
+#> 2 NCT04000165  A Dose-Findin… https://cl… <NA>    COMPLETED      "Background:\n…
+#> 3 NCT01007279  Rosuvastatin … https://cl… ROMA    COMPLETED      "An increase i…
+#> 4 NCT02376244  The Health Im… https://cl… <NA>    COMPLETED      "Cardiac rehab…
+#> 5 NCT01179776  Ilomedin Trea… https://cl… <NA>    COMPLETED      "Acute myocard…
+#> # ℹ 24 more variables: `Study Results` <chr>, Conditions <chr>,
+#> #   Interventions <chr>, `Primary Outcome Measures` <chr>,
+#> #   `Secondary Outcome Measures` <chr>, `Other Outcome Measures` <chr>,
+#> #   Sponsor <chr>, Collaborators <chr>, Sex <chr>, Age <chr>, Phases <chr>,
+#> #   Enrollment <chr>, `Funder Type` <chr>, `Study Type` <chr>,
+#> #   `Study Design` <chr>, `Other IDs` <chr>, `Start Date` <chr>,
+#> #   `Primary Completion Date` <chr>, `Completion Date` <chr>, …
+```
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+Similarly, you can query only desired fields:
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+``` r
+library(clintrialx)
+fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
+                          fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
+#> [=================>--------------------------] 2/5 ( 40%) Fetching
+#> NCT04000165[=========================>------------------] 3/5 ( 60%) Fetching
+#> NCT01007279[==================================>---------] 4/5 ( 80%) Fetching
+#> NCT02376244[============================================] 5/5 (100%) Fetching
+#> NCT01179776
+#> # A tibble: 5 × 4
+#>   `NCT Number` `Study Title`                              `Study Status` Sponsor
+#>   <chr>        <chr>                                      <chr>          <chr>  
+#> 1 NCT02967965  CARdioprotection in Myocardial Infarction  ACTIVE_NOT_RE… EZUS-L…
+#> 2 NCT04000165  A Dose-Finding Study of AG-348 in Sickle … COMPLETED      Nation…
+#> 3 NCT01007279  Rosuvastatin in Preventing Myonecrosis in… COMPLETED      Univer…
+#> 4 NCT02376244  The Health Impact of High Intensity Exerc… COMPLETED      Liverp…
+#> 5 NCT01179776  Ilomedin Treatment for Patients Having Un… COMPLETED      Thromb…
+```
+
+## Data Sources
+
+You can fetch version information directly from the package:
+
+``` r
+library(clintrialx)
+version_info(source = "clinicaltrials.gov")
+#> Clinicaltrials.gov API version: 2.0.3
+#> Timestamp: 2024-07-19 11:12:14
+```
+
+## Get Involved
+
+🚀 **Ready to contribute?** We welcome contributions to make
+`clintrialx` even better. Check out [contributing
+guidelines](https://github.com/ineelhere/clintrialx/blob/main/CONTRIBUTING.md)
+to get started.
+
+💬 **Questions or Feedback?** Feel free to open an issue on [GitHub
+Issues page](https://github.com/ineelhere/clintrialx/issues).
+
+🌟 **Enjoying `clintrialx`?** Please consider giving a star on
+[GitHub](https://github.com/ineelhere/clintrialx)! Your support helps
+this project grow and improve.
+
+More updates to come. Happy coding! 🎉

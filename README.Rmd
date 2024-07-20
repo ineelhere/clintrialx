@@ -1,0 +1,83 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# clintrialx
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![pkgdown](https://img.shields.io/badge/pkgdown-docs-blue.svg)](https://ineelhere.github.io/clintrialx/)
+<!-- badges: end -->
+
+The goal of `{clintrialx}` is to fetch clinical trials data from freely available registries. Currently, it supports the ClinicalTrials.gov registry using its [V2 API](https://clinicaltrials.gov/data-api/api).
+
+## Installation
+
+You can install this package from [GitHub](https://github.com/) with:
+
+```r
+# install.packages("devtools")
+devtools::install_github("ineelhere/clintrialx")
+```
+
+## Example
+
+This is a basic example that shows how to download data based on NCT ID(s):
+
+```{r example1}
+library(clintrialx)
+fetch_specific_trial_data("NCT04000165")
+```
+
+Fetch only a few/specific fields:
+
+```{r example2}
+library(clintrialx)
+fetch_specific_trial_data("NCT04000165", fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
+```
+
+You can also download data for multiple NCT IDs:
+
+```{r example3}
+library(clintrialx)
+fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"))
+```
+
+Similarly, you can query only desired fields:
+
+```{r example4}
+library(clintrialx)
+fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
+                          fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
+```
+
+## Data Sources
+
+You can fetch version information directly from the package:
+
+```{r example}
+library(clintrialx)
+version_info(source = "clinicaltrials.gov")
+```
+
+## Get Involved
+
+🚀 **Ready to contribute?** We welcome contributions to make `clintrialx` even better. Check out [contributing guidelines](https://github.com/ineelhere/clintrialx/blob/main/CONTRIBUTING.md) to get started.
+
+💬 **Questions or Feedback?** Feel free to open an issue on [GitHub Issues page](https://github.com/ineelhere/clintrialx/issues).
+
+🌟 **Enjoying `clintrialx`?** Please consider giving a star on [GitHub](https://github.com/ineelhere/clintrialx)! Your support helps this project grow and improve.
+
+More updates to come. Happy coding! 🎉
