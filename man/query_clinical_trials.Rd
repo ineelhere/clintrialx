@@ -5,31 +5,31 @@
 \title{Query ClinicalTrials.gov API}
 \usage{
 query_clinical_trials(
-  condition = NULL,
-  location = NULL,
+  condition = "Glioblastoma",
+  location = "India",
   title = NULL,
-  intervention = NULL,
+  intervention = "Drug",
   status = NULL,
   page_size = 20
 )
 }
 \arguments{
-\item{condition}{Optional. A character string specifying the medical condition to search for.
+\item{condition}{A character string specifying the medical condition to search for.
 This will filter the results to studies related to the given condition.}
 
-\item{location}{Optional. A character string specifying the location (e.g., city or country)
+\item{location}{A character string specifying the location (e.g., city or country)
 to search in. This will filter the results to studies conducted in the specified
 location.}
 
-\item{title}{Optional. A character string specifying keywords to search for in study title.
+\item{title}{A character string specifying keywords to search for in study title.
 This will filter the results to studies with title that include the specified
 keywords.}
 
-\item{intervention}{Optional. A character string specifying the intervention or treatment
+\item{intervention}{A character string specifying the intervention or treatment
 to search for. This will filter the results to studies involving the specified
 intervention.}
 
-\item{status}{Required. A character vector specifying the overall status of the studies.
+\item{status}{A character vector specifying the overall status of the studies.
 Valid values include:
 \itemize{
   \item \code{ACTIVE_NOT_RECRUITING} - Studies that are actively conducting but not
@@ -50,7 +50,7 @@ Valid values include:
   \item \code{UNKNOWN} - Studies with an unknown status.
 }}
 
-\item{page_size}{Optional. An integer specifying the number of results per page. The default
+\item{page_size}{An integer specifying the number of results per page. The default
 value is 20. The maximum allowed value is 1,000. If a value greater than 1,000
 is specified, it will be coerced to 1,000. If not specified, the default value
 will be used.}
@@ -62,10 +62,12 @@ A tibble containing the query results. Each row represents a study, and the colu
 \description{
 This function sends a query to the ClinicalTrials.gov API and returns the results as a tibble.
 Users can specify various parameters to filter the results, and if a parameter is not provided,
-it will be omitted from the query. The function handles pagination and can return up to 1,000
-results per page.
+it will be omitted from the query.
 }
 \details{
+This function can return up to 1,000 results.
+
+
 The function constructs a query to the ClinicalTrials.gov API using the provided parameters.
 It supports filtering by condition, location, title keywords, intervention, and overall status.
 The function handles the API response, checks for errors, and parses the results into a tibble.

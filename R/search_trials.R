@@ -2,21 +2,22 @@
 #'
 #' This function sends a query to the ClinicalTrials.gov API and returns the results as a tibble.
 #' Users can specify various parameters to filter the results, and if a parameter is not provided,
-#' it will be omitted from the query. The function handles pagination and can return up to 1,000
-#' results per page.
+#' it will be omitted from the query.
 #'
-#' @param condition Optional. A character string specifying the medical condition to search for.
+#' This function can return up to 1,000 results.
+#'
+#' @param condition A character string specifying the medical condition to search for.
 #'                   This will filter the results to studies related to the given condition.
-#' @param location Optional. A character string specifying the location (e.g., city or country)
+#' @param location A character string specifying the location (e.g., city or country)
 #'                  to search in. This will filter the results to studies conducted in the specified
 #'                  location.
-#' @param title Optional. A character string specifying keywords to search for in study title.
+#' @param title A character string specifying keywords to search for in study title.
 #'               This will filter the results to studies with title that include the specified
 #'               keywords.
-#' @param intervention Optional. A character string specifying the intervention or treatment
+#' @param intervention A character string specifying the intervention or treatment
 #'                      to search for. This will filter the results to studies involving the specified
 #'                      intervention.
-#' @param status Required. A character vector specifying the overall status of the studies.
+#' @param status A character vector specifying the overall status of the studies.
 #'               Valid values include:
 #'               \itemize{
 #'                 \item \code{ACTIVE_NOT_RECRUITING} - Studies that are actively conducting but not
@@ -36,7 +37,7 @@
 #'                 \item \code{WITHHELD} - Studies that have data withheld.
 #'                 \item \code{UNKNOWN} - Studies with an unknown status.
 #'               }
-#' @param page_size Optional. An integer specifying the number of results per page. The default
+#' @param page_size An integer specifying the number of results per page. The default
 #'                  value is 20. The maximum allowed value is 1,000. If a value greater than 1,000
 #'                  is specified, it will be coerced to 1,000. If not specified, the default value
 #'                  will be used.
@@ -66,8 +67,8 @@
 #' @export
 
 
-query_clinical_trials <- function(condition = NULL, location = NULL, title = NULL,
-                                  intervention = NULL, status = NULL,
+query_clinical_trials <- function(condition = "Glioblastoma", location = "India", title = NULL,
+                                  intervention = "Drug", status = NULL,
                                   page_size = 20) {
 
   # Define allowed status values
@@ -92,9 +93,8 @@ query_clinical_trials <- function(condition = NULL, location = NULL, title = NUL
   # Check page_size and issue a warning if necessary
   if (page_size >= 1000) {
     warning("Page size is maximum number of studies to return in response.
-    It does not have to be the same for every page.
-    If not specified or set to 0, the default value will be used.
-    It will be coerced down to 1,000, if greater than that.")
+    If not specified, the default value will be used.
+    It will be coerced down to 1000, if greater than that.")
   }
 
   # Construct the base URL
