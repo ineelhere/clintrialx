@@ -1,6 +1,10 @@
-url: http://www.indraneelchakraborty.com/clintrialx/
+url: http://ineelhere.github.io/clintrialx/
+
 template:
   bootstrap: 5
   light-switch: true
-  bootswatch: pulse
+  bootswatch: zephyr
 
+search:
+  enabled: true
+  indexUrl: search/search-index.json
