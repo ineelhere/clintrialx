@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# clintrialx
+# `ClinTrialX`
 
 <!-- badges: start -->
 
@@ -9,6 +9,7 @@
 [![License:
 Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![pkgdown](https://img.shields.io/badge/pkgdown-docs-blue.svg)](https://ineelhere.github.io/clintrialx/)
+
 <!-- badges: end -->
 
 The goal of `{clintrialx}` is to fetch clinical trials data from freely
@@ -17,7 +18,8 @@ registry using its [V2 API](https://clinicaltrials.gov/data-api/api).
 
 ## Installation
 
-You can install this package from [GitHub](https://github.com/) with:
+You can install this package from
+[GitHub](https://github.com/ineelhere/clintrialx) with:
 
 ``` r
 # install.packages("devtools")
@@ -66,7 +68,6 @@ fetch_specific_trial_data("NCT04000165")
 Fetch only a few/specific fields:
 
 ``` r
-library(clintrialx)
 fetch_specific_trial_data("NCT04000165", fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
 #> # A tibble: 1 × 4
 #>   `NCT Number` `Study Title`                              `Study Status` Sponsor
@@ -77,7 +78,6 @@ fetch_specific_trial_data("NCT04000165", fields = c("NCT Number", "Study Title",
 You can also download data for multiple NCT IDs:
 
 ``` r
-library(clintrialx)
 fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"))
 #> [=================>--------------------------] 2/5 ( 40%) Fetching
 #> NCT04000165[=========================>------------------] 3/5 ( 60%) Fetching
@@ -104,7 +104,6 @@ fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT023
 Similarly, you can query only desired fields:
 
 ``` r
-library(clintrialx)
 fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
                           fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
 #> [=================>--------------------------] 2/5 ( 40%) Fetching
@@ -127,7 +126,6 @@ fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT023
 You can fetch version information directly from the package:
 
 ``` r
-library(clintrialx)
 version_info(source = "clinicaltrials.gov")
 #> Clinicaltrials.gov API version: 2.0.3
 #> Timestamp: 2024-07-19 11:12:14
@@ -136,15 +134,15 @@ version_info(source = "clinicaltrials.gov")
 ## Get Involved
 
 🚀 **Ready to contribute?** We welcome contributions to make
-`clintrialx` even better. Check out [contributing
+`clintrialx` even better. Check out our [contributing
 guidelines](https://github.com/ineelhere/clintrialx/blob/main/CONTRIBUTING.md)
 to get started.
 
-💬 **Questions or Feedback?** Feel free to open an issue on [GitHub
+💬 **Questions or Feedback?** Feel free to open an issue on our [GitHub
 Issues page](https://github.com/ineelhere/clintrialx/issues).
 
-🌟 **Enjoying `clintrialx`?** Please consider giving a star on
-[GitHub](https://github.com/ineelhere/clintrialx)! Your support helps
-this project grow and improve.
+🌟 **Enjoying `clintrialx`?** Please consider giving us a star on
+[GitHub](https://github.com/ineelhere/clintrialx)! Your support helps us
+grow and improve.
 
 More updates to come. Happy coding! 🎉
