@@ -3,6 +3,7 @@ Type: Package
 Title: Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs
 Version: 0.1.0
 Author: Indraneel Chakraborty
+Maintainer: Indraneel Chakraborty <hello.indraneel@gmail.com>
 Description: Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs
              More details coming soon. 
 License: Apache License Version 2.0
@@ -10,3 +11,4 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 4.0.0), httr, lubridate
 RoxygenNote: 7.3.2
+URL: http://www.indraneelchakraborty.com/clintrialx/
