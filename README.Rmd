@@ -33,48 +33,46 @@ You can install this package from [GitHub](https://github.com/ineelhere/clintria
 # install.packages("devtools")
 devtools::install_github("ineelhere/clintrialx")
 ```
+### Check installation
+```r
+library(clintrialx)
+```
 
-## Example
+## Query Data based on NCT IDs
 
-This is a basic example that shows how to download data based on NCT ID(s):
+Fetch one or multiple trial records based on NCT IDs. You can opt to fetch some specific fields or all fields available at source (default).
 
 ```{r example1}
 library(clintrialx)
-fetch_specific_trial_data("NCT04000165")
-
-
-```
-
-Fetch only a few/specific fields:
-
-```{r example2}
-fetch_specific_trial_data("NCT04000165", fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
-
-
-```
-
-You can also download data for multiple NCT IDs:
-
-```{r example3}
-fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"))
-
-
-```
-
-Similarly, you can query only desired fields:
-
-```{r example4}
 fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
                           fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
 
 
 ```
 
+## Query Data based on fileds
+
+Supports filtering by condition, location, title keywords, intervention, and overall status.
+
+
+```{r example2}
+query_clinical_trials(
+     condition = "Cancer",
+     location = "Kolkata",
+     title = NULL,
+     intervention = "Drug",
+     status = c("ACTIVE_NOT_RECRUITING", "RECRUITING"),
+     page_size = 10
+)
+
+```
+
+
 ## Data Sources
 
 You can fetch version information directly from the package:
 
-```{r example}
+```{r example3}
 version_info(source = "clinicaltrials.gov")
 
 
