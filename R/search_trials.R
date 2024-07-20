@@ -138,12 +138,12 @@ query_clinical_trials <- function(condition = "Glioblastoma", location = "India"
   # Parse the count
   total_count <- headers(response)[["x-total-count"]]
   data_count <- nrow(parsed_data)
-  message(paste("The Query matches", total_count, "trials/data points in the ClinicalTrials.gov records."))
+  message(paste("The Query matches", total_count, "trial records in the ClinicalTrials.gov records."))
   if(data_count>=1000){
-    message(paste("Your query returned", data_count, "trials/data points. It has a max limit of 1000 rows"))
+    message(paste("Your query returned", data_count, "trial records. It has a max limit of 1000 rows"))
   }
   else{
-    message(paste("Your query returned", data_count, "trials/data points."))
+    message(paste("Your query returned", data_count, "trial records."))
   }
 
   # Convert to tibble and return

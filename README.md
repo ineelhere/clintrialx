@@ -26,10 +26,16 @@ You can install this package from
 devtools::install_github("ineelhere/clintrialx")
 ```
 
-## Example
+### Check installation
 
-This is a basic example that shows how to download data based on NCT
-ID(s):
+``` r
+library(clintrialx)
+```
+
+## Query Data based on NCT IDs
+
+Fetch one or multiple trial records based on NCT IDs. You can opt to
+fetch some specific fields or all fields available at source (default).
 
 ``` r
 library(clintrialx)
@@ -51,61 +57,9 @@ library(clintrialx)
 #> 
 #>     intersect, setdiff, setequal, union
 #> Loading required package: progress
-fetch_specific_trial_data("NCT04000165")
-#> # A tibble: 1 × 30
-#>   `NCT Number` `Study Title`  `Study URL` Acronym `Study Status` `Brief Summary`
-#>   <chr>        <chr>          <chr>       <chr>   <chr>          <chr>          
-#> 1 NCT04000165  A Dose-Findin… https://cl… <NA>    COMPLETED      "Background:\n…
-#> # ℹ 24 more variables: `Study Results` <chr>, Conditions <chr>,
-#> #   Interventions <chr>, `Primary Outcome Measures` <chr>,
-#> #   `Secondary Outcome Measures` <chr>, `Other Outcome Measures` <chr>,
-#> #   Sponsor <chr>, Collaborators <chr>, Sex <chr>, Age <chr>, Phases <chr>,
-#> #   Enrollment <chr>, `Funder Type` <chr>, `Study Type` <chr>,
-#> #   `Study Design` <chr>, `Other IDs` <chr>, `Start Date` <chr>,
-#> #   `Primary Completion Date` <chr>, `Completion Date` <chr>, …
-```
-
-Fetch only a few/specific fields:
-
-``` r
-fetch_specific_trial_data("NCT04000165", fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
-#> # A tibble: 1 × 4
-#>   `NCT Number` `Study Title`                              `Study Status` Sponsor
-#>   <chr>        <chr>                                      <chr>          <chr>  
-#> 1 NCT04000165  A Dose-Finding Study of AG-348 in Sickle … COMPLETED      Nation…
-```
-
-You can also download data for multiple NCT IDs:
-
-``` r
-fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"))
-#> [=================>--------------------------] 2/5 ( 40%) Fetching
-#> NCT04000165[=========================>------------------] 3/5 ( 60%) Fetching
-#> NCT01007279[==================================>---------] 4/5 ( 80%) Fetching
-#> NCT02376244[============================================] 5/5 (100%) Fetching
-#> NCT01179776
-#> # A tibble: 5 × 30
-#>   `NCT Number` `Study Title`  `Study URL` Acronym `Study Status` `Brief Summary`
-#>   <chr>        <chr>          <chr>       <chr>   <chr>          <chr>          
-#> 1 NCT02967965  CARdioprotect… https://cl… CARIM   ACTIVE_NOT_RE… "CARIM is a pr…
-#> 2 NCT04000165  A Dose-Findin… https://cl… <NA>    COMPLETED      "Background:\n…
-#> 3 NCT01007279  Rosuvastatin … https://cl… ROMA    COMPLETED      "An increase i…
-#> 4 NCT02376244  The Health Im… https://cl… <NA>    COMPLETED      "Cardiac rehab…
-#> 5 NCT01179776  Ilomedin Trea… https://cl… <NA>    COMPLETED      "Acute myocard…
-#> # ℹ 24 more variables: `Study Results` <chr>, Conditions <chr>,
-#> #   Interventions <chr>, `Primary Outcome Measures` <chr>,
-#> #   `Secondary Outcome Measures` <chr>, `Other Outcome Measures` <chr>,
-#> #   Sponsor <chr>, Collaborators <chr>, Sex <chr>, Age <chr>, Phases <chr>,
-#> #   Enrollment <chr>, `Funder Type` <chr>, `Study Type` <chr>,
-#> #   `Study Design` <chr>, `Other IDs` <chr>, `Start Date` <chr>,
-#> #   `Primary Completion Date` <chr>, `Completion Date` <chr>, …
-```
-
-Similarly, you can query only desired fields:
-
-``` r
 fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
                           fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
+#> 
 #> [=================>--------------------------] 2/5 ( 40%) Fetching
 #> NCT04000165[=========================>------------------] 3/5 ( 60%) Fetching
 #> NCT01007279[==================================>---------] 4/5 ( 80%) Fetching
@@ -119,6 +73,44 @@ fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT023
 #> 3 NCT01007279  Rosuvastatin in Preventing Myonecrosis in… COMPLETED      Univer…
 #> 4 NCT02376244  The Health Impact of High Intensity Exerc… COMPLETED      Liverp…
 #> 5 NCT01179776  Ilomedin Treatment for Patients Having Un… COMPLETED      Thromb…
+```
+
+## Query Data based on fileds
+
+Supports filtering by condition, location, title keywords, intervention,
+and overall status.
+
+``` r
+query_clinical_trials(
+     condition = "Cancer",
+     location = "Kolkata",
+     title = NULL,
+     intervention = "Drug",
+     status = c("ACTIVE_NOT_RECRUITING", "RECRUITING"),
+     page_size = 10
+)
+#> The Query matches 82 trial records in the ClinicalTrials.gov records.
+#> Your query returned 10 trial records.
+#> # A tibble: 10 × 30
+#>    `NCT Number` `Study Title` `Study URL` Acronym `Study Status` `Brief Summary`
+#>    <chr>        <chr>         <chr>       <chr>   <chr>          <chr>          
+#>  1 NCT05348876  A Study to L… https://cl… <NA>    RECRUITING     "Researchers a…
+#>  2 NCT05952557  An Adjuvant … https://cl… CAMBRI… RECRUITING     "This is a Pha…
+#>  3 NCT05687266  Phase III, O… https://cl… AVANZAR RECRUITING     "This is a Pha…
+#>  4 NCT02763566  A Study of A… https://cl… MONARC… ACTIVE_NOT_RE… "The main purp…
+#>  5 NCT04821622  Study of Tal… https://cl… <NA>    ACTIVE_NOT_RE… "The purpose o…
+#>  6 NCT03875235  Durvalumab o… https://cl… TOPAZ-1 ACTIVE_NOT_RE… "Durvalumab or…
+#>  7 NCT03110562  Bortezomib, … https://cl… BOSTON  ACTIVE_NOT_RE… "This Phase 3,…
+#>  8 NCT06120491  Saruparib (A… https://cl… EvoPAR… RECRUITING     "The intention…
+#>  9 NCT04884360  D9319C00001-… https://cl… MONO-O… RECRUITING     "This is a Pha…
+#> 10 NCT04873362  A Study Eval… https://cl… Astefa… RECRUITING     "This is a Pha…
+#> # ℹ 24 more variables: `Study Results` <chr>, Conditions <chr>,
+#> #   Interventions <chr>, `Primary Outcome Measures` <chr>,
+#> #   `Secondary Outcome Measures` <chr>, `Other Outcome Measures` <chr>,
+#> #   Sponsor <chr>, Collaborators <chr>, Sex <chr>, Age <chr>, Phases <chr>,
+#> #   Enrollment <dbl>, `Funder Type` <chr>, `Study Type` <chr>,
+#> #   `Study Design` <chr>, `Other IDs` <chr>, `Start Date` <date>,
+#> #   `Primary Completion Date` <date>, `Completion Date` <date>, …
 ```
 
 ## Data Sources
