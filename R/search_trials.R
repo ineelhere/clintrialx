@@ -67,8 +67,8 @@
 #' @export
 
 
-ctg_get_fields <- function(condition = "Glioblastoma", location = "India", title = NULL,
-                                  intervention = "Drug", status = NULL,
+ctg_get_fields <- function(condition = NULL, location = NULL, title = NULL,
+                                  intervention = NULL, status = NULL,
                                   page_size = 20) {
 
   # Define allowed status values

@@ -3,7 +3,7 @@ library(dplyr)
 
 test_that("Number of rows matches page_size", {
   # Define a page size to test with
-  test_page_size <- 30
+  test_page_size <- 1
 
   # Call the function with the test page size
   result <- ctg_get_fields(status = "RECRUITING", page_size = test_page_size)

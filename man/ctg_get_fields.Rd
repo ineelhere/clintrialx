@@ -5,10 +5,10 @@
 \title{Query ClinicalTrials.gov API}
 \usage{
 ctg_get_fields(
-  condition = "Glioblastoma",
-  location = "India",
+  condition = NULL,
+  location = NULL,
   title = NULL,
-  intervention = "Drug",
+  intervention = NULL,
   status = NULL,
   page_size = 20
 )
