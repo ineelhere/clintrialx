@@ -44,7 +44,7 @@ Fetch one or multiple trial records based on NCT IDs. You can opt to fetch some 
 
 ```{r example1}
 library(clintrialx)
-fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
+ctg_get_nct(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
                           fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
 
 
@@ -56,7 +56,7 @@ Supports filtering by condition, location, title keywords, intervention, and ove
 
 
 ```{r example2}
-query_clinical_trials(
+ctg_get_fields(
      condition = "Cancer",
      location = "Kolkata",
      title = NULL,
