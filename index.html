@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs • clintrialx</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
@@ -13,6 +19,7 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs">
 <meta name="description" content="Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs More details coming soon.">
 <meta property="og:description" content="Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs More details coming soon.">
+<meta property="og:image" content="http://ineelhere.github.io/clintrialx/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -54,9 +61,11 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="clintrialx">
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="clintrialx">
 <code>ClinTrialX</code><a class="anchor" aria-label="anchor" href="#clintrialx"></a>
-</h1></div>
+</h1>
+</div>
 <!-- badges: start -->
 
 <!-- badges: end -->
@@ -99,7 +108,7 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="co">#&gt; Loading required package: progress</span></span>
-<span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span>,</span>
+<span><span class="fu"><a href="reference/ctg_get_nct.html">ctg_get_nct</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span>,</span>
 <span>                          fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT Number"</span>, <span class="st">"Study Title"</span>, <span class="st">"Study Status"</span>, <span class="st">"Sponsor"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [=================&gt;--------------------------] 2/5 ( 40%) Fetching</span></span>
@@ -121,7 +130,7 @@
 </h2>
 <p>Supports filtering by condition, location, title keywords, intervention, and overall status.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/query_clinical_trials.html">query_clinical_trials</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ctg_get_fields.html">ctg_get_fields</a></span><span class="op">(</span></span>
 <span>     condition <span class="op">=</span> <span class="st">"Cancer"</span>,</span>
 <span>     location <span class="op">=</span> <span class="st">"Kolkata"</span>,</span>
 <span>     title <span class="op">=</span> <span class="cn">NULL</span>,</span>

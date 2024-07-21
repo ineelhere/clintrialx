@@ -4,10 +4,11 @@
 <url><loc>http://ineelhere.github.io/clintrialx/LICENSE-text.html</loc></url>
 <url><loc>http://ineelhere.github.io/clintrialx/authors.html</loc></url>
 <url><loc>http://ineelhere.github.io/clintrialx/index.html</loc></url>
-<url><loc>http://ineelhere.github.io/clintrialx/reference/fetch_specific_trial_data.html</loc></url>
+<url><loc>http://ineelhere.github.io/clintrialx/reference/ctg_count.html</loc></url>
+<url><loc>http://ineelhere.github.io/clintrialx/reference/ctg_get_fields.html</loc></url>
+<url><loc>http://ineelhere.github.io/clintrialx/reference/ctg_get_nct.html</loc></url>
 <url><loc>http://ineelhere.github.io/clintrialx/reference/hello.html</loc></url>
 <url><loc>http://ineelhere.github.io/clintrialx/reference/index.html</loc></url>
-<url><loc>http://ineelhere.github.io/clintrialx/reference/query_clinical_trials.html</loc></url>
 <url><loc>http://ineelhere.github.io/clintrialx/reference/version_info.html</loc></url>
 </urlset>
 
