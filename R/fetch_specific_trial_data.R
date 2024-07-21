@@ -16,15 +16,15 @@
 #'
 #' @examples
 #' # Fetch data for a single NCT ID
-#' trial_data <- fetch_specific_trial_data("NCT04000165")
+#' trial_data <- ctg_get_nct("NCT04000165")
 #' trial_data
 #'
 #' # Fetch data for multiple NCT IDs
-#' multiple_trials <- fetch_specific_trial_data(c("NCT04000165", "NCT04002440"))
+#' multiple_trials <- ctg_get_nct(c("NCT04000165", "NCT04002440"))
 #' multiple_trials
 #'
 #' # Fetch data for multiple NCT IDs with specific fields
-#' specific_fields <- fetch_specific_trial_data(
+#' specific_fields <- ctg_get_nct(
 #'   c("NCT04000165", "NCT04002440"),
 #'   fields = c("NCT Number", "Study Title", "Study Status")
 #' )
@@ -70,7 +70,7 @@
 #'   \code{Study Documents}
 #'
 
-fetch_specific_trial_data <- function(nct_ids, fields = NULL) {
+ctg_get_nct <- function(nct_ids, fields = NULL) {
   # Base URL for the API
   base_url <- "https://clinicaltrials.gov/api/v2/studies/"
 

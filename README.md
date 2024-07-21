@@ -57,7 +57,7 @@ library(clintrialx)
 #> 
 #>     intersect, setdiff, setequal, union
 #> Loading required package: progress
-fetch_specific_trial_data(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
+ctg_get_nct(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
                           fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
 #> 
 #> [=================>--------------------------] 2/5 ( 40%) Fetching
@@ -81,7 +81,7 @@ Supports filtering by condition, location, title keywords, intervention,
 and overall status.
 
 ``` r
-query_clinical_trials(
+ctg_get_fields(
      condition = "Cancer",
      location = "Kolkata",
      title = NULL,

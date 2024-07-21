@@ -56,18 +56,18 @@
 #'
 #' @examples
 #' # Query for studies related to "diabetes" in "Kolkata" with the status "RECRUITING"
-#' query_clinical_trials(condition = "diabetes", location = "Kolkata",
+#' ctg_get_fields(condition = "diabetes", location = "Kolkata",
 #'                                  status = "RECRUITING")
 #'
 #'
 #' # Query for studies with "vaccine" in the title and the status "COMPLETED"
-#' query_clinical_trials(title = "vaccine", status = "COMPLETED", page_size = 50)
+#' ctg_get_fields(title = "vaccine", status = "COMPLETED", page_size = 50)
 #'
 #'
 #' @export
 
 
-query_clinical_trials <- function(condition = "Glioblastoma", location = "India", title = NULL,
+ctg_get_fields <- function(condition = "Glioblastoma", location = "India", title = NULL,
                                   intervention = "Drug", status = NULL,
                                   page_size = 20) {
 
