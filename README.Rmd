@@ -19,16 +19,17 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![pkgdown](https://img.shields.io/badge/pkgdown-docs-blue.svg)](https://ineelhere.github.io/clintrialx/)
-![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fineelhere%2Fclintrialx&label=Visitors&labelColor=%23f47373&countColor=%2337d67a&style=flat&labelStyle=upper)
+[![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fineelhere%2Fclintrialx&label=Visitors&labelColor=%23f47373&countColor=%2337d67a&style=flat&labelStyle=upper)](https://github.com/ineelhere/clintrialx)
 
-
-![Static Badge](https://img.shields.io/badge/Data_Sources-ClinicalTrials.gov-blue?link=https%3A%2F%2Fclinicaltrials.gov%2Fdata-api%2Fapi)
-![Static Badge](https://img.shields.io/badge/Data_Sources-CTTI%20AACT%20(Access%20to%20Aggregate%20Content%20of%20ClinicalTrials.gov)-purple?link=https%3A%2F%2Faact.ctti-clinicaltrials.org%2F)
+[![Data Sources: ClinicalTrials.gov](https://img.shields.io/badge/Data_Sources-ClinicalTrials.gov-blue)](https://clinicaltrials.gov/data-api/api)
+[![Data Sources: CTTI AACT](https://img.shields.io/badge/Data_Sources-CTTI%20AACT%20-purple)](https://aact.ctti-clinicaltrials.org/)
 
 <!-- badges: end -->
 
 
-The goal of `{clintrialx}` is to fetch clinical trials data from freely available registries. Currently, it supports the ClinicalTrials.gov registry using its [V2 API](https://clinicaltrials.gov/data-api/api) and the [CTTI AACT](https://aact.ctti-clinicaltrials.org/) (Public Access to Aggregate Content of ClinicalTrials.gov).
+The goal of `{clintrialx}` is to fetch clinical trials data from freely available registries. Currently, it supports the
+*  [ClinicalTrials.gov ](https://clinicaltrials.gov/)registry using its [V2 API](https://clinicaltrials.gov/data-api/api) and 
+* [CTTI AACT](https://aact.ctti-clinicaltrials.org/) (Public Access to Aggregate Content of ClinicalTrials.gov).
 
 ## Installation
 
