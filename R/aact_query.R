@@ -49,6 +49,7 @@ aact_check_connection <- function(con) {
 #' @param con Database connection object
 #' @param query SQL query string
 #' @return A data frame with the query results
+#' Check database schema here - https://aact.ctti-clinicaltrials.org/documentation/aact_schema.png
 #' @examples
 #' # Set environment variables for database credentials in .Renviron and load it
 #' # readRenviron(".Renviron")

@@ -13,6 +13,7 @@ aact_custom_query(con, query)
 }
 \value{
 A data frame with the query results
+Check database schema here - https://aact.ctti-clinicaltrials.org/documentation/aact_schema.png
 }
 \description{
 Run a custom query
