@@ -70,7 +70,11 @@
 
 
 <!-- badges: end -->
-<p>The goal of <a href="http://ineelhere.github.io/clintrialx/">clintrialx</a> is to fetch clinical trials data from freely available registries. Currently, it supports the ClinicalTrials.gov registry using its <a href="https://clinicaltrials.gov/data-api/api" class="external-link">V2 API</a> and the <a href="https://aact.ctti-clinicaltrials.org/" class="external-link">CTTI AACT</a> (Public Access to Aggregate Content of ClinicalTrials.gov).</p>
+<p>The goal of <a href="http://ineelhere.github.io/clintrialx/">clintrialx</a> is to fetch clinical trials data from freely available registries. Currently, it supports querying the</p>
+<ul>
+<li><p><a href="https://clinicaltrials.gov/" class="external-link">ClinicalTrials.gov</a> registry using its <a href="https://clinicaltrials.gov/data-api/api" class="external-link">V2 API</a> and</p></li>
+<li><p><a href="https://aact.ctti-clinicaltrials.org/" class="external-link">CTTI AACT</a> (Public Access to Aggregate Content of ClinicalTrials.gov).</p></li>
+</ul>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -188,18 +192,18 @@
 <span></span>
 <span><span class="co"># Print the results</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        nct_id                                               source enrollment</span></span>
-<span><span class="co">#&gt; 1 NCT03787862      University of Texas Southwestern Medical Center          0</span></span>
-<span><span class="co">#&gt; 2 NCT00528762                          M.D. Anderson Cancer Center         37</span></span>
-<span><span class="co">#&gt; 3 NCT00991562                                      ImmunoGen, Inc.         50</span></span>
-<span><span class="co">#&gt; 4 NCT04370080                Roseman University of Health Sciences         63</span></span>
-<span><span class="co">#&gt; 5 NCT04680611 University Hospital Southampton NHS Foundation Trust        120</span></span>
-<span><span class="co">#&gt;   overall_status</span></span>
-<span><span class="co">#&gt; 1      WITHDRAWN</span></span>
-<span><span class="co">#&gt; 2      COMPLETED</span></span>
-<span><span class="co">#&gt; 3      COMPLETED</span></span>
-<span><span class="co">#&gt; 4      COMPLETED</span></span>
-<span><span class="co">#&gt; 5     RECRUITING</span></span></code></pre></div>
+<span><span class="co">#&gt;        nct_id                                                  source</span></span>
+<span><span class="co">#&gt; 1 NCT04592120  The University of Texas Health Science Center, Houston</span></span>
+<span><span class="co">#&gt; 2 NCT02079857                                      NYU Langone Health</span></span>
+<span><span class="co">#&gt; 3 NCT03276312                  University of Modena and Reggio Emilia</span></span>
+<span><span class="co">#&gt; 4 NCT06099899 Sun Yat-Sen Memorial Hospital of Sun Yat-Sen University</span></span>
+<span><span class="co">#&gt; 5 NCT01843842                                  Materia Medica Holding</span></span>
+<span><span class="co">#&gt;   enrollment          overall_status</span></span>
+<span><span class="co">#&gt; 1         68 ENROLLING_BY_INVITATION</span></span>
+<span><span class="co">#&gt; 2        183               COMPLETED</span></span>
+<span><span class="co">#&gt; 3        112               COMPLETED</span></span>
+<span><span class="co">#&gt; 4         20      NOT_YET_RECRUITING</span></span>
+<span><span class="co">#&gt; 5        306               COMPLETED</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -208,7 +212,7 @@
 <p>You can fetch version information directly from the package:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/version_info.html">version_info</a></span><span class="op">(</span>source <span class="op">=</span> <span class="st">"clinicaltrials.gov"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Clinicaltrials.gov API version: 2.0.3</span></span>
+<span><span class="co">#&gt; API version: 2.0.3</span></span>
 <span><span class="co">#&gt; Timestamp: 2024-07-23 11:12:33</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -254,6 +258,9 @@
 <li><a href="https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://opensource.org/licenses/Apache-2.0" class="external-link"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License: Apache-2.0"></a></li>
 <li><a href="https://ineelhere.github.io/clintrialx/" class="external-link"><img src="https://img.shields.io/badge/pkgdown-docs-blue.svg" alt="pkgdown"></a></li>
+<li><a href="https://github.com/ineelhere/clintrialx" class="external-link"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fineelhere%2Fclintrialx&amp;label=Visitors&amp;labelColor=%23f47373&amp;countColor=%2337d67a&amp;style=flat&amp;labelStyle=upper" alt="Visitors"></a></li>
+<li><a href="https://clinicaltrials.gov/data-api/api" class="external-link"><img src="https://img.shields.io/badge/Data_Sources-ClinicalTrials.gov-blue" alt="Data Sources: ClinicalTrials.gov"></a></li>
+<li><a href="https://aact.ctti-clinicaltrials.org/" class="external-link"><img src="https://img.shields.io/badge/Data_Sources-CTTI%20AACT%20-purple" alt="Data Sources: CTTI AACT"></a></li>
 </ul>
 </div>
 
