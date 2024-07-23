@@ -9,20 +9,23 @@
 [![License:
 Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![pkgdown](https://img.shields.io/badge/pkgdown-docs-blue.svg)](https://ineelhere.github.io/clintrialx/)
-![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fineelhere%2Fclintrialx&label=Visitors&labelColor=%23f47373&countColor=%2337d67a&style=flat&labelStyle=upper)
+[![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fineelhere%2Fclintrialx&label=Visitors&labelColor=%23f47373&countColor=%2337d67a&style=flat&labelStyle=upper)](https://github.com/ineelhere/clintrialx)
 
-![Static
-Badge](https://img.shields.io/badge/Data_Sources-ClinicalTrials.gov-blue?link=https%3A%2F%2Fclinicaltrials.gov%2Fdata-api%2Fapi)
-![Static
-Badge](https://img.shields.io/badge/Data_Sources-CTTI%20AACT%20(Access%20to%20Aggregate%20Content%20of%20ClinicalTrials.gov)-purple?link=https%3A%2F%2Faact.ctti-clinicaltrials.org%2F)
+[![Data Sources:
+ClinicalTrials.gov](https://img.shields.io/badge/Data_Sources-ClinicalTrials.gov-blue)](https://clinicaltrials.gov/data-api/api)
+[![Data Sources: CTTI
+AACT](https://img.shields.io/badge/Data_Sources-CTTI%20AACT%20-purple)](https://aact.ctti-clinicaltrials.org/)
 
 <!-- badges: end -->
 
 The goal of `{clintrialx}` is to fetch clinical trials data from freely
-available registries. Currently, it supports the ClinicalTrials.gov
-registry using its [V2 API](https://clinicaltrials.gov/data-api/api) and
-the [CTTI AACT](https://aact.ctti-clinicaltrials.org/) (Public Access to
-Aggregate Content of ClinicalTrials.gov).
+available registries. Currently, it supports querying the
+
+- [ClinicalTrials.gov](https://clinicaltrials.gov/) registry using its
+  [V2 API](https://clinicaltrials.gov/data-api/api) and
+
+- [CTTI AACT](https://aact.ctti-clinicaltrials.org/) (Public Access to
+  Aggregate Content of ClinicalTrials.gov).
 
 ## Installation
 
@@ -142,18 +145,18 @@ results <- aact_custom_query(con, query)
 
 # Print the results
 print(results)
-#>        nct_id                                               source enrollment
-#> 1 NCT03787862      University of Texas Southwestern Medical Center          0
-#> 2 NCT00528762                          M.D. Anderson Cancer Center         37
-#> 3 NCT00991562                                      ImmunoGen, Inc.         50
-#> 4 NCT04370080                Roseman University of Health Sciences         63
-#> 5 NCT04680611 University Hospital Southampton NHS Foundation Trust        120
-#>   overall_status
-#> 1      WITHDRAWN
-#> 2      COMPLETED
-#> 3      COMPLETED
-#> 4      COMPLETED
-#> 5     RECRUITING
+#>        nct_id                                                  source
+#> 1 NCT04592120  The University of Texas Health Science Center, Houston
+#> 2 NCT02079857                                      NYU Langone Health
+#> 3 NCT03276312                  University of Modena and Reggio Emilia
+#> 4 NCT06099899 Sun Yat-Sen Memorial Hospital of Sun Yat-Sen University
+#> 5 NCT01843842                                  Materia Medica Holding
+#>   enrollment          overall_status
+#> 1         68 ENROLLING_BY_INVITATION
+#> 2        183               COMPLETED
+#> 3        112               COMPLETED
+#> 4         20      NOT_YET_RECRUITING
+#> 5        306               COMPLETED
 ```
 
 ## Data Sources
@@ -162,7 +165,7 @@ You can fetch version information directly from the package:
 
 ``` r
 version_info(source = "clinicaltrials.gov")
-#> Clinicaltrials.gov API version: 2.0.3
+#> API version: 2.0.3
 #> Timestamp: 2024-07-23 11:12:33
 ```
 

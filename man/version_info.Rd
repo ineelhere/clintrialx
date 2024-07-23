@@ -7,10 +7,12 @@
 version_info(source = "clinicaltrials.gov")
 }
 \arguments{
-\item{source}{A character string specifying the source to query. Currently, only "clinicaltrials.gov" is supported.}
+\item{source}{A character string specifying the source to query.
+Currently, "clinicaltrials.gov" and "aact" are supported.}
 }
 \value{
-Prints the API version and data timestamp if successful. Otherwise, prints an error message.
+A list containing API version and data timestamp for clinicaltrials.gov,
+  or NULL for aact with a message printed.
 }
 \description{
 This function retrieves version information from specified clinical trials API sources.
@@ -18,4 +20,10 @@ This function retrieves version information from specified clinical trials API s
 \examples{
 version_info()
 version_info("clinicaltrials.gov")
+version_info("aact")
+
+}
+\references{
+ClinicalTrials.gov API - https://clinicaltrials.gov/api/v2/version
+AACT - https://aact.ctti-clinicaltrials.org/release_notes
 }
