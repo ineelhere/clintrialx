@@ -43,6 +43,29 @@ devtools::install_github("ineelhere/clintrialx")
 library(clintrialx)
 ```
 
+## Setup AACT account
+
+#### `Only if you wish to use AACT as a source for the data`
+
+- Visit <https://aact.ctti-clinicaltrials.org/users/sign_up>
+
+- Sign up and create an account. It’s free.
+
+- The `username` and `password` will be needed to fetch data using this
+  package.
+
+- Save it in a `.Renviron` file, for example-
+
+  ``` r
+  user =  "random_name"
+  password = "random_password"
+  ```
+
+- Now that the file is created, load the variable with the command
+  `readRenviron("path/to/.Renviron)`
+
+- You’re all set!
+
 ## Query the [ClinicalTrials.gov](https://clinicaltrials.gov/) Registry
 
 #### Based on NCT IDs
@@ -109,16 +132,16 @@ ctg_get_fields(
 #> # A tibble: 10 × 30
 #>    `NCT Number` `Study Title` `Study URL` Acronym `Study Status` `Brief Summary`
 #>    <chr>        <chr>         <chr>       <chr>   <chr>          <chr>          
-#>  1 NCT01932125  An Intervent… https://cl… <NA>    ACTIVE_NOT_RE… "This multicen…
-#>  2 NCT06472076  A Study of B… https://cl… <NA>    RECRUITING     "The goal of t…
-#>  3 NCT04821622  Study of Tal… https://cl… <NA>    ACTIVE_NOT_RE… "The purpose o…
-#>  4 NCT04884360  D9319C00001-… https://cl… MONO-O… RECRUITING     "This is a Pha…
-#>  5 NCT03110562  Bortezomib, … https://cl… BOSTON  ACTIVE_NOT_RE… "This Phase 3,…
-#>  6 NCT04487080  A Study of A… https://cl… MARIPO… ACTIVE_NOT_RE… "The purpose o…
-#>  7 NCT02763566  A Study of A… https://cl… MONARC… ACTIVE_NOT_RE… "The main purp…
-#>  8 NCT05687266  Phase III, O… https://cl… AVANZAR RECRUITING     "This is a Pha…
-#>  9 NCT05894239  A Study to E… https://cl… <NA>    RECRUITING     "This study wi…
-#> 10 NCT05501886  Gedatolisib … https://cl… VIKTOR… RECRUITING     "This is a Pha…
+#>  1 NCT04487080  A Study of A… https://cl… MARIPO… ACTIVE_NOT_RE… "The purpose o…
+#>  2 NCT05687266  Phase III, O… https://cl… AVANZAR RECRUITING     "This is a Pha…
+#>  3 NCT02763566  A Study of A… https://cl… MONARC… ACTIVE_NOT_RE… "The main purp…
+#>  4 NCT05104866  A Phase-3, O… https://cl… <NA>    ACTIVE_NOT_RE… "The study wil…
+#>  5 NCT03778957  A Global Stu… https://cl… EMERAL… ACTIVE_NOT_RE… "A global stud…
+#>  6 NCT06472076  A Study of B… https://cl… <NA>    RECRUITING     "The goal of t…
+#>  7 NCT05348876  A Study to L… https://cl… <NA>    RECRUITING     "Researchers a…
+#>  8 NCT06120491  Saruparib (A… https://cl… EvoPAR… RECRUITING     "The intention…
+#>  9 NCT04884360  D9319C00001-… https://cl… MONO-O… RECRUITING     "This is a Pha…
+#> 10 NCT04035486  A Study of O… https://cl… FLAURA2 ACTIVE_NOT_RE… "The reason fo…
 #> # ℹ 24 more variables: `Study Results` <chr>, Conditions <chr>,
 #> #   Interventions <chr>, `Primary Outcome Measures` <chr>,
 #> #   `Secondary Outcome Measures` <chr>, `Other Outcome Measures` <chr>,
@@ -145,18 +168,18 @@ results <- aact_custom_query(con, query)
 
 # Print the results
 print(results)
-#>        nct_id                                                  source
-#> 1 NCT04592120  The University of Texas Health Science Center, Houston
-#> 2 NCT02079857                                      NYU Langone Health
-#> 3 NCT03276312                  University of Modena and Reggio Emilia
-#> 4 NCT06099899 Sun Yat-Sen Memorial Hospital of Sun Yat-Sen University
-#> 5 NCT01843842                                  Materia Medica Holding
-#>   enrollment          overall_status
-#> 1         68 ENROLLING_BY_INVITATION
-#> 2        183               COMPLETED
-#> 3        112               COMPLETED
-#> 4         20      NOT_YET_RECRUITING
-#> 5        306               COMPLETED
+#>        nct_id                                 source enrollment
+#> 1 NCT00977600                                  Amgen         24
+#> 2 NCT05340751 Hospital for Special Surgery, New York         35
+#> 3 NCT01125254         University of Campinas, Brazil         10
+#> 4 NCT02216851                           Galderma R&D        132
+#> 5 NCT06376851                        HeartFlow, Inc.      10000
+#>            overall_status
+#> 1               COMPLETED
+#> 2               COMPLETED
+#> 3               COMPLETED
+#> 4               COMPLETED
+#> 5 ENROLLING_BY_INVITATION
 ```
 
 ## Data Sources
@@ -166,7 +189,7 @@ You can fetch version information directly from the package:
 ``` r
 version_info(source = "clinicaltrials.gov")
 #> API version: 2.0.3
-#> Timestamp: 2024-07-23 11:12:33
+#> Timestamp: 2024-07-24 11:12:51
 ```
 
 ## Get Involved

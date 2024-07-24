@@ -58,6 +58,29 @@ devtools::install_github("ineelhere/clintrialx")
 library(clintrialx)
 ```
 
+## Setup AACT account 
+
+#### `Only if you wish to use AACT as a source for the data`
+
+-   Visit <https://aact.ctti-clinicaltrials.org/users/sign_up>
+
+-   Sign up and create an account. It's free.
+
+-   The `username` and `password` will be needed to fetch data using
+    this package.
+
+-   Save it in a `.Renviron` file, for example-
+
+    ``` R
+    user =  "random_name"
+    password = "random_password"
+    ```
+
+-   Now that the file is created, load the variable with the command
+    `readRenviron("path/to/.Renviron)`
+
+-   You're all set!
+
 ## Query the [ClinicalTrials.gov](https://clinicaltrials.gov/) Registry
 
 #### Based on NCT IDs
