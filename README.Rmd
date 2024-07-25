@@ -7,7 +7,7 @@ editor_options:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -58,6 +58,29 @@ devtools::install_github("ineelhere/clintrialx")
 library(clintrialx)
 ```
 
+## Setup AACT account
+
+#### `Only if you wish to use AACT as a source for the data`
+
+-   Visit <https://aact.ctti-clinicaltrials.org/users/sign_up>
+
+-   Sign up and create an account. It's free.
+
+-   The `username` and `password` will be needed to fetch data using
+    this package.
+
+-   Save it in a `.Renviron` file, for example-
+
+    ``` r
+    user =  "random_name"
+    password = "random_password"
+    ```
+
+-   Now that the file is created, load the variable with the command
+    `readRenviron("path/to/.Renviron)`
+
+-   You're all set!
+
 ## Query the [ClinicalTrials.gov](https://clinicaltrials.gov/) Registry
 
 #### Based on NCT IDs
@@ -65,7 +88,7 @@ library(clintrialx)
 Fetch one or multiple trial records based on NCT IDs. You can opt to
 fetch some specific fields or all fields available at source (default).
 
-```{r example1}
+```{r example1, eval = FALSE}
 library(clintrialx)
 ctg_get_nct(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
                           fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
@@ -78,7 +101,7 @@ ctg_get_nct(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01
 Supports filtering by condition, location, title keywords, intervention,
 and overall status.
 
-```{r example2}
+```{r example2, eval = FALSE}
 ctg_get_fields(
      condition = "Cancer",
      location = "Kolkata",
@@ -90,11 +113,22 @@ ctg_get_fields(
 
 ```
 
+#### Based on fileds - Bulk download
+
+Download all available data for your query. No limits!
+
+*Supports filtering by condition, location, title keywords,
+intervention, and overall status.*
+
+```{r example5, eval = FALSE}
+df <- ctg_bulk_fetch(location="india")
+```
+
 ## Query the [CTTI AACT](https://aact.ctti-clinicaltrials.org/)
 
 #### Run Custom Queries
 
-```{r example4}
+```{r example4, eval = FALSE}
 # Set environment variables for database credentials in .Renviron and load it
 # readRenviron(".Renviron")
 
@@ -113,7 +147,7 @@ print(results)
 
 You can fetch version information directly from the package:
 
-```{r example3}
+```{r example3, eval = FALSE}
 version_info(source = "clinicaltrials.gov")
 
 
