@@ -75,42 +75,8 @@ fetch some specific fields or all fields available at source (default).
 
 ``` r
 library(clintrialx)
-#> Loading required package: httr
-#> Loading required package: lubridate
-#> 
-#> Attaching package: 'lubridate'
-#> The following objects are masked from 'package:base':
-#> 
-#>     date, intersect, setdiff, union
-#> Loading required package: readr
-#> Loading required package: dplyr
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-#> Loading required package: progress
-#> Loading required package: RPostgreSQL
-#> Loading required package: DBI
 ctg_get_nct(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
                           fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
-#> 
-#> [=================>--------------------------] 2/5 ( 40%) Fetching
-#> NCT04000165[=========================>------------------] 3/5 ( 60%) Fetching
-#> NCT01007279[==================================>---------] 4/5 ( 80%) Fetching
-#> NCT02376244[============================================] 5/5 (100%) Fetching
-#> NCT01179776
-#> # A tibble: 5 × 4
-#>   `NCT Number` `Study Title`                              `Study Status` Sponsor
-#>   <chr>        <chr>                                      <chr>          <chr>  
-#> 1 NCT02967965  CARdioprotection in Myocardial Infarction  ACTIVE_NOT_RE… EZUS-L…
-#> 2 NCT04000165  A Dose-Finding Study of AG-348 in Sickle … COMPLETED      Nation…
-#> 3 NCT01007279  Rosuvastatin in Preventing Myonecrosis in… COMPLETED      Univer…
-#> 4 NCT02376244  The Health Impact of High Intensity Exerc… COMPLETED      Liverp…
-#> 5 NCT01179776  Ilomedin Treatment for Patients Having Un… COMPLETED      Thromb…
 ```
 
 #### Based on fileds
@@ -127,28 +93,17 @@ ctg_get_fields(
      status = c("ACTIVE_NOT_RECRUITING", "RECRUITING"),
      page_size = 10
 )
-#> The Query matches 82 trial records in the ClinicalTrials.gov records.
-#> Your query returned 10 trial records.
-#> # A tibble: 10 × 30
-#>    `NCT Number` `Study Title` `Study URL` Acronym `Study Status` `Brief Summary`
-#>    <chr>        <chr>         <chr>       <chr>   <chr>          <chr>          
-#>  1 NCT04487080  A Study of A… https://cl… MARIPO… ACTIVE_NOT_RE… "The purpose o…
-#>  2 NCT05687266  Phase III, O… https://cl… AVANZAR RECRUITING     "This is a Pha…
-#>  3 NCT02763566  A Study of A… https://cl… MONARC… ACTIVE_NOT_RE… "The main purp…
-#>  4 NCT05104866  A Phase-3, O… https://cl… <NA>    ACTIVE_NOT_RE… "The study wil…
-#>  5 NCT03778957  A Global Stu… https://cl… EMERAL… ACTIVE_NOT_RE… "A global stud…
-#>  6 NCT06472076  A Study of B… https://cl… <NA>    RECRUITING     "The goal of t…
-#>  7 NCT05348876  A Study to L… https://cl… <NA>    RECRUITING     "Researchers a…
-#>  8 NCT06120491  Saruparib (A… https://cl… EvoPAR… RECRUITING     "The intention…
-#>  9 NCT04884360  D9319C00001-… https://cl… MONO-O… RECRUITING     "This is a Pha…
-#> 10 NCT04035486  A Study of O… https://cl… FLAURA2 ACTIVE_NOT_RE… "The reason fo…
-#> # ℹ 24 more variables: `Study Results` <chr>, Conditions <chr>,
-#> #   Interventions <chr>, `Primary Outcome Measures` <chr>,
-#> #   `Secondary Outcome Measures` <chr>, `Other Outcome Measures` <chr>,
-#> #   Sponsor <chr>, Collaborators <chr>, Sex <chr>, Age <chr>, Phases <chr>,
-#> #   Enrollment <dbl>, `Funder Type` <chr>, `Study Type` <chr>,
-#> #   `Study Design` <chr>, `Other IDs` <chr>, `Start Date` <date>,
-#> #   `Primary Completion Date` <date>, `Completion Date` <date>, …
+```
+
+#### Based on fileds - Bulk download
+
+Download all available data for your query. No limits!
+
+*Supports filtering by condition, location, title keywords,
+intervention, and overall status.*
+
+``` r
+df <- ctg_bulk_fetch(location="india")
 ```
 
 ## Query the [CTTI AACT](https://aact.ctti-clinicaltrials.org/)
@@ -168,18 +123,6 @@ results <- aact_custom_query(con, query)
 
 # Print the results
 print(results)
-#>        nct_id                                 source enrollment
-#> 1 NCT00977600                                  Amgen         24
-#> 2 NCT05340751 Hospital for Special Surgery, New York         35
-#> 3 NCT01125254         University of Campinas, Brazil         10
-#> 4 NCT02216851                           Galderma R&D        132
-#> 5 NCT06376851                        HeartFlow, Inc.      10000
-#>            overall_status
-#> 1               COMPLETED
-#> 2               COMPLETED
-#> 3               COMPLETED
-#> 4               COMPLETED
-#> 5 ENROLLING_BY_INVITATION
 ```
 
 ## Data Sources
@@ -188,8 +131,6 @@ You can fetch version information directly from the package:
 
 ``` r
 version_info(source = "clinicaltrials.gov")
-#> API version: 2.0.3
-#> Timestamp: 2024-07-24 11:12:51
 ```
 
 ## Get Involved
