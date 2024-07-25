@@ -135,16 +135,16 @@ version_info(source = "clinicaltrials.gov")
 
 ## Get Involved
 
-🚀 **Ready to contribute?** We welcome contributions to make
-`clintrialx` even better. Check out our [contributing
+🚀 **Ready to contribute?** Lets make`clintrialx` even better. Check out
+the [contributing
 guidelines](https://github.com/ineelhere/clintrialx/blob/main/CONTRIBUTING.md)
 to get started.
 
-💬 **Questions or Feedback?** Feel free to open an issue on our [GitHub
+💬 **Questions or Feedback?** Feel free to open an issue on [GitHub
 Issues page](https://github.com/ineelhere/clintrialx/issues).
 
-🌟 **Enjoying `clintrialx`?** Please consider giving us a star on
-[GitHub](https://github.com/ineelhere/clintrialx)! Your support helps us
-grow and improve.
+🌟 **Enjoying `clintrialx`?** Please consider giving it a star on
+[GitHub](https://github.com/ineelhere/clintrialx)! Your support helps
+this project grow and improve.
 
 More updates to come. Happy coding! 🎉
