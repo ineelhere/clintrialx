@@ -1,11 +1,10 @@
 Package: clintrialx
 Type: Package
-Title: Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs
+Title: Connect and work with clinical trials sources with R programming.
 Version: 0.1.0
 Author: Indraneel Chakraborty
 Maintainer: Indraneel Chakraborty <hello.indraneel@gmail.com>
-Description: Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs
-             More details coming soon. 
+Description: Fetch clinical trial data from sources like ClinicalTrials.gov and the CTTI AACT database with R programming language.
 License: Apache License Version 2.0
 Encoding: UTF-8
 LazyData: true
