@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.0
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-07-26T17:28Z
+last_built: 2024-07-26T17:30Z
 urls:
   reference: http://ineelhere.github.io/clintrialx/reference
   article: http://ineelhere.github.io/clintrialx/articles

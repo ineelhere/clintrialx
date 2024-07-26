@@ -5,21 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Connect and work with clinical trials sources with R programming. • clintrialx</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<title>Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs • clintrialx</title>
 <script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Connect and work with clinical trials sources with R programming.">
-<meta name="description" content="Fetch clinical trial data from sources like ClinicalTrials.gov and the CTTI AACT database with R programming language.">
-<meta property="og:description" content="Fetch clinical trial data from sources like ClinicalTrials.gov and the CTTI AACT database with R programming language.">
-<meta property="og:image" content="http://ineelhere.github.io/clintrialx/logo.png">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs">
+<meta name="description" content="Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs More details coming soon.">
+<meta property="og:description" content="Connect and work with clinical trials data from sources like ClinicalTrials.Gov via their live APIs More details coming soon.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -44,7 +37,6 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/ineelhere/clintrialx" aria-label="GitHub"><span class="fa fa-github"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
@@ -61,126 +53,122 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="clintrialx">
-<code>ClinTrialX</code><a class="anchor" aria-label="anchor" href="#clintrialx"></a>
-</h1>
-</div>
+<div class="page-header"><h1 id="clintrialx">clintrialx<a class="anchor" aria-label="anchor" href="#clintrialx"></a>
+</h1></div>
 <!-- badges: start -->
 
-
-<!-- badges: end -->
-<p>The goal of <a href="http://ineelhere.github.io/clintrialx/">clintrialx</a> is to fetch clinical trials data from freely available registries. Currently, it supports querying the</p>
-<ul>
-<li><p><a href="https://clinicaltrials.gov/" class="external-link">ClinicalTrials.gov</a> registry using its <a href="https://clinicaltrials.gov/data-api/api" class="external-link">V2 API</a> and</p></li>
-<li><p><a href="https://aact.ctti-clinicaltrials.org/" class="external-link">CTTI AACT</a> (Public Access to Aggregate Content of ClinicalTrials.gov).</p></li>
-</ul>
+<p>The goal of <a href="http://ineelhere.github.io/clintrialx/">clintrialx</a> is to fetch clinical trials data from freely available registries. Currently, it supports the ClinicalTrials.gov registry using its <a href="https://clinicaltrials.gov/data-api/api" class="external-link">V2 API</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install this package from <a href="https://github.com/ineelhere/clintrialx" class="external-link">GitHub</a> with:</p>
+<p>You can install this package from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ineelhere/clintrialx"</span><span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="check-installation">Check installation<a class="anchor" aria-label="anchor" href="#check-installation"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
+<p>This is a basic example that shows how to download data based on NCT ID(s):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="setup-aact-account">Setup AACT account<a class="anchor" aria-label="anchor" href="#setup-aact-account"></a>
-</h2>
-<div class="section level4">
-<h4 id="only-if-you-wish-to-use-aact-as-a-source-for-the-data">
-<code>Only if you wish to use AACT as a source for the data</code><a class="anchor" aria-label="anchor" href="#only-if-you-wish-to-use-aact-as-a-source-for-the-data"></a>
-</h4>
-<ul>
-<li><p>Visit <a href="https://aact.ctti-clinicaltrials.org/users/sign_up" class="external-link uri">https://aact.ctti-clinicaltrials.org/users/sign_up</a></p></li>
-<li><p>Sign up and create an account. It’s free.</p></li>
-<li><p>The <code>username</code> and <code>password</code> will be needed to fetch data using this package.</p></li>
-<li>
-<p>Save it in a <code>.Renviron</code> file, for example-</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: httr</span></span>
+<span><span class="co">#&gt; Loading required package: lubridate</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'lubridate'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     date, intersect, setdiff, union</span></span>
+<span><span class="co">#&gt; Loading required package: readr</span></span>
+<span><span class="co">#&gt; Loading required package: dplyr</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="co">#&gt; Loading required package: progress</span></span>
+<span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="st">"NCT04000165"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 30</span></span>
+<span><span class="co">#&gt;   `NCT Number` `Study Title`  `Study URL` Acronym `Study Status` `Brief Summary`</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;          </span></span>
+<span><span class="co">#&gt; 1 NCT04000165  A Dose-Findin… https://cl… &lt;NA&gt;    COMPLETED      "Background:\n…</span></span>
+<span><span class="co">#&gt; # ℹ 24 more variables: `Study Results` &lt;chr&gt;, Conditions &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Interventions &lt;chr&gt;, `Primary Outcome Measures` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   `Secondary Outcome Measures` &lt;chr&gt;, `Other Outcome Measures` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Sponsor &lt;chr&gt;, Collaborators &lt;chr&gt;, Sex &lt;chr&gt;, Age &lt;chr&gt;, Phases &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Enrollment &lt;chr&gt;, `Funder Type` &lt;chr&gt;, `Study Type` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   `Study Design` &lt;chr&gt;, `Other IDs` &lt;chr&gt;, `Start Date` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   `Primary Completion Date` &lt;chr&gt;, `Completion Date` &lt;chr&gt;, …</span></span></code></pre></div>
+<p>Fetch only a few/specific fields:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">user</span> <span class="op">=</span>  <span class="st">"random_name"</span></span>
-<span><span class="va">password</span> <span class="op">=</span> <span class="st">"random_password"</span></span></code></pre></div>
-</li>
-<li><p>Now that the file is created, load the variable with the command <code>readRenviron("path/to/.Renviron)</code></p></li>
-<li><p>You’re all set!</p></li>
-</ul>
-</div>
-</div>
-<div class="section level2">
-<h2 id="query-the-clinicaltrialsgov-registry">Query the <a href="https://clinicaltrials.gov/" class="external-link">ClinicalTrials.gov</a> Registry<a class="anchor" aria-label="anchor" href="#query-the-clinicaltrialsgov-registry"></a>
-</h2>
-<div class="section level4">
-<h4 id="based-on-nct-ids">Based on NCT IDs<a class="anchor" aria-label="anchor" href="#based-on-nct-ids"></a>
-</h4>
-<p>Fetch one or multiple trial records based on NCT IDs. You can opt to fetch some specific fields or all fields available at source (default).</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="st">"NCT04000165"</span>, fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT Number"</span>, <span class="st">"Study Title"</span>, <span class="st">"Study Status"</span>, <span class="st">"Sponsor"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 4</span></span>
+<span><span class="co">#&gt;   `NCT Number` `Study Title`                              `Study Status` Sponsor</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;                                      &lt;chr&gt;          &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt; 1 NCT04000165  A Dose-Finding Study of AG-348 in Sickle … COMPLETED      Nation…</span></span></code></pre></div>
+<p>You can also download data for multiple NCT IDs:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/ctg_get_nct.html">ctg_get_nct</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span>,</span>
-<span>                          fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT Number"</span>, <span class="st">"Study Title"</span>, <span class="st">"Study Status"</span>, <span class="st">"Sponsor"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="based-on-fileds">Based on fileds<a class="anchor" aria-label="anchor" href="#based-on-fileds"></a>
-</h4>
-<p>Supports filtering by condition, location, title keywords, intervention, and overall status.</p>
+<span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [=================&gt;--------------------------] 2/5 ( 40%) Fetching</span></span>
+<span><span class="co">#&gt; NCT04000165[=========================&gt;------------------] 3/5 ( 60%) Fetching</span></span>
+<span><span class="co">#&gt; NCT01007279[==================================&gt;---------] 4/5 ( 80%) Fetching</span></span>
+<span><span class="co">#&gt; NCT02376244[============================================] 5/5 (100%) Fetching</span></span>
+<span><span class="co">#&gt; NCT01179776</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 30</span></span>
+<span><span class="co">#&gt;   `NCT Number` `Study Title`  `Study URL` Acronym `Study Status` `Brief Summary`</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;          </span></span>
+<span><span class="co">#&gt; 1 NCT02967965  CARdioprotect… https://cl… CARIM   ACTIVE_NOT_RE… "CARIM is a pr…</span></span>
+<span><span class="co">#&gt; 2 NCT04000165  A Dose-Findin… https://cl… &lt;NA&gt;    COMPLETED      "Background:\n…</span></span>
+<span><span class="co">#&gt; 3 NCT01007279  Rosuvastatin … https://cl… ROMA    COMPLETED      "An increase i…</span></span>
+<span><span class="co">#&gt; 4 NCT02376244  The Health Im… https://cl… &lt;NA&gt;    COMPLETED      "Cardiac rehab…</span></span>
+<span><span class="co">#&gt; 5 NCT01179776  Ilomedin Trea… https://cl… &lt;NA&gt;    COMPLETED      "Acute myocard…</span></span>
+<span><span class="co">#&gt; # ℹ 24 more variables: `Study Results` &lt;chr&gt;, Conditions &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Interventions &lt;chr&gt;, `Primary Outcome Measures` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   `Secondary Outcome Measures` &lt;chr&gt;, `Other Outcome Measures` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Sponsor &lt;chr&gt;, Collaborators &lt;chr&gt;, Sex &lt;chr&gt;, Age &lt;chr&gt;, Phases &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   Enrollment &lt;chr&gt;, `Funder Type` &lt;chr&gt;, `Study Type` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   `Study Design` &lt;chr&gt;, `Other IDs` &lt;chr&gt;, `Start Date` &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   `Primary Completion Date` &lt;chr&gt;, `Completion Date` &lt;chr&gt;, …</span></span></code></pre></div>
+<p>Similarly, you can query only desired fields:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/ctg_get_fields.html">ctg_get_fields</a></span><span class="op">(</span></span>
-<span>     condition <span class="op">=</span> <span class="st">"Cancer"</span>,</span>
-<span>     location <span class="op">=</span> <span class="st">"Kolkata"</span>,</span>
-<span>     title <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>     intervention <span class="op">=</span> <span class="st">"Drug"</span>,</span>
-<span>     status <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ACTIVE_NOT_RECRUITING"</span>, <span class="st">"RECRUITING"</span><span class="op">)</span>,</span>
-<span>     page_size <span class="op">=</span> <span class="fl">10</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="based-on-fileds---bulk-download">Based on fileds - Bulk download<a class="anchor" aria-label="anchor" href="#based-on-fileds---bulk-download"></a>
-</h4>
-<p>Download all available data for your query. No limits!</p>
-<p><em>Supports filtering by condition, location, title keywords, intervention, and overall status.</em></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ctg_bulk_fetch.html">ctg_bulk_fetch</a></span><span class="op">(</span>location<span class="op">=</span><span class="st">"india"</span><span class="op">)</span></span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="query-the-ctti-aact">Query the <a href="https://aact.ctti-clinicaltrials.org/" class="external-link">CTTI AACT</a>
-<a class="anchor" aria-label="anchor" href="#query-the-ctti-aact"></a>
-</h2>
-<div class="section level4">
-<h4 id="run-custom-queries">Run Custom Queries<a class="anchor" aria-label="anchor" href="#run-custom-queries"></a>
-</h4>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Set environment variables for database credentials in .Renviron and load it</span></span>
-<span><span class="co"># readRenviron(".Renviron")</span></span>
-<span></span>
-<span><span class="co"># Connect to the database</span></span>
-<span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/aact_connection.html">aact_connection</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'user'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">'password'</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Run a custom query</span></span>
-<span><span class="va">query</span> <span class="op">&lt;-</span> <span class="st">"SELECT nct_id, source, enrollment, overall_status FROM studies LIMIT 5;"</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/aact_custom_query.html">aact_custom_query</a></span><span class="op">(</span><span class="va">con</span>, <span class="va">query</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Print the results</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
-</div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/fetch_specific_trial_data.html">fetch_specific_trial_data</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span>,</span>
+<span>                          fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT Number"</span>, <span class="st">"Study Title"</span>, <span class="st">"Study Status"</span>, <span class="st">"Sponsor"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [=================&gt;--------------------------] 2/5 ( 40%) Fetching</span></span>
+<span><span class="co">#&gt; NCT04000165[=========================&gt;------------------] 3/5 ( 60%) Fetching</span></span>
+<span><span class="co">#&gt; NCT01007279[==================================&gt;---------] 4/5 ( 80%) Fetching</span></span>
+<span><span class="co">#&gt; NCT02376244[============================================] 5/5 (100%) Fetching</span></span>
+<span><span class="co">#&gt; NCT01179776</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 4</span></span>
+<span><span class="co">#&gt;   `NCT Number` `Study Title`                              `Study Status` Sponsor</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;                                      &lt;chr&gt;          &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt; 1 NCT02967965  CARdioprotection in Myocardial Infarction  ACTIVE_NOT_RE… EZUS-L…</span></span>
+<span><span class="co">#&gt; 2 NCT04000165  A Dose-Finding Study of AG-348 in Sickle … COMPLETED      Nation…</span></span>
+<span><span class="co">#&gt; 3 NCT01007279  Rosuvastatin in Preventing Myonecrosis in… COMPLETED      Univer…</span></span>
+<span><span class="co">#&gt; 4 NCT02376244  The Health Impact of High Intensity Exerc… COMPLETED      Liverp…</span></span>
+<span><span class="co">#&gt; 5 NCT01179776  Ilomedin Treatment for Patients Having Un… COMPLETED      Thromb…</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="data-sources">Data Sources<a class="anchor" aria-label="anchor" href="#data-sources"></a>
 </h2>
 <p>You can fetch version information directly from the package:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/version_info.html">version_info</a></span><span class="op">(</span>source <span class="op">=</span> <span class="st">"clinicaltrials.gov"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/version_info.html">version_info</a></span><span class="op">(</span>source <span class="op">=</span> <span class="st">"clinicaltrials.gov"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Clinicaltrials.gov API version: 2.0.3</span></span>
+<span><span class="co">#&gt; Timestamp: 2024-07-19 11:12:14</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="get-involved">Get Involved<a class="anchor" aria-label="anchor" href="#get-involved"></a>
 </h2>
-<p>🚀 <strong>Ready to contribute?</strong> Lets make<code>clintrialx</code> even better. Check out the <a href="https://github.com/ineelhere/clintrialx/blob/main/CONTRIBUTING.md" class="external-link">contributing guidelines</a> to get started.</p>
+<p>🚀 <strong>Ready to contribute?</strong> We welcome contributions to make <code>clintrialx</code> even better. Check out <a href="https://github.com/ineelhere/clintrialx/blob/main/CONTRIBUTING.md" class="external-link">contributing guidelines</a> to get started.</p>
 <p>💬 <strong>Questions or Feedback?</strong> Feel free to open an issue on <a href="https://github.com/ineelhere/clintrialx/issues" class="external-link">GitHub Issues page</a>.</p>
-<p>🌟 <strong>Enjoying <code>clintrialx</code>?</strong> Please consider giving it a star on <a href="https://github.com/ineelhere/clintrialx" class="external-link">GitHub</a>! Your support helps this project grow and improve.</p>
+<p>🌟 <strong>Enjoying <code>clintrialx</code>?</strong> Please consider giving a star on <a href="https://github.com/ineelhere/clintrialx" class="external-link">GitHub</a>! Your support helps this project grow and improve.</p>
 <p>More updates to come. Happy coding! 🎉</p>
 </div>
 </div>
@@ -218,9 +206,6 @@
 <li><a href="https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://opensource.org/licenses/Apache-2.0" class="external-link"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License: Apache-2.0"></a></li>
 <li><a href="https://ineelhere.github.io/clintrialx/" class="external-link"><img src="https://img.shields.io/badge/pkgdown-docs-blue.svg" alt="pkgdown"></a></li>
-<li><a href="https://github.com/ineelhere/clintrialx" class="external-link"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fineelhere%2Fclintrialx&amp;label=Visitors&amp;labelColor=%23f47373&amp;countColor=%2337d67a&amp;style=flat&amp;labelStyle=upper" alt="Visitors"></a></li>
-<li><a href="https://clinicaltrials.gov/data-api/api" class="external-link"><img src="https://img.shields.io/badge/Data_Sources-ClinicalTrials.gov-blue" alt="Data Sources: ClinicalTrials.gov"></a></li>
-<li><a href="https://aact.ctti-clinicaltrials.org/" class="external-link"><img src="https://img.shields.io/badge/Data_Sources-CTTI%20AACT%20-purple" alt="Data Sources: CTTI AACT"></a></li>
 </ul>
 </div>
 
@@ -229,7 +214,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://www.linkedin.com/in/indraneelchakraborty/" target="_blank" class="external-link">Indraneel Chakraborty </a></p>
+  <p>Developed by Indraneel Chakraborty.</p>
 </div>
 
 <div class="pkgdown-footer-right">
