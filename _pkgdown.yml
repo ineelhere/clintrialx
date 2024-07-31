@@ -1,5 +1,11 @@
 url: http://ineelhere.github.io/clintrialx/
 
+install:
+  packages:
+    - tidyverse
+    - lubridate
+    - plotly
+
 template:
   bootstrap: 5
   light-switch: true
