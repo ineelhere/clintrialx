@@ -1,5 +1,4 @@
 ---
-
 title: "Exploring Clinical Trial Data with clintrialx"
 author: "Indraneel Chakraborty"
 date: "`r Sys.Date()`"
