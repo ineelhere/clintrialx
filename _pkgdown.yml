@@ -2,8 +2,9 @@ url: http://ineelhere.github.io/clintrialx/
 
 install:
   packages:
-    - tidyverse
+    - dplyr
     - lubridate
+    - ggplot2
     - plotly
 
 template:
