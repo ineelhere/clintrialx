@@ -1,5 +1,6 @@
 ---
-title: "Exploring Clinical Trial Data with clintrialx"
+
+title: "Exploring Clinical Trial Data with `clintrialx`"
 author: "Indraneel Chakraborty"
 date: "`r Sys.Date()`"
 output: 
@@ -12,35 +13,35 @@ output:
 
 ## Introduction
 
-Welcome to the `clintrialx` vignette! This package is designed to help you fetch and analyze clinical trial data effortlessly. In this guide, we'll explore how to use `clintrialx` along with some popular R packages to examine and visualize clinical trial data for cancer studies in India. 🚀
+Welcome to the `clintrialx` vignette! This package simplifies the process of fetching and analyzing clinical trial data. In this guide, we'll demonstrate how to use `clintrialx` alongside popular R packages to examine and visualize clinical trial data specifically for cancer studies in India. 🚀
 
 ## Setup
 
-First, let’s load the required libraries. We’ll use `suppressPackageStartupMessages` to keep things tidy:
+To start, load the necessary libraries. We use `suppressPackageStartupMessages` to keep the output clean:
 
 ```{r}
-# Load necessary libraries
+# Load required libraries
 invisible(suppressPackageStartupMessages({
   library(clintrialx)  # For fetching clinical trial data
   library(ggplot2)     # For data visualization
   library(plotly)      # For interactive plots
   library(dplyr)       # For data manipulation
-  library(lubridate)  # For date handling
+  library(lubridate)   # For date handling
 }))
 ```
 
 ## Fetching Data
 
-Let's fetch the clinical trial data for cancer studies in India. Use the `ctg_bulk_fetch` function to get started:
+Retrieve clinical trial data related to cancer studies in India using the `ctg_bulk_fetch` function:
 
 ```{r}
-# Fetch data on cancer studies in India
+# Fetch cancer study data in India
 df <- ctg_bulk_fetch(condition = "cancer", location = "India")
 ```
 
 ## Visualizing Study Status Distribution 
 
-To understand the distribution of study statuses, we'll create a bar plot. Here’s how:
+Understand the distribution of study statuses by creating a bar plot:
 
 ```{r}
 # Create a table of study statuses
@@ -60,11 +61,11 @@ ggplotly(ggplot(status_df, aes(x = reorder(status, -count), y = count)) +
   geom_text(aes(label = count), vjust = -0.5))
 ```
 
-This plot provides a snapshot of the number of studies in each status category. 📉
+This plot provides an overview of the number of studies in each status category. 📉
 
 ## Analyzing Enrollment by Study Phase 
 
-To compare enrollment numbers across different study phases, we’ll use a box plot. Interactive plots can be particularly useful here:
+Compare enrollment numbers across different study phases using an interactive box plot:
 
 ```{r}
 # Create an interactive box plot of enrollment by study phase
@@ -79,18 +80,18 @@ ggplotly(ggplot(df, aes(x = Phases, y = Enrollment)) +
         plot.title = element_text(hjust = 0.5)))
 ```
 
-This interactive box plot allows us to explore enrollment numbers across different study phases and spot any interesting trends. 🔍
+This interactive plot allows you to explore enrollment numbers across different phases and identify trends. 🔍
 
 ## Visualizing Study Duration Timeline 
 
-To see the timeline of studies, we’ll create a scatter plot:
+Examine the timeline of studies with a scatter plot:
 
 ```{r}
 # Convert date strings to Date objects
 df$start_date <- as.Date(df$`Start Date`, format = "%Y-%m-%d")
 df$completion_date <- as.Date(df$`Completion Date`, format = "%Y-%m-%d")
 
-# Create an scatter plot with a horizontal line at 2024 mark
+# Create a scatter plot with a horizontal line at 2024
 ggplot(df, aes(x = start_date, y = completion_date, color = `Study Status`)) +
   geom_point(alpha = 0.6) +
   geom_hline(yintercept = as.Date("2024-01-01"), linetype = "dashed", color = "blue") +
@@ -101,11 +102,11 @@ ggplot(df, aes(x = start_date, y = completion_date, color = `Study Status`)) +
   scale_color_brewer(palette = "Set1")
 ```
 
-This scatter plot helps us visualize the duration and status of studies, offering insights into their timelines. ⏳
+This scatter plot helps visualize study durations and their statuses, providing insights into timelines. ⏳
 
 ## Analyzing Funding Sources and Study Types
 
-Finally, let’s examine how different funding sources relate to study types. We’ll use a stacked bar plot for this:
+Examine the relationship between funding sources and study types using a stacked bar plot:
 
 ```{r}
 # Summarize and plot funding sources by study type
@@ -124,8 +125,8 @@ ggplotly(ggplot(df_summary, aes(x = `Funder Type`, y = prop, fill = `Study Type`
   theme(axis.text.x = element_text(angle = 45, hjust = 1)))
 ```
 
-This plot helps to uncover patterns in how different funders support various study types. 💡
+This plot uncovers patterns in how different funders support various study types. 💡
 
 ## Conclusion 
 
-With the `clintrialx` package and visualization tools like `ggplot2` and `plotly`, you can gain valuable insights into clinical trial data. This vignette demonstrated several techniques for visualizing and interpreting cancer clinical trials in India. These methods are adaptable to any clinical trial data you fetch with `clintrialx`. Happy analyzing! 😊
+Using the `clintrialx` package along with visualization tools like `ggplot2` and `plotly`, you can extract valuable insights from clinical trial data. This vignette has illustrated techniques for analyzing cancer clinical trials in India, and these methods are adaptable to other datasets fetched with `clintrialx`. Happy analyzing! 😊
