@@ -90,14 +90,15 @@ To see the timeline of studies, we’ll create a scatter plot:
 df$start_date <- as.Date(df$`Start Date`, format = "%Y-%m-%d")
 df$completion_date <- as.Date(df$`Completion Date`, format = "%Y-%m-%d")
 
-# Create an interactive scatter plot
-ggplotly(ggplot(df, aes(x = start_date, y = completion_date, color = `Study Status`)) +
+# Create an scatter plot with a horizontal line at 2024 mark
+ggplot(df, aes(x = start_date, y = completion_date, color = `Study Status`)) +
   geom_point(alpha = 0.6) +
+  geom_hline(yintercept = as.Date("2024-01-01"), linetype = "dashed", color = "blue") +
   theme_minimal() +
   labs(title = "Study Duration Timeline",
        x = "Start Date",
        y = "Completion Date") +
-  scale_color_brewer(palette = "Set1"))
+  scale_color_brewer(palette = "Set1")
 ```
 
 This scatter plot helps us visualize the duration and status of studies, offering insights into their timelines. ⏳
