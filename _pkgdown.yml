@@ -1,12 +1,5 @@
 url: http://ineelhere.github.io/clintrialx/
 
-install:
-  packages:
-    - dplyr
-    - lubridate
-    - ggplot2
-    - plotly
-
 template:
   bootstrap: 5
   light-switch: true
