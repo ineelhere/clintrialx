@@ -50,14 +50,14 @@ status_counts <- table(df$`Study Status`)
 status_df <- data.frame(status = names(status_counts), count = as.numeric(status_counts))
 
 # Generate the bar plot
-ggplot(status_df, aes(x = reorder(status, -count), y = count)) +
+ggplotly(ggplot(status_df, aes(x = reorder(status, -count), y = count)) +
   geom_bar(stat = "identity", fill = "orange") +
   theme_minimal() +
   labs(title = "Distribution of Study Statuses",
        x = "Study Status",
        y = "Count") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  geom_text(aes(label = count), vjust = -0.5)
+  geom_text(aes(label = count), vjust = -0.5))
 ```
 
 This plot provides a snapshot of the number of studies in each status category. 📉
