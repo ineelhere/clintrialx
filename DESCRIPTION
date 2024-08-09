@@ -2,7 +2,7 @@ Package: clintrialx
 Type: Package
 Title: Connect and work with clinical trials data sources with R programming.
 Version: 0.1.0
-Authors@R: person("Indraneel", "Chakraborty", "hello.indraneel@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6958-8269"))
+Authors@R: person("Indraneel", "Chakraborty",, "hello.indraneel@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6958-8269"))
 Maintainer: Indraneel Chakraborty <hello.indraneel@gmail.com>
 Description: Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing clintrialx - Fetch clinical trial data from sources like ClinicalTrials.gov and the CTTI AACT database with R, supporting pagination and bulk downloads!
 License: Apache License Version 2.0
