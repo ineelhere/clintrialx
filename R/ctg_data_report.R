@@ -1,59 +1,119 @@
 #' Generate a Comprehensive Clinical Trial Data Report
 #'
-#' The `ctg_data_report` function generates an HTML report that provides a comprehensive analysis of clinical trial data.
-#' The report includes summary statistics, visualizations, and optional data quality assessment, with the ability to customize
-#' the appearance and content.
+#' @description
+#' This function creates a detailed, visually appealing HTML report from clinical trial data.
+#' It automates the process of data analysis and visualization, providing insights into various
+#' aspects of clinical trials such as study status, enrollment, duration, and funding sources.
 #'
-#' @param ctg_data A `data.frame` containing clinical trial data. The data frame should include columns such as 'Study Status',
-#' 'Enrollment', 'Phases', 'Start Date', 'Completion Date', and others relevant to clinical trials.
-#' @param title A `character` string specifying the title of the report. Default is "Clinical Trial Data Report".
-#' @param author A `character` string specifying the author of the report. Default is "Author Name".
-#' @param output_file A `character` string specifying the file path for the output HTML report. Default is "./report.html".
-#' @param color_palette A `character` vector of hex color codes used for plots in the report. Default is a six-color palette.
-#' @param theme A `character` string specifying the Bootstrap theme for the HTML report. Available options include "default",
-#' "cerulean", "journal", "flatly", "readable", "spacelab", "united", "cosmo", "lumen", "paper", "sandstone", "simplex", and "yeti".
-#' Default is "cerulean".
-#' @param include_data_quality A `logical` value indicating whether to include a data quality assessment section in the report.
-#' Default is `TRUE`.
-#' @param include_interactive_plots A `logical` value indicating whether to include interactive plots using `plotly`. If `FALSE`,
-#' static `ggplot2` plots will be used. Default is `TRUE`.
-#' @param custom_footer A `character` string specifying custom HTML content for the footer of the report. If `NULL`, a default
-#' footer will be included. Default is `NULL`.
+#' @param ctg_data A data frame containing clinical trial data. Required columns include:
+#'   \itemize{
+#'     \item \code{Study Status}: Current status of each study (e.g., \code{"Completed"}, \code{"Ongoing"})
+#'     \item \code{Enrollment}: Number of participants in each study
+#'     \item \code{Start Date}: The date each study began
+#'     \item \code{Completion Date}: The date each study ended or is expected to end
+#'     \item \code{Phases}: The phase of each clinical trial (e.g., \code{"Phase 1"}, \code{"Phase 2"})
+#'     \item \code{Funder Type}: The type of organization funding each study
+#'     \item \code{Study Type}: The type of each study (e.g., \code{"Interventional"}, \code{"Observational"})
+#'   }
+#' @param title Character string. The title of the report.
+#'   Default is \code{"Clinical Trial Data Report"}.
+#' @param author Character string. The name of the report author.
+#'   Default is \code{"Author Name"}.
+#' @param output_file Character string. The file path where the HTML report will be saved.
+#'   Default is \code{"./report.html"}. You can specify a different path if needed.
+#' @param color_palette Character vector. A set of colors to be used in the report's visualizations.
+#'   Default is a preset palette of 6 colors. You can provide your own color codes for customization.
+#' @param theme Character string. The Bootstrap theme for the HTML report.
+#'   Default is \code{"cerulean"}. Other options include \code{"default"}, \code{"journal"},
+#'   \code{"flatly"}, \code{"readable"}, \code{"spacelab"}, \code{"united"}, \code{"cosmo"},
+#'   \code{"lumen"}, \code{"paper"}, \code{"sandstone"}, \code{"simplex"}, and \code{"yeti"}.
+#' @param include_data_quality Logical. Whether to include a data quality assessment section.
+#'   Default is \code{TRUE}. Set to \code{FALSE} if you want to skip this section.
+#' @param include_interactive_plots Logical. Whether to generate interactive plots using plotly.
+#'   Default is \code{TRUE}. Set to \code{FALSE} for static plots, which may be preferred for certain use cases.
+#' @param custom_footer Character string or \code{NULL}. A custom footer for the report.
+#'   If \code{NULL} (default), a standard footer crediting the ClinTrialX package is used.
+#'
+#' @return This function doesn't return a value, but generates an HTML report at the specified location.
+#'   It prints a message with the path to the generated report upon successful completion.
 #'
 #' @details
-#' The function first checks for the necessary packages and prompts the user to install any missing packages. It then loads
-#' the required libraries and validates the provided theme. The report content is generated dynamically, with sections
-#' for summary statistics, data overview, data quality assessment (optional), and visualizations of study status distribution,
-#' enrollment by phase, study duration, and funding sources. The report is saved as an HTML file.
+#' The function performs these key steps:
 #'
-#' The visualizations include:
+#' 1. Package Management:
+#'    \itemize{
+#'    \item Checks for required packages and offers to install any that are missing.
+#'    \item Required packages: \code{rmarkdown}, \code{ggplot2}, \code{plotly}, \code{dplyr},
+#'      \code{lubridate}, \code{reactable}, \code{scales}, \code{RColorBrewer}, \code{htmltools}.
+#'      }
+#'
+#' 2. Report Generation:
+#'    \itemize{
+#'    \item Creates a temporary R Markdown file with the report content.
+#'    \item Includes an executive summary with key statistics.
+#'    \item Provides an interactive data table for easy exploration of the dataset.
+#'    }
+#'
+#' 3. Data Visualization:
+#'    \itemize{
+#'    \item Study Status Distribution: Bar chart showing the count of studies in each status.
+#'    \item Enrollment by Study Phase: Box plot displaying enrollment numbers across different study phases.
+#'    \item Study Duration Timeline: Scatter plot showing the relationship between study start dates and durations.
+#'    \item Funding Sources and Study Types: Stacked bar chart illustrating the proportion of study types for each funder type.
+#'    }
+#'
+#' 4. Optional Sections:
+#'    \itemize{
+#'    \item Data Quality Assessment: Bar chart showing the percentage of missing data for each variable (if enabled).
+#'    \item Interactive Plots: Uses plotly to create interactive versions of all plots (if enabled).
+#'    }
+#'
+#' 5. Report Finalization:
+#'    \itemize{
+#'    \item Renders the R Markdown file to an HTML report.
+#'    \item Cleans up temporary files.
+#'    }
+#'
+#' @section Tips for Users:
 #' \itemize{
-#'   \item \strong{Study Status Distribution:} A bar chart showing the distribution of study statuses.
-#'   \item \strong{Enrollment by Study Phase:} A boxplot of enrollment numbers across different study phases.
-#'   \item \strong{Study Duration Timeline:} A scatter plot of study durations over time.
-#'   \item \strong{Funding Sources and Study Types:} A stacked bar chart showing the proportion of study types by funder.
+#' \item Ensure your data frame has all required columns before using this function.
+#' \item Experiment with different themes to find the most suitable look for your report.
+#' \item If you encounter any package installation issues, you may need to install them manually.
+#' \item For large datasets, setting \code{include_interactive_plots = FALSE} may improve performance.
+#' \item Custom color palettes can be used to match your organization's branding.
+#' \item The generated report is self-contained and can be easily shared or published on the web.
 #' }
-#'
-#' @return None. The function generates an HTML report and saves it to the specified `output_file` location.
-#'
-#' @note Ensure that the `ctg_data` data frame contains all the necessary columns for accurate report generation. The function
-#' dynamically generates the report content based on the provided data and parameters.
 #'
 #' @examples
 #' \dontrun{
-#' # Assuming `clinical_data` is a data frame with the required columns:
-#' ctg_data_report(ctg_data = clinical_data,
-#'                 title = "My Clinical Trial Report",
-#'                 author = "John Doe",
-#'                 output_file = "./my_report.html",
-#'                 color_palette = c("#1f77b4", "#ff7f0e"),
-#'                 theme = "flatly",
-#'                 include_data_quality = TRUE,
-#'                 include_interactive_plots = FALSE,
-#'                 custom_footer = "<p>Custom footer text</p>")
+#' # Basic usage with default settings
+#' ctg_data_report(my_clinical_trial_data)
+#'
+#' # Customized report with specific settings
+#' ctg_data_report(
+#'   ctg_data = my_clinical_trial_data,
+#'   title = "Clinical Trials Analysis",
+#'   author = "Indra",
+#'   output_file = "reports/clinical_trials.html",
+#'   theme = "flatly",
+#'   color_palette = c("#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F", "#EDC948"),
+#'   include_data_quality = TRUE,
+#'   include_interactive_plots = TRUE,
+#'   custom_footer = "Proprietary report generated by SomeGreatOrg Inc."
+#' )
+#'
+#' # Generate a report with static plots and no data quality assessment
+#' ctg_data_report(
+#'   my_clinical_trial_data,
+#'   title = "Quick Clinical Trial Overview",
+#'   include_data_quality = FALSE,
+#'   include_interactive_plots = FALSE
+#' )
 #' }
 #'
-#' @import rmarkdown ggplot2 plotly dplyr lubridate reactable scales RColorBrewer htmltools
+#' @seealso
+#' \url{https://ineelhere.github.io/clintrialx} for more information about the ClinTrialX package.
+#'
 #' @export
 ctg_data_report <- function(ctg_data,
                             title = "Clinical Trial Data Report",
