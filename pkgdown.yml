@@ -3,7 +3,7 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   usecase-doc: usecase-doc.html
-last_built: 2024-08-09T07:11Z
+last_built: 2024-08-11T06:34Z
 urls:
   reference: http://ineelhere.github.io/clintrialx/reference
   article: http://ineelhere.github.io/clintrialx/articles
