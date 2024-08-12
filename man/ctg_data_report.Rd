@@ -62,6 +62,8 @@ This function doesn't return a value, but generates an HTML report at the specif
 This function creates a detailed, visually appealing HTML report from clinical trial data.
 It automates the process of data analysis and visualization, providing insights into various
 aspects of clinical trials such as study status, enrollment, duration, and funding sources.
+
+Click here for an example report - \url{https://ineelhere.github.io/clintrialx/report.html}{report.html}.
 }
 \details{
 The function performs these key steps:
