@@ -129,6 +129,9 @@ print(results)
 
 *Currently works for data from ClinicalTrials.Gov*
 
+Visit here for an exqample report -
+<https://ineelhere.github.io/clintrialx/report.html>
+
 ``` r
 #first get the data in a R dataframe
 my_clinical_trial_data <- ctg_bulk_fetch(condition="cancer")

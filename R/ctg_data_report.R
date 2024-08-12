@@ -5,6 +5,7 @@
 #' It automates the process of data analysis and visualization, providing insights into various
 #' aspects of clinical trials such as study status, enrollment, duration, and funding sources.
 #'
+#' Visit here for an example report - \url{https://ineelhere.github.io/clintrialx/report.html}.
 #' @param ctg_data A data frame containing clinical trial data. Required columns include:
 #'   \itemize{
 #'     \item \code{Study Status}: Current status of each study (e.g., \code{"Completed"}, \code{"Ongoing"})
