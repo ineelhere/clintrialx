@@ -6,7 +6,7 @@ Authors@R:
     person("Indraneel", "Chakraborty",, "hello.indraneel@gmail.com", 
            role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6958-8269"))
 Maintainer: Indraneel Chakraborty <hello.indraneel@gmail.com>
-Description: Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing clintrialx - Fetch clinical trial data from sources like ClinicalTrials.gov and the CTTI AACT database with R, supporting pagination and bulk downloads. Also, you can generate HTML reports based on the data obtained from the sources!
+Description: Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing clintrialx - Fetch clinical trial data from sources like ClinicalTrials.gov and the Clinical Trials Transformation Initiative - Access to Aggregate Content of ClinicalTrials.gov database with R, supporting pagination and bulk downloads. Also, you can generate HTML reports based on the data obtained from the sources!
 License: Apache License 2.0 | file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -27,5 +27,3 @@ Suggests:
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 URL: http://www.indraneelchakraborty.com/clintrialx/
-ExtraLicense: LICENSE
-ExtraFiles: CODE_OF_CONDUCT.md, logo.png

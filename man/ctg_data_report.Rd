@@ -143,5 +143,5 @@ ctg_data_report(
 
 }
 \seealso{
-\url{https://www.indraneelchakraborty.com/clintrialx} for more information about the ClinTrialX package.
+\url{https://www.indraneelchakraborty.com/clintrialx/} for more information about the ClinTrialX package.
 }

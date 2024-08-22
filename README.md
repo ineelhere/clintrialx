@@ -7,7 +7,7 @@
 
 [![R-CMD-check](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml)
 [![License:
-Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://opensource.org/license/apache-2-0)
 [![pkgdown](https://img.shields.io/badge/pkgdown-docs-blue.svg)](https://www.indraneelchakraborty.com/clintrialx/)
 [![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fineelhere%2Fclintrialx&label=Visitors&labelColor=%23f47373&countColor=%2337d67a&style=flat&labelStyle=upper)](https://github.com/ineelhere/clintrialx)
 
@@ -95,7 +95,7 @@ ctg_get_fields(
 )
 ```
 
-#### Based on fileds - Bulk download
+#### Based on fields - Bulk download
 
 Download all available data for your query. No limits!
 
@@ -164,10 +164,15 @@ version_info(source = "clinicaltrials.gov")
 
 ## Get Involved
 
-🚀 **Ready to contribute?** Lets make`clintrialx` even better. Check out
-the [contributing
-guidelines](https://github.com/ineelhere/clintrialx/blob/main/CONTRIBUTING.md)
-to get started.
+🚀 Ready to contribute? Let’s make clintrialx even better!
+
+- Fork the [GitHub](https://github.com/ineelhere/clintrialx) repo.
+- Check out your development branch from the dev branch.
+- Do your work on a feature (ftr) branch.
+- Raise a PR against the dev branch of the
+  [clintrialx](https://github.com/ineelhere/clintrialx) repo.
+- Sit back and [relax](https://www.youtube.com/watch?v=Uffjii1hXzU)
+  while I review it!
 
 💬 **Questions or Feedback?** Feel free to open an issue on [GitHub
 Issues page](https://github.com/ineelhere/clintrialx/issues).
