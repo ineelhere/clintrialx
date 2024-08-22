@@ -7,7 +7,7 @@
 #' @examples
 #' hello()
 hello <- function() {
-  message <- "👋 Welcome to ClinTrialX!"
+  message <- "Welcome to ClinTrialX!"
   Encoding(message) <- "UTF-8"
   print(message)
 }

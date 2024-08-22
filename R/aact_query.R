@@ -3,12 +3,16 @@
 #' @param user Database username
 #' @param password Database password
 #' @return A connection object to the AACT database
+#' @import DBI
+#' @import RPostgreSQL
 #' @examples
+#' \dontrun{
 #' # Set environment variables for database credentials in .Renviron and load it
 #' # readRenviron(".Renviron")
 #'
 #' # Connect to the database
 #' con <- aact_connection(Sys.getenv('user'), Sys.getenv('password'))
+#' }
 #' @export
 aact_connection <- function(user, password) {
   con <- dbConnect(
@@ -26,7 +30,9 @@ aact_connection <- function(user, password) {
 #'
 #' @param con Database connection object
 #' @return A data frame with distinct study types
+#' @import DBI
 #' @examples
+#' \dontrun{
 #' # Set environment variables for database credentials in .Renviron and load it
 #' # readRenviron(".Renviron")
 #'
@@ -35,6 +41,7 @@ aact_connection <- function(user, password) {
 #'
 #' # Check the connection
 #' aact_check_connection(con)
+#' }
 #' @export
 aact_check_connection <- function(con) {
   df <- dbGetQuery(con, "select distinct study_type from studies")
@@ -49,8 +56,9 @@ aact_check_connection <- function(con) {
 #' @param con Database connection object
 #' @param query SQL query string
 #' @return A data frame with the query results
-#' Check database schema here - https://aact.ctti-clinicaltrials.org/documentation/aact_schema.png
+#' @import DBI
 #' @examples
+#' \dontrun{
 #' # Set environment variables for database credentials in .Renviron and load it
 #' # readRenviron(".Renviron")
 #'
@@ -63,6 +71,7 @@ aact_check_connection <- function(con) {
 #'
 #' # Print the results
 #' print(results)
+#' }
 #' @export
 aact_custom_query <- function(con, query) {
   df <- dbGetQuery(con, query)

@@ -5,7 +5,7 @@
 #' It automates the process of data analysis and visualization, providing insights into various
 #' aspects of clinical trials such as study status, enrollment, duration, and funding sources.
 #'
-#' Visit here for an example report - \url{https://ineelhere.github.io/clintrialx/report.html}.
+#' Visit here for an example report - \url{https://www.indraneelchakraborty.com/clintrialx/report.html}.
 #' @param ctg_data A data frame containing clinical trial data. Required columns include:
 #'   \itemize{
 #'     \item \code{Study Status}: Current status of each study (e.g., \code{"Completed"}, \code{"Ongoing"})
@@ -113,8 +113,10 @@
 #' }
 #'
 #' @seealso
-#' \url{https://ineelhere.github.io/clintrialx} for more information about the ClinTrialX package.
-#'
+#' \url{https://www.indraneelchakraborty.com/clintrialx} for more information about the ClinTrialX package.
+#' @importFrom grDevices colorRampPalette
+#' @importFrom utils install.packages installed.packages
+#' @importFrom rmarkdown render
 #' @export
 ctg_data_report <- function(ctg_data,
                             title = "Clinical Trial Data Report",
@@ -198,7 +200,7 @@ ctg_data_report <- function(ctg_data,
   footer_content <- if (!is.null(custom_footer)) {
     paste0('\n\n<div class="footer">\n', custom_footer, '\n</div>\n')
   } else {
-    '\n\n<div class="footer">\nAutomated report generated using <a href="https://ineelhere.github.io/clintrialx">ClinTrialX</a> package\n</div>\n'
+    '\n\n<div class="footer">\nAutomated report generated using <a href="https://www.indraneelchakraborty.com/clintrialx">ClinTrialX</a> package\n</div>\n'
   }
 
   # Write the Rmd content dynamically
