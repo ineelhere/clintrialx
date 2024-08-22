@@ -2,12 +2,11 @@
 title: "Exploring Clinical Trial Data with clintrialx"
 author: "Indraneel Chakraborty"
 date: "`r Sys.Date()`"
-output: 
-  html_document:
-    theme: cerulean
-    highlight: tango
-    toc: true
-    toc_float: true
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Exploring Clinical Trial Data with clintrialx}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ## Introduction
@@ -18,7 +17,7 @@ Welcome to the `clintrialx` vignette! This package simplifies the process of fet
 
 To start, load the necessary libraries. We use `suppressPackageStartupMessages` to keep the output clean:
 
-```{r}
+```{r, eval=FALSE}
 # Load required libraries
 invisible(suppressPackageStartupMessages({
   library(clintrialx)  # For fetching clinical trial data
@@ -33,7 +32,7 @@ invisible(suppressPackageStartupMessages({
 
 Retrieve clinical trial data related to cancer studies in India using the `ctg_bulk_fetch` function:
 
-```{r}
+```{r, eval=FALSE}
 # Fetch cancer study data in India
 df <- ctg_bulk_fetch(condition = "cancer", location = "India")
 ```
@@ -42,7 +41,7 @@ df <- ctg_bulk_fetch(condition = "cancer", location = "India")
 
 Understand the distribution of study statuses by creating a bar plot:
 
-```{r}
+```{r, eval=FALSE}
 # Create a table of study statuses
 status_counts <- table(df$`Study Status`)
 
@@ -66,7 +65,7 @@ This plot provides an overview of the number of studies in each status category.
 
 Compare enrollment numbers across different study phases using an interactive box plot:
 
-```{r}
+```{r, eval=FALSE}
 # Create an interactive box plot of enrollment by study phase
 ggplotly(ggplot(df, aes(x = Phases, y = Enrollment)) +
   geom_boxplot(fill = "lightblue", outlier.colour = "red", outlier.shape = 1) +
@@ -85,7 +84,7 @@ This interactive plot allows you to explore enrollment numbers across different 
 
 Examine the timeline of studies with a scatter plot:
 
-```{r}
+```{r, eval=FALSE}
 # Convert date strings to Date objects
 df$start_date <- as.Date(df$`Start Date`, format = "%Y-%m-%d")
 df$completion_date <- as.Date(df$`Completion Date`, format = "%Y-%m-%d")
@@ -107,7 +106,7 @@ This scatter plot helps visualize study durations and their statuses, providing 
 
 Examine the relationship between funding sources and study types using a stacked bar plot:
 
-```{r}
+```{r, eval=FALSE}
 # Summarize and plot funding sources by study type
 df_summary <- df %>%
   count(`Funder Type`, `Study Type`) %>%

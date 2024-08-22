@@ -63,7 +63,7 @@ This function creates a detailed, visually appealing HTML report from clinical t
 It automates the process of data analysis and visualization, providing insights into various
 aspects of clinical trials such as study status, enrollment, duration, and funding sources.
 
-Click here for an example report - \url{https://ineelhere.github.io/clintrialx/report.html}{report.html}.
+Visit here for an example report - \url{https://www.indraneelchakraborty.com/clintrialx/report.html}.
 }
 \details{
 The function performs these key steps:
@@ -143,5 +143,5 @@ ctg_data_report(
 
 }
 \seealso{
-\url{https://ineelhere.github.io/clintrialx} for more information about the ClinTrialX package.
+\url{https://www.indraneelchakraborty.com/clintrialx} for more information about the ClinTrialX package.
 }

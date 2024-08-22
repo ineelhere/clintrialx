@@ -13,12 +13,12 @@ aact_custom_query(con, query)
 }
 \value{
 A data frame with the query results
-Check database schema here - https://aact.ctti-clinicaltrials.org/documentation/aact_schema.png
 }
 \description{
 Run a custom query
 }
 \examples{
+\dontrun{
 # Set environment variables for database credentials in .Renviron and load it
 # readRenviron(".Renviron")
 
@@ -31,4 +31,5 @@ results <- aact_custom_query(con, query)
 
 # Print the results
 print(results)
+}
 }

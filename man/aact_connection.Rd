@@ -18,9 +18,11 @@ A connection object to the AACT database
 Connect to AACT PostgreSQL database
 }
 \examples{
+\dontrun{
 # Set environment variables for database credentials in .Renviron and load it
 # readRenviron(".Renviron")
 
 # Connect to the database
 con <- aact_connection(Sys.getenv('user'), Sys.getenv('password'))
+}
 }

@@ -7,3 +7,5 @@
 ^pkgdown$
 ^\.github$
 ^README\.Rmd$
+^CODE_OF_CONDUCT\.md$
+^logo\.png$

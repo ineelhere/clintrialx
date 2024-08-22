@@ -16,6 +16,7 @@ A data frame with distinct study types
 Check database connection
 }
 \examples{
+\dontrun{
 # Set environment variables for database credentials in .Renviron and load it
 # readRenviron(".Renviron")
 
@@ -24,4 +25,5 @@ con <- aact_connection(Sys.getenv('user'), Sys.getenv('password'))
 
 # Check the connection
 aact_check_connection(con)
+}
 }

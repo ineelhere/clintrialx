@@ -1,8 +1,15 @@
 # Test for aact_connection function
 test_that("aact_connection function works correctly", {
+  skip_on_cran() # Skip on CRAN
+
   # Mock credentials
   user <- Sys.getenv('user')
   password <- Sys.getenv('password')
+
+  # Skip if credentials are not set
+  if (user == "" || password == "") {
+    skip("Database credentials are not set in the environment.")
+  }
 
   # Test connection
   con <- aact_connection(user, password)
@@ -16,9 +23,16 @@ test_that("aact_connection function works correctly", {
 
 # Test for aact_check_connection function
 test_that("aact_check_connection function works correctly", {
+  skip_on_cran() # Skip on CRAN
+
   # Mock credentials
   user <- Sys.getenv('user')
   password <- Sys.getenv('password')
+
+  # Skip if credentials are not set
+  if (user == "" || password == "") {
+    skip("Database credentials are not set in the environment.")
+  }
 
   # Establish connection
   con <- aact_connection(user, password)
@@ -38,9 +52,16 @@ test_that("aact_check_connection function works correctly", {
 
 # Test for aact_custom_query function
 test_that("aact_custom_query function works correctly", {
+  skip_on_cran() # Skip on CRAN
+
   # Mock credentials
   user <- Sys.getenv('user')
   password <- Sys.getenv('password')
+
+  # Skip if credentials are not set
+  if (user == "" || password == "") {
+    skip("Database credentials are not set in the environment.")
+  }
 
   # Establish connection
   con <- aact_connection(user, password)
