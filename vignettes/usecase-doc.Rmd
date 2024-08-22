@@ -37,7 +37,7 @@ Retrieve clinical trial data related to cancer studies in India using the `ctg_b
 df <- ctg_bulk_fetch(condition = "cancer", location = "India")
 ```
 
-## Visualizing Study Status Distribution 
+## Visualizing Study Status Distribution
 
 Understand the distribution of study statuses by creating a bar plot:
 
@@ -59,9 +59,11 @@ ggplotly(ggplot(status_df, aes(x = reorder(status, -count), y = count)) +
   geom_text(aes(label = count), vjust = -0.5))
 ```
 
+![image](https://github.com/user-attachments/assets/633ed6a3-7fe9-4044-92c4-4ec4c26f4cf6)
+
 This plot provides an overview of the number of studies in each status category. 📉
 
-## Analyzing Enrollment by Study Phase 
+## Analyzing Enrollment by Study Phase
 
 Compare enrollment numbers across different study phases using an interactive box plot:
 
@@ -78,9 +80,11 @@ ggplotly(ggplot(df, aes(x = Phases, y = Enrollment)) +
         plot.title = element_text(hjust = 0.5)))
 ```
 
+![image](https://github.com/user-attachments/assets/3aef0bff-792b-4689-a80e-ef56b3074765)
+
 This interactive plot allows you to explore enrollment numbers across different phases and identify trends. 🔍
 
-## Visualizing Study Duration Timeline 
+## Visualizing Study Duration Timeline
 
 Examine the timeline of studies with a scatter plot:
 
@@ -99,6 +103,8 @@ ggplot(df, aes(x = start_date, y = completion_date, color = `Study Status`)) +
        y = "Completion Date") +
   scale_color_brewer(palette = "Set1")
 ```
+
+![image](https://github.com/user-attachments/assets/353f12d2-1a08-4e30-879b-bbac1d5d9651)
 
 This scatter plot helps visualize study durations and their statuses, providing insights into timelines. ⏳
 
@@ -123,8 +129,10 @@ ggplotly(ggplot(df_summary, aes(x = `Funder Type`, y = prop, fill = `Study Type`
   theme(axis.text.x = element_text(angle = 45, hjust = 1)))
 ```
 
+![image](https://github.com/user-attachments/assets/ec71369c-491f-4b26-9b65-cbde1f4e99f0)
+
 This plot uncovers patterns in how different funders support various study types. 💡
 
-## Conclusion 
+## Conclusion
 
 Using the `clintrialx` package along with visualization tools like `ggplot2` and `plotly`, you can extract valuable insights from clinical trial data. This vignette has illustrated techniques for analyzing cancer clinical trials in India, and these methods are adaptable to other datasets fetched with `clintrialx`. Happy analyzing! 😊
