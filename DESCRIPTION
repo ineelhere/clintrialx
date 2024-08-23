@@ -1,6 +1,6 @@
 Package: clintrialx
 Type: Package
-Title: Connect and Work with Clinical Trials Data Sources with R Programming
+Title: Connect and Work with Clinical Trials Data Sources using R Programming
 Version: 0.1.0
 Authors@R: 
     person("Indraneel", "Chakraborty",, "hello.indraneel@gmail.com", 
