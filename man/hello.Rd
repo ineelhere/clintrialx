@@ -10,7 +10,7 @@ hello()
 A character string containing the welcome message.
 }
 \description{
-This function prints a welcome message for ClinTrialX.
+This function returns a welcome message for ClinTrialX.
 }
 \examples{
 hello()

@@ -52,6 +52,5 @@ specified parameters. It handles pagination and returns a combined dataset.
 \examples{
 \donttest{
 trials <- ctg_bulk_fetch(location="india")
-print(trials)
 }
 }

@@ -1,13 +1,13 @@
 #' Print a Welcome Message
 #'
-#' This function prints a welcome message for ClinTrialX.
+#' This function returns a welcome message for ClinTrialX.
 #'
 #' @return A character string containing the welcome message.
 #' @export
 #' @examples
 #' hello()
 hello <- function() {
-  message <- "Welcome to ClinTrialX!"
-  Encoding(message) <- "UTF-8"
-  print(message)
+  msg <- "Welcome to ClinTrialX!"
+  Encoding(msg) <- "UTF-8"
+  return(msg)   # Return the message for further use
 }
