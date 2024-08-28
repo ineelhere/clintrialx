@@ -37,8 +37,11 @@
 #'
 #'
 #' @examples
+#' \dontrun{
 #' trials <- ctg_bulk_fetch(location="india")
+#' }
 #' @export
+
 
 ctg_bulk_fetch <- function(condition = NULL, location = NULL, title = NULL,
                            intervention = NULL, status = NULL) {
