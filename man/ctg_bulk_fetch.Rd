@@ -50,7 +50,8 @@ This function retrieves clinical trial data in bulk from the ClinicalTrials.gov 
 specified parameters. It handles pagination and returns a combined dataset.
 }
 \examples{
-\dontrun{
+\donttest{
 trials <- ctg_bulk_fetch(location="india")
+print(trials)
 }
 }

@@ -86,7 +86,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Basic usage with default settings
 #' ctg_data_report(my_clinical_trial_data)
 #'

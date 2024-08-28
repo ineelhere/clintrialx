@@ -1,13 +1,13 @@
 Package: clintrialx
 Type: Package
-Title: Connect and Work with Clinical Trials Data Sources using R Programming
+Title: Connect and Work with Clinical Trials Data Sources
 Version: 0.1.0
 Authors@R: 
     person("Indraneel", "Chakraborty",, "hello.indraneel@gmail.com", 
            role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6958-8269"))
 Maintainer: Indraneel Chakraborty <hello.indraneel@gmail.com>
-Description: Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing clintrialx - Fetch clinical trial data from sources like ClinicalTrials.gov and the Clinical Trials Transformation Initiative - Access to Aggregate Content of ClinicalTrials.gov database with R, supporting pagination and bulk downloads. Also, you can generate HTML reports based on the data obtained from the sources!
-License: Apache License 2.0 | file LICENSE
+Description: Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing 'clintrialx' - Fetch clinical trial data from sources like 'ClinicalTrials.gov' <https://clinicaltrials.gov/> and the 'Clinical Trials Transformation Initiative - Access to Aggregate Content of ClinicalTrials.gov' database <https://aact.ctti-clinicaltrials.org/>, supporting pagination and bulk downloads. Also, you can generate HTML reports based on the data obtained from the sources!
+License: Apache License 2.0
 Encoding: UTF-8
 LazyData: true
 Depends: 
