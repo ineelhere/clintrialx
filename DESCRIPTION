@@ -21,7 +21,8 @@ Imports:
     RPostgreSQL, 
     tibble, 
     DBI,
-    rmarkdown
+    rmarkdown,
+    xfun (>= 0.44)
 Suggests: 
     knitr
 VignetteBuilder: knitr

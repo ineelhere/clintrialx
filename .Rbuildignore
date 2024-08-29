@@ -12,3 +12,5 @@
 ^report.html$
 ^LICENSE$
 ^reports$
+^CRAN-SUBMISSION$
+^cran-comments\.md$
