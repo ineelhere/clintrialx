@@ -5,6 +5,10 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/clintrialx)](https://CRAN.R-project.org/package=clintrialx)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/clintrialx)](https://CRAN.R-project.org/package=clintrialx)
 [![R-CMD-check](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml)
 [![License:
 Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://opensource.org/license/apache-2-0)
@@ -29,8 +33,17 @@ available registries. Currently, it supports querying the
 
 ## Installation
 
+Install the package from
+[CRAN](https://CRAN.R-project.org/package=clintrialx) with:
+
+``` r
+install.packages("clintrialx")
+```
+
 You can install this package from
 [GitHub](https://github.com/ineelhere/clintrialx) with:
+
+*you’ll need the `devtools` package for this*
 
 ``` r
 # install.packages("devtools")
