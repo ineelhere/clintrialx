@@ -3,7 +3,7 @@
 Users can specify various parameters to filter the results, and if a parameter is not provided,
 it will be omitted from the query."><meta property="og:description" content="This function sends a query to the ClinicalTrials.gov API and returns the results as a tibble.
 Users can specify various parameters to filter the results, and if a parameter is not provided,
-it will be omitted from the query."><meta property="og:image" content="http://ineelhere.github.io/clintrialx/logo.png"></head><body>
+it will be omitted from the query."><meta property="og:image" content="http://www.indraneelchakraborty.com/clintrialx/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -137,19 +137,18 @@ The function handles the API response, checks for errors, and parses the results
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Query for studies related to "diabetes" in "Kolkata" with the status "RECRUITING"</span></span></span>
 <span class="r-in"><span><span class="fu">ctg_get_fields</span><span class="op">(</span>condition <span class="op">=</span> <span class="st">"diabetes"</span>, location <span class="op">=</span> <span class="st">"Kolkata"</span>,</span></span>
 <span class="r-in"><span>                                 status <span class="op">=</span> <span class="st">"RECRUITING"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The Query matches 8 trial records in the ClinicalTrials.gov records.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Your query returned 8 trial records.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 30</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The Query matches 7 trial records in the ClinicalTrials.gov records.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Your query returned 7 trial records.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 30</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   `NCT Number` `Study Title`  `Study URL` Acronym `Study Status` `Brief Summary`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> NCT04596631  A Research St… https://cl… PIONEE… RECRUITING     <span style="color: #949494;">"</span>This study co…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> NCT05929066  A Study of Re… https://cl… TRIUMP… RECRUITING     <span style="color: #949494;">"</span>The purpose o…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> NCT06065540  A Research St… https://cl… REIMAG… RECRUITING     <span style="color: #949494;">"</span>The study wil…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> NCT06221969  A Research St… https://cl… <span style="color: #BB0000;">NA</span>      RECRUITING     <span style="color: #949494;">"</span>This study wi…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> NCT05929079  A Study of Re… https://cl… TRIUMP… RECRUITING     <span style="color: #949494;">"</span>The purpose o…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> NCT05254002  A Study to Le… https://cl… CONFID… RECRUITING     <span style="color: #949494;">"</span>Finerenone wo…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> NCT06370715  A Study of LY… https://cl… <span style="color: #BB0000;">NA</span>      RECRUITING     <span style="color: #949494;">"</span>The purpose o…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> NCT06269107  A Research St… https://cl… COMBIN… RECRUITING     <span style="color: #949494;">"</span>This study wi…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> NCT06221969  A Research St… https://cl… <span style="color: #BB0000;">NA</span>      RECRUITING     <span style="color: #949494;">"</span>This study wi…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> NCT06370715  A Study of LY… https://cl… <span style="color: #BB0000;">NA</span>      RECRUITING     <span style="color: #949494;">"</span>The purpose o…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> NCT05254002  A Study to Le… https://cl… CONFID… RECRUITING     <span style="color: #949494;">"</span>Finerenone wo…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> NCT05929079  A Study of Re… https://cl… TRIUMP… RECRUITING     <span style="color: #949494;">"</span>The purpose o…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> NCT06269107  A Research St… https://cl… COMBIN… RECRUITING     <span style="color: #949494;">"</span>This study wi…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 24 more variables: `Study Results` &lt;chr&gt;, Conditions &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Interventions &lt;chr&gt;, `Primary Outcome Measures` &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `Secondary Outcome Measures` &lt;chr&gt;, `Other Outcome Measures` &lt;lgl&gt;,</span></span>
@@ -161,21 +160,21 @@ The function handles the API response, checks for errors, and parses the results
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Query for studies with "vaccine" in the title and the status "COMPLETED"</span></span></span>
 <span class="r-in"><span><span class="fu">ctg_get_fields</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"vaccine"</span>, status <span class="op">=</span> <span class="st">"COMPLETED"</span>, page_size <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The Query matches 5519 trial records in the ClinicalTrials.gov records.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The Query matches 5536 trial records in the ClinicalTrials.gov records.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Your query returned 50 trial records.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 30</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    `NCT Number` `Study Title` `Study URL` Acronym `Study Status` `Brief Summary`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> NCT01704365  RSV-F Vaccin… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>The purpose o…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> NCT00734565  Safety and R… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>This study wi…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> NCT02880865  Immunogenici… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>This study ai…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> NCT04440774  Research Stu… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>Phase Ib, sin…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> NCT04927065  A Study to E… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>This is a stu…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> NCT00731965  Safety and E… https://cl… VAART   COMPLETED      <span style="color: #949494;">"</span>Background:\n…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> NCT00465465  A Study of 2… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>The dose of r…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> NCT01644565  Safety Study… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>The purpose o…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> NCT00329966  Safety and I… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>To evaluate t…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> NCT04843774  Vaccine-gene… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>Severe acute …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> NCT00722774  Safety and I… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>In the 20th c…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> NCT01679665  Systems Biol… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>Recently, an …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> NCT02897765  A Personal C… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>The purpose o…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> NCT01147965  Active Immun… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>The purpose o…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> NCT03777865  Study To Des… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>This is a Pha…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> NCT03161366  Providing Ad… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>Interventiona…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> NCT01439165  Safety and I… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>The purpose o…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> NCT00423566  A Phase I St… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>This study is…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> NCT02571166  HSV529 Vacci… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>The purpose o…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> NCT02547974  A Study to E… https://cl… <span style="color: #BB0000;">NA</span>      COMPLETED      <span style="color: #949494;">"</span>The purpose o…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 24 more variables: `Study Results` &lt;chr&gt;, Conditions &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Interventions &lt;chr&gt;, `Primary Outcome Measures` &lt;chr&gt;,</span></span>

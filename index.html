@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Connect and work with clinical trials data sources with R programming. • clintrialx</title>
+<title>Connect and Work with Clinical Trials Data Sources • clintrialx</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -16,10 +16,10 @@
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Connect and work with clinical trials data sources with R programming.">
-<meta name="description" content="Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing clintrialx - Fetch clinical trial data from sources like ClinicalTrials.gov and the CTTI AACT database with R, supporting pagination and bulk downloads!">
-<meta property="og:description" content="Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing clintrialx - Fetch clinical trial data from sources like ClinicalTrials.gov and the CTTI AACT database with R, supporting pagination and bulk downloads!">
-<meta property="og:image" content="http://ineelhere.github.io/clintrialx/logo.png">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Connect and Work with Clinical Trials Data Sources">
+<meta name="description" content="Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing clintrialx - Fetch clinical trial data from sources like ClinicalTrials.gov &lt;https://clinicaltrials.gov/&gt; and the Clinical Trials Transformation Initiative - Access to Aggregate Content of ClinicalTrials.gov database &lt;https://aact.ctti-clinicaltrials.org/&gt;, supporting pagination and bulk downloads. Also, you can generate HTML reports based on the data obtained from the sources!">
+<meta property="og:description" content="Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing clintrialx - Fetch clinical trial data from sources like ClinicalTrials.gov &lt;https://clinicaltrials.gov/&gt; and the Clinical Trials Transformation Initiative - Access to Aggregate Content of ClinicalTrials.gov database &lt;https://aact.ctti-clinicaltrials.org/&gt;, supporting pagination and bulk downloads. Also, you can generate HTML reports based on the data obtained from the sources!">
+<meta property="og:image" content="http://www.indraneelchakraborty.com/clintrialx/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -76,7 +76,7 @@
 
 
 <!-- badges: end -->
-<p>The goal of <a href="http://ineelhere.github.io/clintrialx/">clintrialx</a> is to fetch clinical trials data from freely available registries. Currently, it supports querying the</p>
+<p>The goal of <a href="http://www.indraneelchakraborty.com/clintrialx/">clintrialx</a> is to fetch clinical trials data from freely available registries. Currently, it supports querying the</p>
 <ul>
 <li><p><a href="https://clinicaltrials.gov/" class="external-link">ClinicalTrials.gov</a> registry using its <a href="https://clinicaltrials.gov/data-api/api" class="external-link">V2 API</a> and</p></li>
 <li><p><a href="https://aact.ctti-clinicaltrials.org/" class="external-link">CTTI AACT</a> (Public Access to Aggregate Content of ClinicalTrials.gov).</p></li>
@@ -84,15 +84,19 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install this package from <a href="https://github.com/ineelhere/clintrialx" class="external-link">GitHub</a> with:</p>
+<p>Install the package from <a href="https://CRAN.R-project.org/package=clintrialx" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"clintrialx"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install this package from <a href="https://github.com/ineelhere/clintrialx" class="external-link">GitHub</a> with:</p>
+<p><em>you’ll need the <code>devtools</code> package for this</em></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ineelhere/clintrialx"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="check-installation">Check installation<a class="anchor" aria-label="anchor" href="#check-installation"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.indraneelchakraborty.com/clintrialx/">clintrialx</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -108,7 +112,7 @@
 <li><p>The <code>username</code> and <code>password</code> will be needed to fetch data using this package.</p></li>
 <li>
 <p>Save it in a <code>.Renviron</code> file, for example-</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">user</span> <span class="op">=</span>  <span class="st">"random_name"</span></span>
 <span><span class="va">password</span> <span class="op">=</span> <span class="st">"random_password"</span></span></code></pre></div>
 </li>
@@ -124,8 +128,8 @@
 <h4 id="based-on-nct-ids">Based on NCT IDs<a class="anchor" aria-label="anchor" href="#based-on-nct-ids"></a>
 </h4>
 <p>Fetch one or multiple trial records based on NCT IDs. You can opt to fetch some specific fields or all fields available at source (default).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ineelhere.github.io/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.indraneelchakraborty.com/clintrialx/">clintrialx</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/ctg_get_nct.html">ctg_get_nct</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT02967965"</span>, <span class="st">"NCT04000165"</span>, <span class="st">"NCT01007279"</span>, <span class="st">"NCT02376244"</span>, <span class="st">"NCT01179776"</span><span class="op">)</span>,</span>
 <span>                          fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NCT Number"</span>, <span class="st">"Study Title"</span>, <span class="st">"Study Status"</span>, <span class="st">"Sponsor"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -133,7 +137,7 @@
 <h4 id="based-on-fileds">Based on fileds<a class="anchor" aria-label="anchor" href="#based-on-fileds"></a>
 </h4>
 <p>Supports filtering by condition, location, title keywords, intervention, and overall status.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/ctg_get_fields.html">ctg_get_fields</a></span><span class="op">(</span></span>
 <span>     condition <span class="op">=</span> <span class="st">"Cancer"</span>,</span>
 <span>     location <span class="op">=</span> <span class="st">"Kolkata"</span>,</span>
@@ -144,11 +148,11 @@
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="based-on-fileds---bulk-download">Based on fileds - Bulk download<a class="anchor" aria-label="anchor" href="#based-on-fileds---bulk-download"></a>
+<h4 id="based-on-fields---bulk-download">Based on fields - Bulk download<a class="anchor" aria-label="anchor" href="#based-on-fields---bulk-download"></a>
 </h4>
 <p>Download all available data for your query. No limits!</p>
 <p><em>Supports filtering by condition, location, title keywords, intervention, and overall status.</em></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ctg_bulk_fetch.html">ctg_bulk_fetch</a></span><span class="op">(</span>location<span class="op">=</span><span class="st">"india"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -159,7 +163,7 @@
 <div class="section level4">
 <h4 id="run-custom-queries">Run Custom Queries<a class="anchor" aria-label="anchor" href="#run-custom-queries"></a>
 </h4>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Set environment variables for database credentials in .Renviron and load it</span></span>
 <span><span class="co"># readRenviron(".Renviron")</span></span>
 <span></span>
@@ -178,8 +182,8 @@
 <h2 id="trial-data-html-reports">Trial Data HTML Reports<a class="anchor" aria-label="anchor" href="#trial-data-html-reports"></a>
 </h2>
 <p><em>Currently works for data from ClinicalTrials.Gov</em></p>
-<p>Visit here for an exqample report - <a href="https://ineelhere.github.io/clintrialx/report.html" class="external-link uri">https://ineelhere.github.io/clintrialx/report.html</a></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>Visit here for an exqample report - <a href="https://www.indraneelchakraborty.com/clintrialx/report.html" class="external-link uri">https://www.indraneelchakraborty.com/clintrialx/report.html</a></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#first get the data in a R dataframe</span></span>
 <span><span class="va">my_clinical_trial_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ctg_bulk_fetch.html">ctg_bulk_fetch</a></span><span class="op">(</span>condition<span class="op">=</span><span class="st">"cancer"</span><span class="op">)</span></span>
 <span><span class="co">#now pass it to the reports function</span></span>
@@ -193,6 +197,14 @@
 <span>  include_data_quality <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  include_interactive_plots <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  custom_footer <span class="op">=</span> <span class="st">"Proprietary report generated by SomeGreatOrg Inc."</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Generate a report with static plots and no data quality assessment</span></span>
+<span><span class="fu"><a href="reference/ctg_data_report.html">ctg_data_report</a></span><span class="op">(</span></span>
+<span>  ctg_data <span class="op">=</span> <span class="va">my_clinical_trial_data</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"Quick Clinical Trial Overview"</span>,</span>
+<span>  include_data_quality <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_interactive_plots <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Check the path <code>reports/clinical_trials.html</code> on your local. It will have the html report file.</p>
 <p>Cool stuff - It also has the codes to the plots!</p>
@@ -201,22 +213,36 @@
 <h2 id="data-sources">Data Sources<a class="anchor" aria-label="anchor" href="#data-sources"></a>
 </h2>
 <p>You can fetch version information directly from the package:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/version_info.html">version_info</a></span><span class="op">(</span>source <span class="op">=</span> <span class="st">"clinicaltrials.gov"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="get-involved">Get Involved<a class="anchor" aria-label="anchor" href="#get-involved"></a>
 </h2>
-<p>🚀 <strong>Ready to contribute?</strong> Lets make<code>clintrialx</code> even better. Check out the <a href="https://github.com/ineelhere/clintrialx/blob/main/CONTRIBUTING.md" class="external-link">contributing guidelines</a> to get started.</p>
+<p>🚀 Ready to contribute? Let’s make clintrialx even better!</p>
+<ul>
+<li>Fork the <a href="https://github.com/ineelhere/clintrialx" class="external-link">GitHub</a> repo.</li>
+<li>Check out your development branch from the dev branch.</li>
+<li>Do your work on a feature (ftr) branch.</li>
+<li>Raise a PR against the dev branch of the <a href="https://github.com/ineelhere/clintrialx" class="external-link">clintrialx</a> repo.</li>
+<li>Sit back and <a href="https://www.youtube.com/watch?v=Uffjii1hXzU" class="external-link">relax</a> while I review it!</li>
+</ul>
 <p>💬 <strong>Questions or Feedback?</strong> Feel free to open an issue on <a href="https://github.com/ineelhere/clintrialx/issues" class="external-link">GitHub Issues page</a>.</p>
 <p>🌟 <strong>Enjoying <code>clintrialx</code>?</strong> Please consider giving it a star on <a href="https://github.com/ineelhere/clintrialx" class="external-link">GitHub</a>! Your support helps this project grow and improve.</p>
 <p>More updates to come. Happy coding! 🎉</p>
 </div>
 </div>
-  </main><aside class="col-md-3"><div class="license">
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=clintrialx" class="external-link">View on CRAN</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>Apache License Version 2.0</li>
+<li>Apache License 2.0</li>
 </ul>
 </div>
 
@@ -245,9 +271,11 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://opensource.org/licenses/Apache-2.0" class="external-link"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License: Apache-2.0"></a></li>
-<li><a href="https://ineelhere.github.io/clintrialx/" class="external-link"><img src="https://img.shields.io/badge/pkgdown-docs-blue.svg" alt="pkgdown"></a></li>
+<li><a href="https://opensource.org/license/apache-2-0" class="external-link"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License: Apache-2.0"></a></li>
+<li><a href="https://www.indraneelchakraborty.com/clintrialx/" class="external-link"><img src="https://img.shields.io/badge/pkgdown-docs-blue.svg" alt="pkgdown"></a></li>
 <li><a href="https://github.com/ineelhere/clintrialx" class="external-link"><img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fineelhere%2Fclintrialx&amp;label=Visitors&amp;labelColor=%23f47373&amp;countColor=%2337d67a&amp;style=flat&amp;labelStyle=upper" alt="Visitors"></a></li>
+<li><a href="https://CRAN.R-project.org/package=clintrialx" class="external-link"><img src="https://www.r-pkg.org/badges/version/clintrialx" alt="CRAN status"></a></li>
+<li><a href="https://CRAN.R-project.org/package=clintrialx" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/clintrialx" alt="CRAN downloads"></a></li>
 <li><a href="https://clinicaltrials.gov/data-api/api" class="external-link"><img src="https://img.shields.io/badge/Data_Sources-ClinicalTrials.gov-blue" alt="Data Sources: ClinicalTrials.gov"></a></li>
 <li><a href="https://aact.ctti-clinicaltrials.org/" class="external-link"><img src="https://img.shields.io/badge/Data_Sources-CTTI%20AACT%20-purple" alt="Data Sources: CTTI AACT"></a></li>
 </ul>
