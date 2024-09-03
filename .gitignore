@@ -49,3 +49,5 @@ po/*~
 rsconnect/
 docs
 *.html
+CRAN-SUBMISSION
+cran-comments.md

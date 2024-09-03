@@ -37,8 +37,11 @@
 #'
 #'
 #' @examples
+#' \donttest{
 #' trials <- ctg_bulk_fetch(location="india")
+#' }
 #' @export
+
 
 ctg_bulk_fetch <- function(condition = NULL, location = NULL, title = NULL,
                            intervention = NULL, status = NULL) {
@@ -104,7 +107,7 @@ get_total_count <- function(base_url, query_params) {
 
 create_progress_bar <- function(total_pages) {
   progress::progress_bar$new(
-    format = "Fetching Page :current/:total :spin :bar Completed :percent 🕒 :elapsedfull ",
+    format = "Fetching Page :current/:total :spin :bar Completed :percent :elapsedfull ",
     total = total_pages,
     clear = FALSE,
     width = 80

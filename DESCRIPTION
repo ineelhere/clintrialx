@@ -1,13 +1,30 @@
 Package: clintrialx
 Type: Package
-Title: Connect and work with clinical trials data sources with R programming.
+Title: Connect and Work with Clinical Trials Data Sources
 Version: 0.1.0
-Authors@R: person("Indraneel", "Chakraborty",, "hello.indraneel@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6958-8269"))
+Authors@R: 
+    person("Indraneel", "Chakraborty",, "hello.indraneel@gmail.com", 
+           role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6958-8269"))
 Maintainer: Indraneel Chakraborty <hello.indraneel@gmail.com>
-Description: Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing clintrialx - Fetch clinical trial data from sources like ClinicalTrials.gov and the CTTI AACT database with R, supporting pagination and bulk downloads!
-License: Apache License Version 2.0
+Description: Are you spending too much time fetching and managing clinical trial data? Struggling with complex queries and bulk data extraction? What if you could simplify this process with just a few lines of code? Introducing 'clintrialx' - Fetch clinical trial data from sources like 'ClinicalTrials.gov' <https://clinicaltrials.gov/> and the 'Clinical Trials Transformation Initiative - Access to Aggregate Content of ClinicalTrials.gov' database <https://aact.ctti-clinicaltrials.org/>, supporting pagination and bulk downloads. Also, you can generate HTML reports based on the data obtained from the sources!
+License: Apache License 2.0
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 4.0.0), httr, lubridate, readr, dplyr, progress,RPostgreSQL
+Depends: 
+    R (>= 4.0.0)
+Imports: 
+    httr, 
+    lubridate, 
+    readr, 
+    dplyr, 
+    progress, 
+    RPostgreSQL, 
+    tibble, 
+    DBI,
+    rmarkdown,
+    xfun (>= 0.44)
+Suggests: 
+    knitr
+VignetteBuilder: knitr
 RoxygenNote: 7.3.2
-URL: http://ineelhere.github.io/clintrialx/
+URL: http://www.indraneelchakraborty.com/clintrialx/
