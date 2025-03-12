@@ -18,7 +18,7 @@ A connection object to the AACT database
 Connect to AACT PostgreSQL database
 }
 \examples{
-\donttest{
+\dontrun{
 # Set environment variables for database credentials in .Renviron and load it
 # readRenviron(".Renviron")
 

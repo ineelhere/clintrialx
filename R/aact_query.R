@@ -6,7 +6,7 @@
 #' @import DBI
 #' @import RPostgreSQL
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Set environment variables for database credentials in .Renviron and load it
 #' # readRenviron(".Renviron")
 #'
@@ -32,7 +32,7 @@ aact_connection <- function(user, password) {
 #' @return A data frame with distinct study types
 #' @import DBI
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Set environment variables for database credentials in .Renviron and load it
 #' # readRenviron(".Renviron")
 #'
@@ -58,7 +58,7 @@ aact_check_connection <- function(con) {
 #' @return A data frame with the query results
 #' @import DBI
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Set environment variables for database credentials in .Renviron and load it
 #' # readRenviron(".Renviron")
 #'

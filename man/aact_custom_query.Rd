@@ -18,7 +18,7 @@ A data frame with the query results
 Run a custom query
 }
 \examples{
-\donttest{
+\dontrun{
 # Set environment variables for database credentials in .Renviron and load it
 # readRenviron(".Renviron")
 

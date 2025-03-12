@@ -137,7 +137,7 @@ df <- ctg_bulk_fetch(location="india")
 
 #### Run Custom Queries
 
-```{r example4, eval = FALSE}
+```
 # Set environment variables for database credentials in .Renviron and load it
 # readRenviron(".Renviron")
 

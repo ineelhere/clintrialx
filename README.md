@@ -123,20 +123,18 @@ df <- ctg_bulk_fetch(location="india")
 
 #### Run Custom Queries
 
-``` r
-# Set environment variables for database credentials in .Renviron and load it
-# readRenviron(".Renviron")
+    # Set environment variables for database credentials in .Renviron and load it
+    # readRenviron(".Renviron")
 
-# Connect to the database
-con <- aact_connection(Sys.getenv('user'), Sys.getenv('password'))
+    # Connect to the database
+    con <- aact_connection(Sys.getenv('user'), Sys.getenv('password'))
 
-# Run a custom query
-query <- "SELECT nct_id, source, enrollment, overall_status FROM studies LIMIT 5;"
-results <- aact_custom_query(con, query)
+    # Run a custom query
+    query <- "SELECT nct_id, source, enrollment, overall_status FROM studies LIMIT 5;"
+    results <- aact_custom_query(con, query)
 
-# Print the results
-print(results)
-```
+    # Print the results
+    print(results)
 
 ## Trial Data HTML Reports
 

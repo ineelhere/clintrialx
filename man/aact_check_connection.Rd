@@ -16,7 +16,7 @@ A data frame with distinct study types
 Check database connection
 }
 \examples{
-\donttest{
+\dontrun{
 # Set environment variables for database credentials in .Renviron and load it
 # readRenviron(".Renviron")
 
