@@ -37,7 +37,7 @@
 #'
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' trials <- ctg_bulk_fetch(location="india")
 #' }
 #' @export
