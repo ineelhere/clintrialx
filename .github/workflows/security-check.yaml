@@ -5,55 +5,55 @@ on: [push, pull_request]
 jobs:
   security-audit:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    
+
     - name: Set up R
       uses: r-lib/actions/setup-r@v2
       with:
         r-version: 'release'
-    
+
     - name: Install system dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
-    
+
     - name: Cache R packages
       uses: actions/cache@v3
       with:
         path: ~/.local/lib/R/site-library
         key: ${{ runner.os }}-r-${{ hashFiles('DESCRIPTION') }}
         restore-keys: ${{ runner.os }}-r-
-    
+
     - name: Install oysteR
       run: |
         R -e "install.packages('oysteR', repos='https://cran.r-project.org')"
-    
+
     - name: Install clintrialx (if needed)
       run: |
         R -e "if (!require('clintrialx', quietly = TRUE)) install.packages('clintrialx', repos='https://cran.r-project.org')"
       continue-on-error: true
-    
+
     - name: Run security audit
       id: audit
       run: |
         # Create R script for vulnerability check
         cat > check_vulnerabilities.R << 'EOF'
         library(oysteR)
-        
+
         # Function to safely check vulnerabilities
         check_package_vulnerabilities <- function(pkg_name) {
           tryCatch({
             # Try to get vulnerabilities for the package
             result <- expect_secure(pkg_name)
-            
+
             # If we get here, no vulnerabilities found
             cat("VULNERABILITY_COUNT=0\n", file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
             cat("STATUS=success\n", file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
             cat("MESSAGE=No vulnerabilities found\n", file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
-            
+
             return(0)
           }, error = function(e) {
             # Check if error is due to vulnerabilities found
@@ -77,17 +77,18 @@ jobs:
             return(1)
           })
         }
-        
+
         # Run the check
         result <- check_package_vulnerabilities("clintrialx")
         quit(status = result)
         EOF
-        
+
         # Run the R script
         R --slave < check_vulnerabilities.R
       continue-on-error: true
-    
+
     - name: Create vulnerability badge
+      id: badge
       run: |
         # Determine badge color and message based on results
         case "${{ steps.audit.outputs.STATUS }}" in
@@ -108,38 +109,35 @@ jobs:
             BADGE_MESSAGE="unknown"
             ;;
         esac
-        
+
         # Create badge URL
         BADGE_URL="https://img.shields.io/badge/clintrialx%20vulnerabilities-${BADGE_MESSAGE}-${BADGE_COLOR}"
-        
+
         # Output badge info
         echo "BADGE_URL=${BADGE_URL}" >> $GITHUB_OUTPUT
         echo "Badge URL: ${BADGE_URL}"
         echo "Status: ${{ steps.audit.outputs.STATUS }}"
         echo "Message: ${{ steps.audit.outputs.MESSAGE }}"
-      id: badge
-    
-    - name: Update README badge (optional)
-      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-      run: |
-        # This step would update your README.md file with the new badge
-        # You can customize this based on your README structure
-        echo "Badge URL for README: ${{ steps.badge.outputs.BADGE_URL }}"
-        echo "You can manually update your README.md with this badge URL"
-    
-    - name: Create badge artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: security-badge
-        path: |
-          badge_info.txt
-        retention-days: 30
-      if: always()
-    
+
     - name: Save badge info
+      if: always()
       run: |
         echo "Badge URL: ${{ steps.badge.outputs.BADGE_URL }}" > badge_info.txt
         echo "Status: ${{ steps.audit.outputs.STATUS }}" >> badge_info.txt
         echo "Vulnerability Count: ${{ steps.audit.outputs.VULNERABILITY_COUNT }}" >> badge_info.txt
         echo "Message: ${{ steps.audit.outputs.MESSAGE }}" >> badge_info.txt
+
+    - name: Create badge artifact
       if: always()
+      uses: actions/upload-artifact@v4   # ← updated to v4
+      with:
+        name: security-badge
+        path: badge_info.txt
+        retention-days: 30
+
+    - name: Update README badge (optional)
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      run: |
+        # This step would update your README.md file with the new badge
+        echo "Badge URL for README: ${{ steps.badge.outputs.BADGE_URL }}"
+        echo "You can manually update your README.md with this badge URL"
