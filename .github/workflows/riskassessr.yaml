@@ -2,15 +2,18 @@ name: Package Risk Assessment
 
 on:
   push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   risk-assessment:
     runs-on: ubuntu-latest
     name: Risk Assessment
-    
+
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      CACHE_VERSION: v1
 
     steps:
       - name: Checkout repository
@@ -41,278 +44,123 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          key: ${{ runner.os }}-${{ env.CACHE_VERSION }}-${{ hashFiles('.github/R-version') }}-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.CACHE_VERSION }}-
 
-      - name: Install package dependencies
+      - name: Install dependencies
         run: |
+          install.packages(c("remotes", "devtools", "risk.assessr", "crayon", "knitr", "jsonlite"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
-      - name: Install risk.assessr and additional dependencies
-        run: |
-          install.packages(c("risk.assessr", "crayon", "knitr"))
-        shell: Rscript {0}
-
       - name: Build package
-        run: |
-          devtools::build(path = ".", vignettes = FALSE)
+        run: devtools::build(path = ".", vignettes = FALSE)
         shell: Rscript {0}
 
       - name: Run Risk Assessment
         run: |
-          # Load required libraries
           library(risk.assessr)
           library(crayon)
-          
-          # Set up CRAN repository
-          r <- getOption("repos")
-          r["CRAN"] <- "https://cloud.r-project.org"
-          options(repos = r)
-          
-          cat("=== Starting Package Risk Assessment ===\n")
-          cat("Repository:", Sys.getenv("GITHUB_REPOSITORY"), "\n")
-          cat("Branch:", Sys.getenv("GITHUB_REF_NAME"), "\n")
-          cat("Workflow run:", Sys.getenv("GITHUB_RUN_ID"), "\n")
-          cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S UTC"), "\n\n")
-          
-          # Pretty print function for GitHub Actions logs
+          library(jsonlite)
+
+          `%||%` <- function(a, b) if (!is.null(a)) a else b
+
+          log_time <- function(msg) {
+            cat(sprintf("[%s] %s\n", format(Sys.time(), "%Y-%m-%d %H:%M:%S UTC"), msg))
+          }
+
           pretty_print_assessment <- function(assessment_results) {
-            
-            if (is.null(assessment_results) || length(assessment_results) == 0) {
-              cat("❌ No assessment results to display.\n")
+            if (is.null(assessment_results)) {
+              cat("❌ No assessment results\n")
               return()
             }
-            
-            # Helper functions for colored output in GitHub Actions
-            print_header <- function(title) {
-              cat("\n")
-              cat("🔍 ===", title, "===\n")
-              cat(paste(rep("=", nchar(title) + 10), collapse = ""), "\n")
-            }
-            
-            print_subheader <- function(title) {
-              cat("\n📊", title, "\n")
-              cat(paste(rep("-", nchar(title) + 3), collapse = ""), "\n")
-            }
-            
-            # Extract package name
-            pkg_name <- "Unknown Package"
-            if ("package" %in% names(assessment_results)) {
-              pkg_name <- assessment_results$package
-            } else if ("pkg_name" %in% names(assessment_results)) {
-              pkg_name <- assessment_results$pkg_name
-            }
-            
-            print_header("PACKAGE ASSESSMENT RESULTS")
-            cat("📦 Package:", pkg_name, "\n")
-            cat("⏰ Generated:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n")
-            
-            # Print R CMD Check Results
+
+            # PACKAGE INFO
+            cat("::group::📦 Package Info\n")
+            pkg_name <- assessment_results$package %||% assessment_results$pkg_name %||% "Unknown"
+            cat("Package:", pkg_name, "\n")
+            cat("Generated:", format(Sys.time(), "%Y-%m-%d %H:%M:%S UTC"), "\n")
+            cat("::endgroup::\n")
+
+            # R CMD CHECK
             if ("rcmdcheck" %in% names(assessment_results)) {
-              print_header("R CMD CHECK RESULTS")
+              cat("::group::🔍 R CMD CHECK\n")
               rcmd <- assessment_results$rcmdcheck
-              
-              if (is.list(rcmd)) {
-                # Errors
-                if ("errors" %in% names(rcmd) && length(rcmd$errors) > 0) {
-                  print_subheader("🚨 ERRORS")
-                  for (error in rcmd$errors) {
-                    cat("❌", error, "\n")
-                  }
-                  cat("::error::R CMD check found", length(rcmd$errors), "error(s)\n")
-                } else {
-                  cat("✅ No errors found\n")
-                }
-                
-                # Warnings
-                if ("warnings" %in% names(rcmd) && length(rcmd$warnings) > 0) {
-                  print_subheader("⚠️ WARNINGS")
-                  for (warning in rcmd$warnings) {
-                    cat("⚠️", warning, "\n")
-                  }
-                  cat("::warning::R CMD check found", length(rcmd$warnings), "warning(s)\n")
-                } else {
-                  cat("✅ No warnings found\n")
-                }
-                
-                # Notes
-                if ("notes" %in% names(rcmd) && length(rcmd$notes) > 0) {
-                  print_subheader("📝 NOTES")
-                  for (note in rcmd$notes) {
-                    cat("ℹ️", note, "\n")
-                  }
-                  cat("::notice::R CMD check found", length(rcmd$notes), "note(s)\n")
-                } else {
-                  cat("✅ No notes\n")
-                }
-              } else {
-                cat(as.character(rcmd), "\n")
-              }
+              if (length(rcmd$errors) > 0) {
+                cat(red$bold("❌ Errors:\n"), paste(rcmd$errors, collapse="\n"), "\n")
+              } else cat(green$bold("✅ No errors\n"))
+              if (length(rcmd$warnings) > 0) {
+                cat(yellow$bold("⚠️ Warnings:\n"), paste(rcmd$warnings, collapse="\n"), "\n")
+              } else cat(green$bold("✅ No warnings\n"))
+              if (length(rcmd$notes) > 0) {
+                cat(blue$bold("ℹ️ Notes:\n"), paste(rcmd$notes, collapse="\n"), "\n")
+              } else cat(green$bold("✅ No notes\n"))
+              cat("::endgroup::\n")
             }
-            
-            # Print Coverage Results
+
+            # COVERAGE
             if ("covr" %in% names(assessment_results)) {
-              print_header("CODE COVERAGE")
+              cat("::group::📈 Coverage\n")
               covr <- assessment_results$covr
-              
               if (is.numeric(covr)) {
                 coverage_pct <- round(covr, 2)
-                if (coverage_pct >= 80) {
-                  cat("✅ Coverage:", coverage_pct, "%\n")
-                } else if (coverage_pct >= 60) {
-                  cat("⚠️ Coverage:", coverage_pct, "%\n")
-                  cat("::warning::Code coverage is below 80%\n")
-                } else {
-                  cat("❌ Coverage:", coverage_pct, "%\n")
-                  cat("::error::Code coverage is below 60%\n")
-                }
-              } else if (is.data.frame(covr)) {
-                cat("Coverage details:\n")
-                print(covr)
-              } else {
-                cat(as.character(covr), "\n")
-              }
+                cat("Coverage:", coverage_pct, "%\n")
+                if (coverage_pct < 60) cat("::error::Coverage < 60%\n")
+                else if (coverage_pct < 80) cat("::warning::Coverage < 80%\n")
+              } else print(covr)
+              cat("::endgroup::\n")
             }
-            
-            # Print Dependencies
+
+            # DEPENDENCIES
             if ("dependencies" %in% names(assessment_results)) {
-              print_header("DEPENDENCIES")
-              deps <- assessment_results$dependencies
-              
-              if (is.data.frame(deps)) {
-                if (nrow(deps) > 0) {
-                  cat("📋 Found", nrow(deps), "dependencies:\n")
-                  print(deps)
-                } else {
-                  cat("✅ No dependencies found\n")
-                }
-              } else if (is.list(deps)) {
-                if (length(deps) > 0) {
-                  for (name in names(deps)) {
-                    cat("•", name, ":", as.character(deps[[name]]), "\n")
-                  }
-                } else {
-                  cat("✅ No dependencies found\n")
-                }
-              } else {
-                cat(as.character(deps), "\n")
-              }
+              cat("::group::📋 Dependencies\n")
+              print(assessment_results$dependencies)
+              cat("::endgroup::\n")
             }
-            
-            # Print Metrics
+
+            # METRICS
             if ("metrics" %in% names(assessment_results)) {
-              print_header("PACKAGE METRICS")
-              metrics <- assessment_results$metrics
-              
-              if (is.data.frame(metrics)) {
-                if (nrow(metrics) > 0) {
-                  print(metrics)
-                } else {
-                  cat("No metrics data available\n")
-                }
-              } else if (is.list(metrics)) {
-                if (length(metrics) > 0) {
-                  for (name in names(metrics)) {
-                    cat("•", name, ":", as.character(metrics[[name]]), "\n")
-                  }
-                } else {
-                  cat("No metrics data available\n")
-                }
-              } else {
-                cat(as.character(metrics), "\n")
-              }
+              cat("::group::📊 Metrics\n")
+              print(assessment_results$metrics)
+              cat("::endgroup::\n")
             }
-            
-            # Print other components
-            other_components <- names(assessment_results)[!names(assessment_results) %in% 
-                                                         c("rcmdcheck", "covr", "dependencies", "metrics", "package", "pkg_name")]
-            
-            if (length(other_components) > 0) {
-              print_header("OTHER ASSESSMENT DATA")
-              
-              for (component in other_components) {
-                data <- assessment_results[[component]]
-                cat("\n📋", toupper(component), "\n")
-                
-                if (is.data.frame(data) && nrow(data) > 0) {
-                  print(data)
-                } else if (is.list(data) && length(data) > 0) {
-                  str(data, max.level = 2)
-                } else if (!is.null(data) && length(data) > 0) {
-                  cat(as.character(data), "\n")
-                } else {
-                  cat("No data available\n")
-                }
-              }
-            }
-            
-            # Summary
-            print_header("ASSESSMENT SUMMARY")
-            cat("📊 Total components assessed:", length(assessment_results), "\n")
-            
-            # Create GitHub Actions summary
-            error_count <- if("rcmdcheck" %in% names(assessment_results) && 
-                             "errors" %in% names(assessment_results$rcmdcheck)) 
-                             length(assessment_results$rcmdcheck$errors) else 0
-            warning_count <- if("rcmdcheck" %in% names(assessment_results) && 
-                               "warnings" %in% names(assessment_results$rcmdcheck)) 
-                               length(assessment_results$rcmdcheck$warnings) else 0
-            note_count <- if("rcmdcheck" %in% names(assessment_results) && 
-                            "notes" %in% names(assessment_results$rcmdcheck)) 
-                            length(assessment_results$rcmdcheck$notes) else 0
-            
-            if (error_count > 0) {
-              cat("::error::Assessment completed with", error_count, "errors\n")
-            } else if (warning_count > 0) {
-              cat("::warning::Assessment completed with", warning_count, "warnings\n")
-            } else {
-              cat("::notice::Assessment completed successfully\n")
-            }
-            
-            cat("\n🎉 Assessment display completed!\n")
           }
-          
-          # Run the assessment
+
+          log_time("🚀 Running risk assessment with risk.assessr...")
           tryCatch({
-            cat("🚀 Starting risk assessment...\n")
-            
-            # Use the simplified risk_assess_pkg function with current directory
-            comprehensive_assessment <- risk_assess_pkg(".")
-            
-            # Print the results
-            pretty_print_assessment(comprehensive_assessment)
-            
-          }, error = function(e) {
-            cat("::error::Assessment failed with error:", e$message, "\n")
-            cat("📋 Attempting fallback assessment...\n")
-            
-            # Fallback: try building package first
-            tryCatch({
-              # Build the package
-              built_pkg <- devtools::build(".", quiet = FALSE)
-              cat("📦 Package built:", built_pkg, "\n")
-              
-              # Try assessment with built package
-              comprehensive_assessment <- risk_assess_pkg(built_pkg)
-              pretty_print_assessment(comprehensive_assessment)
-              
-            }, error = function(e2) {
-              cat("::error::Fallback assessment also failed:", e2$message, "\n")
-              cat("🔍 Package structure:\n")
-              cat(paste(list.files(".", recursive = TRUE, include.dirs = TRUE), collapse = "\n"), "\n")
-            })
+            assessment <- risk_assess_pkg(".")
+            pretty_print_assessment(assessment)
+
+            # Save logs & structured results
+            saveRDS(assessment, "assessment_results.rds")
+            write_json(assessment, "assessment_results.json", pretty=TRUE, auto_unbox=TRUE)
+
+            # Write summary for GitHub
+            summary_file <- Sys.getenv("GITHUB_STEP_SUMMARY")
+            if (nzchar(summary_file)) {
+              writeLines(c(
+                "## 📊 Risk Assessment Summary",
+                paste0("- Package: ", assessment$package %||% "Unknown"),
+                paste0("- Errors: ", length(assessment$rcmdcheck$errors) %||% 0),
+                paste0("- Warnings: ", length(assessment$rcmdcheck$warnings) %||% 0),
+                paste0("- Notes: ", length(assessment$rcmdcheck$notes) %||% 0)
+              ), summary_file, append = TRUE)
+            }
+
+          }, error=function(e) {
+            cat("::error:: Risk assessment failed:", e$message, "\n")
           })
-          
-          cat("\n=== Risk Assessment Complete ===\n")
         shell: Rscript {0}
 
       - name: Upload assessment artifacts
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: risk-assessment-logs
+          name: risk-assessment-output
           path: |
             *.log
             *.Rcheck/
+            assessment_results.json
+            assessment_results.rds
           retention-days: 30
