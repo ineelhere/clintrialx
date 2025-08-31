@@ -19,6 +19,8 @@ downloads](https://cranlogs.r-pkg.org/badges/clintrialx)](https://CRAN.R-project
 ClinicalTrials.gov](https://img.shields.io/badge/Data_Sources-ClinicalTrials.gov-blue)](https://clinicaltrials.gov/data-api/api)
 [![Data Sources: CTTI
 AACT](https://img.shields.io/badge/Data_Sources-CTTI%20AACT%20-purple)](https://aact.ctti-clinicaltrials.org/)
+![Security Check](https://github.com/yourusername/yourrepo/workflows/Security%20Check/badge.svg)
+
 
 <!-- badges: end -->
 
