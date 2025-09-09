@@ -277,8 +277,12 @@ jobs:
           tryCatch({
             cat("🚀 Starting risk assessment...\n")
             
-            # Use the simplified risk_assess_pkg function with current directory
-            comprehensive_assessment <- risk_assess_pkg(".")
+            # Build the package in a temp directory
+            built_pkg <- devtools::build(".", quiet = FALSE, path = tempdir())
+            cat("📦 Package built:", built_pkg, "\n")
+            
+            # Run risk assessment on the built tarball
+            comprehensive_assessment <- risk_assess_pkg(built_pkg)
             
             # Print the results
             pretty_print_assessment(comprehensive_assessment)
@@ -287,14 +291,9 @@ jobs:
             cat("::error::Assessment failed with error:", e$message, "\n")
             cat("📋 Attempting fallback assessment...\n")
             
-            # Fallback: try building package first
+            # Fallback: try assessment in current directory
             tryCatch({
-              # Build the package
-              built_pkg <- devtools::build(".", quiet = FALSE)
-              cat("📦 Package built:", built_pkg, "\n")
-              
-              # Try assessment with built package
-              comprehensive_assessment <- risk_assess_pkg(built_pkg)
+              comprehensive_assessment <- risk_assess_pkg(".")
               pretty_print_assessment(comprehensive_assessment)
               
             }, error = function(e2) {
