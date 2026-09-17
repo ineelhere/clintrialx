@@ -6,8 +6,6 @@
 #'   Currently, "clinicaltrials.gov" and "aact" are supported.
 #' @return A list containing API version and data timestamp for clinicaltrials.gov,
 #'   or NULL for aact with a message printed.
-#' @importFrom httr GET status_code content
-#' @importFrom lubridate ymd_hms
 #' @export
 #'
 #' @examples
@@ -21,36 +19,41 @@
 version_info <- function(source = "clinicaltrials.gov") {
   supported_sources <- c("clinicaltrials.gov", "aact")
 
-  if (!source %in% supported_sources) {
-    stop("Unsupported source: ", source, call. = FALSE)
+  if (!is.character(source) || length(source) != 1L || is.na(source) ||
+      !source %in% supported_sources) {
+    .abort_clintrialx(
+      paste0("Unsupported source: ", paste(source, collapse = ", ")),
+      class = "ctg_validation_error",
+      argument = "source"
+    )
   }
 
   urls <- c(
-    "clinicaltrials.gov" = "https://clinicaltrials.gov/api/v2/version",
+    "clinicaltrials.gov" = .ctg_version_url,
     "aact" = "https://aact.ctti-clinicaltrials.org/api/v2/version"
   )
 
   url <- urls[source]
 
   if (source == "clinicaltrials.gov") {
-    tryCatch({
-      response <- httr::GET(url)
-      httr::stop_for_status(response)
+    response <- .api_request(url, accept = "application/json")
+    response_content <- httr::content(response, as = "parsed", encoding = "UTF-8")
 
-      content <- httr::content(response, as = "parsed", encoding = "UTF-8")
-      readable_timestamp <- lubridate::ymd_hms(content$dataTimestamp)
-
-      result <- list(
-        api_version = content$apiVersion,
-        timestamp = readable_timestamp
+    if (is.null(response_content$apiVersion) || is.null(response_content$dataTimestamp)) {
+      .abort_clintrialx(
+        "The ClinicalTrials.gov version response is missing apiVersion or dataTimestamp",
+        class = "ctg_parse_error"
       )
+    }
 
-      message("API version: ", result$api_version, "\nTimestamp: ", result$timestamp)
-    }, error = function(e) {
-      warning("Failed to retrieve data: ", conditionMessage(e), call. = FALSE)
-
-    })
-  } else if (source == "aact") {
+    result <- list(
+      api_version = response_content$apiVersion,
+      timestamp = lubridate::ymd_hms(response_content$dataTimestamp, quiet = TRUE)
+    )
+    message("API version: ", result$api_version, "\nTimestamp: ", result$timestamp)
+    return(result)
+  } else {
     message("Please refer to: ", url)
+    return(invisible(NULL))
   }
 }

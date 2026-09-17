@@ -87,9 +87,6 @@
 #'
 #' @seealso
 #' \url{https://www.indraneelchakraborty.com/clintrialx/} for more information about the ClinTrialX package.
-#' @importFrom grDevices colorRampPalette
-#' @importFrom utils install.packages installed.packages
-#' @importFrom rmarkdown render
 #' @export
 
 ctg_data_report <- function(ctg_data,
@@ -101,6 +98,17 @@ ctg_data_report <- function(ctg_data,
                             include_data_quality = TRUE,
                             include_interactive_plots = TRUE,
                             custom_footer = NULL) {
+
+  required_columns <- c(
+    "Study Status",
+    "Enrollment",
+    "Start Date",
+    "Completion Date",
+    "Phases",
+    "Funder Type",
+    "Study Type"
+  )
+  .validate_dataframe_cols(ctg_data, required_columns, "ctg_data")
 
   # List of required packages
   required_packages <- c("rmarkdown", "ggplot2", "plotly", "dplyr", "lubridate", "reactable", "scales", "RColorBrewer", "htmltools")
@@ -135,7 +143,7 @@ ctg_data_report <- function(ctg_data,
     if (n <= length(color_palette)) {
       return(color_palette[1:n])
     } else {
-      return(colorRampPalette(color_palette)(n))
+      return(grDevices::colorRampPalette(color_palette)(n))
     }
   }
 
@@ -198,7 +206,7 @@ get_colors <- function(n) {
   if (n <= length(color_palette)) {
     return(color_palette[1:n])
   } else {
-    return(colorRampPalette(color_palette)(n))
+    return(grDevices::colorRampPalette(color_palette)(n))
   }
 }
 

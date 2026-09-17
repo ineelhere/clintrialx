@@ -23,7 +23,15 @@ Imports:
     DBI,
     rmarkdown
 Suggests: 
-    knitr
+    ggplot2,
+    htmltools,
+    knitr,
+    plotly,
+    RColorBrewer,
+    reactable,
+    scales,
+    testthat (>= 3.1.0)
+Config/testthat/edition: 3
 VignetteBuilder: knitr
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 URL: http://www.indraneelchakraborty.com/clintrialx/, https://github.com/ineelhere/clintrialx

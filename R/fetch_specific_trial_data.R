@@ -8,10 +8,6 @@
 #' @param fields A character vector specifying the fields to retrieve. If NULL (default), all available fields are fetched. If specified, it must be a subset of the available fields.
 #' @return A tibble containing the clinical trial data with columns matching the requested fields.
 #' @export
-#' @importFrom httr GET content
-#' @importFrom readr read_csv cols
-#' @importFrom dplyr bind_rows as_tibble
-#' @importFrom progress progress_bar
 #'
 #'
 #' @examples
@@ -71,10 +67,8 @@
 #'
 
 ctg_get_nct <- function(nct_ids, fields = NULL) {
-  # Base URL for the API
-  base_url <- "https://clinicaltrials.gov/api/v2/studies/"
+  nct_ids <- .validate_nct_ids(nct_ids)
 
-  # Define all available fields
   all_fields <- c(
     "NCT Number", "Study Title", "Study URL", "Acronym", "Study Status",
     "Brief Summary", "Study Results", "Conditions", "Interventions",
@@ -86,61 +80,89 @@ ctg_get_nct <- function(nct_ids, fields = NULL) {
     "Last Update Posted", "Locations", "Study Documents"
   )
 
-  # If fields are not specified, use all fields
   if (is.null(fields)) {
     fields <- all_fields
   } else {
-    # Validate user-provided fields
+    if (!is.character(fields) || anyNA(fields) || length(fields) == 0L) {
+      .abort_clintrialx(
+        "'fields' must be a non-empty character vector without missing values",
+        class = "ctg_validation_error",
+        argument = "fields"
+      )
+    }
+    fields <- unique(fields)
     invalid_fields <- setdiff(fields, all_fields)
-    if (length(invalid_fields) > 0) {
-      stop("Invalid fields specified: ", paste(invalid_fields, collapse = ", "))
+    if (length(invalid_fields) > 0L) {
+      .abort_clintrialx(
+        paste0("Invalid fields specified: ", paste(invalid_fields, collapse = ", ")),
+        class = "ctg_validation_error",
+        argument = "fields",
+        invalid = invalid_fields
+      )
     }
   }
 
-  # Create progress bar
-  pb <- progress::progress_bar$new(
-    format = "[:bar] :current/:total (:percent) Fetching :id",
-    total = length(nct_ids)
-  )
+  progress_bar <- if (interactive()) {
+    progress::progress_bar$new(
+      format = "[:bar] :current/:total (:percent) Fetching :id",
+      total = length(nct_ids),
+      clear = FALSE
+    )
+  } else {
+    NULL
+  }
+  on.exit({
+    if (!is.null(progress_bar)) progress_bar$terminate()
+  }, add = TRUE)
 
-  # Function to fetch data for a single NCT ID
+  failed_ids <- character()
+
   fetch_single <- function(nct_id) {
-    # Update progress bar
-    pb$tick(tokens = list(id = nct_id))
+    if (!is.null(progress_bar)) progress_bar$tick(tokens = list(id = nct_id))
 
-    # Construct the API URL
-    fields_param <- gsub(" ", "%20", paste(fields, collapse = "%7C"))
-    url <- paste0(base_url, nct_id, "?format=csv&fields=", fields_param)
+    response <- tryCatch(
+      .api_request(
+        paste0(.ctg_studies_url, "/", nct_id),
+        query_params = list(format = "csv", fields = paste(fields, collapse = "|")),
+        accept = "text/csv"
+      ),
+      ctg_http_error = function(e) {
+        failed_ids <<- c(failed_ids, nct_id)
+        .warn_clintrialx(
+          paste0("Failed to fetch data for ", nct_id, ": ", conditionMessage(e)),
+          class = "ctg_partial_result",
+          nct_id = nct_id,
+          parent = e
+        )
+        NULL
+      }
+    )
 
-    # Make the API request
-    response <- httr::GET(url, httr::add_headers("accept" = "text/csv"))
-
-    # Check for successful response
-    if (httr::status_code(response) != 200) {
-      warning("Failed to fetch data for ", nct_id, ". Status code: ", httr::status_code(response))
+    if (is.null(response)) {
       return(NULL)
     }
-
-    # Parse the CSV content
-    content <- httr::content(response, "text", encoding = "UTF-8")
-    data <- readr::read_csv(content, col_types = readr::cols(.default = "c"))
-
-    return(data)
+    .parse_csv_response(response)
   }
 
-  # Fetch data for all NCT IDs
   all_data <- lapply(nct_ids, fetch_single)
+  all_data <- Filter(Negate(is.null), all_data)
 
-  # Remove NULL entries (failed fetches)
-  all_data <- all_data[!sapply(all_data, is.null)]
+  if (length(all_data) == 0L) {
+    .abort_clintrialx(
+      paste0("Failed to fetch every requested NCT ID: ", paste(failed_ids, collapse = ", ")),
+      class = "ctg_http_error",
+      failed_ids = failed_ids
+    )
+  }
 
-  # Combine all data into a single dataframe
   combined_data <- dplyr::bind_rows(all_data)
 
-  # Ensure column names match exactly with the requested fields
   if (!all(colnames(combined_data) %in% fields)) {
-    warning("Some column names may not match exactly with the requested fields.")
+    .warn_clintrialx(
+      "Some response column names do not match the requested fields",
+      class = "ctg_parse_warning"
+    )
   }
 
-  return(combined_data)
+  tibble::as_tibble(combined_data)
 }

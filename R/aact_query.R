@@ -3,8 +3,6 @@
 #' @param user Database username
 #' @param password Database password
 #' @return A connection object to the AACT database
-#' @import DBI
-#' @import RPostgreSQL
 #' @examples
 #' \dontrun{
 #' # Set environment variables for database credentials in .Renviron and load it
@@ -15,8 +13,11 @@
 #' }
 #' @export
 aact_connection <- function(user, password) {
-  con <- dbConnect(
-    drv = dbDriver("PostgreSQL"),
+  user <- .validate_nonempty_string(user, "user")
+  password <- .validate_nonempty_string(password, "password")
+
+  con <- DBI::dbConnect(
+    drv = RPostgreSQL::PostgreSQL(),
     dbname = "aact",
     host = "aact-db.ctti-clinicaltrials.org",
     port = 5432,
@@ -30,7 +31,6 @@ aact_connection <- function(user, password) {
 #'
 #' @param con Database connection object
 #' @return A data frame with distinct study types
-#' @import DBI
 #' @examples
 #' \dontrun{
 #' # Set environment variables for database credentials in .Renviron and load it
@@ -44,7 +44,15 @@ aact_connection <- function(user, password) {
 #' }
 #' @export
 aact_check_connection <- function(con) {
-  df <- dbGetQuery(con, "select distinct study_type from studies")
+  connection_is_valid <- tryCatch(DBI::dbIsValid(con), error = function(e) FALSE)
+  if (!isTRUE(connection_is_valid)) {
+    .abort_clintrialx(
+      "Invalid or closed AACT database connection",
+      class = "aact_connection_error"
+    )
+  }
+
+  df <- DBI::dbGetQuery(con, "select distinct study_type from studies")
   if (length(df) > 0) {
     message("The connection works! Here is a result of a simple query - select distinct study_type from studies")
   }
@@ -56,7 +64,6 @@ aact_check_connection <- function(con) {
 #' @param con Database connection object
 #' @param query SQL query string
 #' @return A data frame with the query results
-#' @import DBI
 #' @examples
 #' \dontrun{
 #' # Set environment variables for database credentials in .Renviron and load it
@@ -74,6 +81,15 @@ aact_check_connection <- function(con) {
 #' }
 #' @export
 aact_custom_query <- function(con, query) {
-  df <- dbGetQuery(con, query)
+  connection_is_valid <- tryCatch(DBI::dbIsValid(con), error = function(e) FALSE)
+  if (!isTRUE(connection_is_valid)) {
+    .abort_clintrialx(
+      "Invalid or closed AACT database connection",
+      class = "aact_connection_error"
+    )
+  }
+  query <- .validate_nonempty_string(query, "query")
+
+  df <- DBI::dbGetQuery(con, query)
   return(df)
 }

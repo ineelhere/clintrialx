@@ -2,6 +2,10 @@
 ^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.vscode$
+^\.RData$
+^\.Renviron$
+^\.Rhistory$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
@@ -10,6 +14,8 @@
 ^CODE_OF_CONDUCT\.md$
 ^logo\.png$
 ^report.html$
+^clintrialx_assessment_report\.html$
+^clintrialx_market_action_plan_2026\.html$
 ^LICENSE$
 ^reports$
 ^CRAN-SUBMISSION$

@@ -30,10 +30,6 @@
 #'
 #' @return A data frame containing the fetched clinical trial data.
 #'
-#' @import httr
-#' @import readr
-#' @import dplyr
-#' @import progress
 #'
 #'
 #' @examples
@@ -45,108 +41,78 @@
 
 ctg_bulk_fetch <- function(condition = NULL, location = NULL, title = NULL,
                            intervention = NULL, status = NULL) {
-
-  allowed_status <- c("ACTIVE_NOT_RECRUITING", "COMPLETED", "ENROLLING_BY_INVITATION",
-                      "NOT_YET_RECRUITING", "RECRUITING", "SUSPENDED", "TERMINATED",
-                      "WITHDRAWN", "AVAILABLE", "NO_LONGER_AVAILABLE",
-                      "TEMPORARILY_NOT_AVAILABLE", "APPROVED_FOR_MARKETING",
-                      "WITHHELD", "UNKNOWN")
-
-  validate_status(status, allowed_status)
-
-  base_url <- "https://clinicaltrials.gov/api/v2/studies"
-  query_params <- build_query_params(condition, location, title, intervention, status)
-
-  total_count <- get_total_count(base_url, query_params)
-  total_pages <- ceiling(total_count / 1000)
-
-  pb <- create_progress_bar(total_pages)
-
-  all_data <- fetch_all_pages(base_url, query_params, total_pages, pb)
-
-  pb$terminate()
-
-  dplyr::bind_rows(all_data)
-}
-
-validate_status <- function(status, allowed_status) {
-  if (!is.null(status)) {
-    invalid_status <- setdiff(status, allowed_status)
-    if (length(invalid_status) > 0) {
-      warning(sprintf("Invalid status value(s) provided: %s\nThese values will be ignored. Allowed values are: %s",
-                      paste(invalid_status, collapse = ", "),
-                      paste(allowed_status, collapse = ", ")))
-      status <- intersect(status, allowed_status)
-    }
-  }
-  status
-}
-
-build_query_params <- function(condition, location, title, intervention, status) {
-  params <- list(
-    format = "csv",
-    markupFormat = "markdown",
-    countTotal = "true",
-    pageSize = 1000
+  status <- .validate_status(status)
+  query_params <- .build_query_params(
+    condition = condition,
+    location = location,
+    title = title,
+    intervention = intervention,
+    status = status,
+    page_size = 1000L,
+    count_total = TRUE
   )
 
-  if (!is.null(condition)) params[["query.cond"]] <- condition
-  if (!is.null(location)) params[["query.locn"]] <- location
-  if (!is.null(title)) params[["query.titles"]] <- title
-  if (!is.null(intervention)) params[["query.intr"]] <- intervention
-  if (length(status) > 0) params[["filter.overallStatus"]] <- paste(status, collapse = "|")
-
-  params
-}
-
-get_total_count <- function(base_url, query_params) {
-  response <- httr::GET(url = base_url, query = query_params, httr::add_headers(accept = "application/json"))
-  httr::stop_for_status(response)
-  as.numeric(httr::headers(response)[["x-total-count"]])
-}
-
-create_progress_bar <- function(total_pages) {
-  progress::progress_bar$new(
-    format = "Fetching Page :current/:total :spin :bar Completed :percent :elapsedfull ",
-    total = total_pages,
-    clear = FALSE,
-    width = 80
-  )
-}
-
-fetch_all_pages <- function(base_url, query_params, total_pages, pb) {
-  all_data <- vector("list", total_pages)
+  pages <- list()
+  expected_columns <- NULL
   next_page_token <- NULL
+  seen_tokens <- character()
+  page_number <- 0L
+  progress_bar <- NULL
 
-  for (page_number in seq_len(total_pages)) {
-    page_info <- fetch_data(base_url, query_params, page_number, next_page_token)
-    all_data[[page_number]] <- page_info$data
-    next_page_token <- page_info$next_page_token
-    pb$tick(tokens = list(eta = format(Sys.time() + (pb$total - pb$current) * 5, "%H:%M:%S")))
+  on.exit({
+    if (!is.null(progress_bar)) progress_bar$terminate()
+  }, add = TRUE)
 
-    if (is.null(next_page_token)) break
+  repeat {
+    page_query <- query_params
+    if (!is.null(next_page_token)) {
+      page_query[["pageToken"]] <- next_page_token
+    }
+
+    response <- .api_request(
+      .ctg_studies_url,
+      query_params = page_query,
+      accept = "text/csv"
+    )
+    page_number <- page_number + 1L
+    page <- .parse_csv_response(response, column_names = expected_columns)
+
+    if (is.null(expected_columns)) {
+      expected_columns <- names(page)
+      total_count <- .response_total_count(response)
+      if (interactive()) {
+        total_pages <- if (is.na(total_count)) {
+          1L
+        } else {
+          max(1L, ceiling(total_count / 1000))
+        }
+        progress_bar <- progress::progress_bar$new(
+          format = "Fetching page :current/:total :bar :percent :elapsedfull",
+          total = total_pages,
+          clear = FALSE,
+          width = 80
+        )
+      }
+    }
+
+    pages[[page_number]] <- page
+    if (!is.null(progress_bar)) progress_bar$tick()
+
+    new_token <- .response_header(response, "x-next-page-token")
+    if (is.null(new_token)) break
+    if (new_token %in% seen_tokens) {
+      .abort_clintrialx(
+        "ClinicalTrials.gov returned a repeated page token; pagination was stopped to prevent duplicate results",
+        class = "ctg_pagination_error",
+        page_token = new_token
+      )
+    }
+
+    seen_tokens <- c(seen_tokens, new_token)
+    next_page_token <- new_token
   }
 
-  all_data
-}
-
-fetch_data <- function(base_url, query_params, page_number, next_page_token) {
-  if (!is.null(next_page_token)) {
-    query_params[["pageToken"]] <- next_page_token
-  }
-
-  response <- httr::GET(url = base_url, query = query_params, httr::add_headers(accept = "application/json"))
-  httr::stop_for_status(response)
-
-  content <- httr::content(response, as = "text", encoding = "UTF-8")
-
-  if (page_number != 1) {
-    header_line <- "NCT Number,Study Title,Study URL,Acronym,Study Status,Brief Summary,Study Results,Conditions,Interventions,Primary Outcome Measures,Secondary Outcome Measures,Other Outcome Measures,Sponsor,Collaborators,Sex,Age,Phases,Enrollment,Funder Type,Study Type,Study Design,Other IDs,Start Date,Primary Completion Date,Completion Date,First Posted,Results First Posted,Last Update Posted,Locations,Study Documents"
-    content <- paste(header_line, content, sep = "\n")
-  }
-
-  parsed_data <- readr::read_csv(content, show_col_types = FALSE)
-  next_page_token <- httr::headers(response)[["x-next-page-token"]]
-
-  list(data = parsed_data, next_page_token = next_page_token)
+  result <- dplyr::bind_rows(pages)
+  message("Fetched ", nrow(result), " trial records across ", page_number, " page(s).")
+  tibble::as_tibble(result)
 }

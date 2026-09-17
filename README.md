@@ -1,200 +1,293 @@
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# `ClinTrialX`
-
-<!-- badges: start -->
+# clintrialx
 
 [![CRAN status](https://www.r-pkg.org/badges/version/clintrialx)](https://CRAN.R-project.org/package=clintrialx)
-[![CRAN downloads](https://cranlogs.r-pkg.org/badges/clintrialx)](https://CRAN.R-project.org/package=clintrialx)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/clintrialx)](https://cranlogs.r-pkg.org/downloads/total/last-month/clintrialx)
 [![R-CMD-check](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ineelhere/clintrialx/actions/workflows/R-CMD-check.yaml)
-[![Security Status](https://img.shields.io/badge/security-verified-green?label=OSS%20Index)](https://ossindex.sonatype.org/component/pkg:cran/clintrialx)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://opensource.org/license/apache-2-0)
-[![pkgdown](https://img.shields.io/badge/pkgdown-docs-blue.svg)](https://www.indraneelchakraborty.com/clintrialx/)
-[![Data Sources: ClinicalTrials.gov](https://img.shields.io/badge/Data_Sources-ClinicalTrials.gov-blue)](https://clinicaltrials.gov/data-api/api)
-[![Data Sources: CTTI AACT](https://img.shields.io/badge/Data_Sources-CTTI%20AACT%20-purple)](https://aact.ctti-clinicaltrials.org/)
-[![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fineelhere%2Fclintrialx&label=Visitors&labelColor=%23f47373&countColor=%2337d67a&style=flat&labelStyle=upper)](https://github.com/ineelhere/clintrialx)
+[![Documentation](https://img.shields.io/badge/docs-pkgdown-176B87.svg)](https://www.indraneelchakraborty.com/clintrialx/)
 
+**From a ClinicalTrials.gov question to tidy data—and an optional shareable report—in a few lines of R.**
 
+`clintrialx` provides a focused R interface to:
 
-<!-- badges: end -->
+- [ClinicalTrials.gov](https://clinicaltrials.gov/) through its
+  [API v2](https://clinicaltrials.gov/data-api/api); and
+- the [CTTI AACT](https://aact.ctti-clinicaltrials.org/) PostgreSQL
+  database derived from ClinicalTrials.gov.
 
-The goal of `{clintrialx}` is to fetch clinical trials data from freely
-available registries. Currently, it supports querying the
+Use it to search common trial fields, retrieve specific NCT records,
+download complete result sets with cursor-based pagination, run AACT
+queries, and create HTML summaries.
 
-- [ClinicalTrials.gov](https://clinicaltrials.gov/) registry using its
-  [V2 API](https://clinicaltrials.gov/data-api/api) and
+## Quick start
 
-- [CTTI AACT](https://aact.ctti-clinicaltrials.org/) (Public Access to
-  Aggregate Content of ClinicalTrials.gov).
+```r
+library(clintrialx)
+
+trials <- ctg_get_fields(
+  condition = "glioblastoma",
+  status = c("RECRUITING", "NOT_YET_RECRUITING"),
+  page_size = 25
+)
+
+trials[c("NCT Number", "Study Title", "Study Status")]
+```
+
+ClinicalTrials.gov access does not require an API key.
 
 ## Installation
 
-Install the package from
-[CRAN](https://CRAN.R-project.org/package=clintrialx) with:
+Install the current CRAN release:
 
-``` r
+```r
 install.packages("clintrialx")
 ```
 
-You can install this package from
-[GitHub](https://github.com/ineelhere/clintrialx) with:
+Install the development version from GitHub:
 
-*you’ll need the `devtools` package for this*
-
-``` r
-# install.packages("devtools")
-devtools::install_github("ineelhere/clintrialx")
+```r
+# install.packages("remotes")
+remotes::install_github("ineelhere/clintrialx")
 ```
 
-### Check installation
+## Choose the right function
 
-``` r
-library(clintrialx)
+| Goal | Function |
+|---|---|
+| Estimate the size of a query | `ctg_count()` |
+| Retrieve one page of matching trials | `ctg_get_fields()` |
+| Retrieve particular NCT records | `ctg_get_nct()` |
+| Retrieve every page of a query | `ctg_bulk_fetch()` |
+| Inspect API version and data timestamp | `version_info()` |
+| Connect to AACT | `aact_connection()` |
+| Run SQL against AACT | `aact_custom_query()` |
+| Generate an HTML summary | `ctg_data_report()` |
+
+## Work with ClinicalTrials.gov
+
+### Count before downloading
+
+Use `ctg_count()` to estimate the size of a result set:
+
+```r
+trial_count <- ctg_count(
+  condition = "breast cancer",
+  location = "India",
+  status = "RECRUITING"
+)
+
+trial_count
 ```
 
-## Setup AACT account
+### Search common fields
 
-#### `Only if you wish to use AACT as a source for the data`
+`ctg_get_fields()` returns up to 1,000 records as a tibble:
 
-- Visit <https://aact.ctti-clinicaltrials.org/users/sign_up>
-
-- Sign up and create an account. It’s free.
-
-- The `username` and `password` will be needed to fetch data using this
-  package.
-
-- Save it in a `.Renviron` file, for example-
-
-  ``` r
-  user =  "random_name"
-  password = "random_password"
-  ```
-
-- Now that the file is created, load the variable with the command
-  `readRenviron("path/to/.Renviron)`
-
-- You’re all set!
-
-## Query the [ClinicalTrials.gov](https://clinicaltrials.gov/) Registry
-
-#### Based on NCT IDs
-
-Fetch one or multiple trial records based on NCT IDs. You can opt to
-fetch some specific fields or all fields available at source (default).
-
-``` r
-library(clintrialx)
-ctg_get_nct(c("NCT02967965", "NCT04000165", "NCT01007279", "NCT02376244", "NCT01179776"),
-                          fields = c("NCT Number", "Study Title", "Study Status", "Sponsor"))
-```
-
-#### Based on fileds
-
-Supports filtering by condition, location, title keywords, intervention,
-and overall status.
-
-``` r
-ctg_get_fields(
-     condition = "Cancer",
-     location = "Kolkata",
-     title = NULL,
-     intervention = "Drug",
-     status = c("ACTIVE_NOT_RECRUITING", "RECRUITING"),
-     page_size = 10
+```r
+trials <- ctg_get_fields(
+  condition = "breast cancer",
+  location = "India",
+  intervention = "Drug",
+  status = c("RECRUITING", "ACTIVE_NOT_RECRUITING"),
+  page_size = 100
 )
 ```
 
-#### Based on fields - Bulk download
+`page_size` must be a whole number of at least 1. Values greater than
+1,000 are reduced to the API maximum with a warning.
 
-Download all available data for your query. No limits!
+### Retrieve records by NCT ID
 
-*Supports filtering by condition, location, title keywords,
-intervention, and overall status.*
-
-``` r
-df <- ctg_bulk_fetch(location="india")
+```r
+selected_trials <- ctg_get_nct(
+  c("NCT02967965", "NCT04000165"),
+  fields = c(
+    "NCT Number",
+    "Study Title",
+    "Study Status",
+    "Sponsor"
+  )
+)
 ```
 
-## Query the [CTTI AACT](https://aact.ctti-clinicaltrials.org/)
+NCT IDs are trimmed, converted to uppercase, validated as `NCT`
+followed by eight digits, and de-duplicated while preserving request
+order.
 
-#### Run Custom Queries
+### Retrieve all matching pages
 
-    # Set environment variables for database credentials in .Renviron and load it
-    # readRenviron(".Renviron")
+```r
+all_trials <- ctg_bulk_fetch(
+  condition = "glioblastoma",
+  status = "RECRUITING"
+)
+```
 
-    # Connect to the database
-    con <- aact_connection(Sys.getenv('user'), Sys.getenv('password'))
+Bulk retrieval follows the API's page cursor until no next-page token
+remains. Large queries can still take significant time and memory, so
+use `ctg_count()` first and narrow the query when practical.
 
-    # Run a custom query
-    query <- "SELECT nct_id, source, enrollment, overall_status FROM studies LIMIT 5;"
-    results <- aact_custom_query(con, query)
+### Check source freshness
 
-    # Print the results
-    print(results)
+```r
+source_info <- version_info("clinicaltrials.gov")
 
-## Trial Data HTML Reports
+source_info$api_version
+source_info$timestamp
+```
 
-*Currently works for data from ClinicalTrials.Gov*
+The result is returned as a list, so it can be recorded with analysis
+outputs.
 
-Visit here for an exqample report -
-<https://www.indraneelchakraborty.com/clintrialx/report.html>
+## Query AACT
 
-``` r
-#first get the data in a R dataframe
-my_clinical_trial_data <- ctg_bulk_fetch(condition="cancer")
-#now pass it to the reports function
+AACT access is optional and requires a free
+[AACT account](https://aact.ctti-clinicaltrials.org/users/sign_up).
+
+Store credentials in your user-level `.Renviron` file:
+
+```text
+AACT_USER="your_username"
+AACT_PASSWORD="your_password"
+```
+
+Restart R after editing `.Renviron`, then connect:
+
+```r
+library(clintrialx)
+
+results <- local({
+  con <- aact_connection(
+    user = Sys.getenv("AACT_USER"),
+    password = Sys.getenv("AACT_PASSWORD")
+  )
+  on.exit(DBI::dbDisconnect(con), add = TRUE)
+
+  aact_check_connection(con)
+  aact_custom_query(
+    con,
+    paste(
+      "SELECT nct_id, source, enrollment, overall_status",
+      "FROM studies",
+      "LIMIT 5"
+    )
+  )
+})
+```
+
+Never commit `.Renviron` or print credentials in examples, logs, or
+issue reports. `aact_custom_query()` executes the SQL supplied to it;
+prefer read-only queries unless you explicitly intend otherwise.
+
+## Generate an HTML report
+
+The reporting workflow uses optional visualization packages. Install
+them once if needed:
+
+```r
+install.packages(c(
+  "ggplot2",
+  "plotly",
+  "reactable",
+  "scales",
+  "RColorBrewer",
+  "htmltools"
+))
+```
+
+Create a report from the flattened ClinicalTrials.gov data:
+
+```r
+trial_data <- ctg_get_fields(
+  condition = "glioblastoma",
+  page_size = 250
+)
+
+dir.create("reports", showWarnings = FALSE)
+
 ctg_data_report(
-  ctg_data = my_clinical_trial_data,
-  title = "Clinical Trials Analysis",
-  author = "Indra",
-  output_file = "reports/clinical_trials.html",
+  ctg_data = trial_data,
+  title = "Glioblastoma Trial Landscape",
+  author = "Analysis team",
+  output_file = "reports/glioblastoma-trials.html",
   theme = "flatly",
-  color_palette = c("#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F", "#EDC948"),
   include_data_quality = TRUE,
-  include_interactive_plots = TRUE,
-  custom_footer = "Proprietary report generated by SomeGreatOrg Inc."
-)
-
-# Generate a report with static plots and no data quality assessment
-ctg_data_report(
-  ctg_data = my_clinical_trial_data,
-  title = "Quick Clinical Trial Overview",
-  include_data_quality = FALSE,
-  include_interactive_plots = FALSE
+  include_interactive_plots = TRUE
 )
 ```
 
-Check the path `reports/clinical_trials.html` on your local. It will
-have the html report file.
+See an [example report](https://www.indraneelchakraborty.com/clintrialx/report.html).
+The current `custom_footer` parameter is rendered as HTML; only pass
+content you trust.
 
-Cool stuff - It also has the codes to the plots!
+## Reliability and error handling
 
-## Data Sources
+The development version uses one HTTP path for all ClinicalTrials.gov
+requests, including:
 
-You can fetch version information directly from the package:
+- a package user-agent and a finite request timeout;
+- retry and jitter for transient failures, including rate limits;
+- cursor-based bulk pagination;
+- shared input validation; and
+- typed conditions such as `ctg_http_error`,
+  `ctg_validation_error`, and `ctg_partial_result`.
 
-``` r
-version_info(source = "clinicaltrials.gov")
+This makes failures catchable in production scripts:
+
+```r
+tryCatch(
+  ctg_get_nct("not-an-nct-id"),
+  ctg_validation_error = function(error) {
+    message("Invalid request: ", conditionMessage(error))
+  }
+)
 ```
 
-## Get Involved
+The package does not add silent usage telemetry.
 
-🚀 Ready to contribute? Let’s make clintrialx even better!
+## Scope and responsible use
 
-- Fork the [GitHub](https://github.com/ineelhere/clintrialx) repo.
-- Check out your development branch from the dev branch.
-- Do your work on a feature (ftr) branch.
-- Raise a PR against the dev branch of the
-  [clintrialx](https://github.com/ineelhere/clintrialx) repo.
-- Sit back and [relax](https://www.youtube.com/watch?v=Uffjii1hXzU)
-  while I review it!
+`clintrialx` is intentionally focused on ClinicalTrials.gov and AACT.
+For multi-register retrieval, registry history, document downloads, or
+cross-register de-duplication, consider
+[`ctrdata`](https://CRAN.R-project.org/package=ctrdata).
 
-💬 **Questions or Feedback?** Feel free to open an issue on [GitHub
-Issues page](https://github.com/ineelhere/clintrialx/issues).
+Registry data can be incomplete, delayed, or changed after retrieval.
+Record the retrieval date and API version, verify important facts
+against the source record, and do not interpret search results as
+medical advice or patient-to-trial suitability.
 
-🌟 **Enjoying `clintrialx`?** Please consider giving it a star on
-[GitHub](https://github.com/ineelhere/clintrialx)! Your support helps
-this project grow and improve.
+## Contributing
 
-More updates to come. Happy coding! 🎉
+Issues and pull requests are welcome.
+
+1. Fork the [repository](https://github.com/ineelhere/clintrialx).
+2. Create a focused branch from `dev`.
+3. Add or update offline tests.
+4. Run the checks below.
+5. Open a pull request against `dev`.
+
+```r
+devtools::test()
+devtools::check()
+```
+
+Routine ClinicalTrials.gov tests use local response fixtures. AACT
+integration tests are skipped when credentials are unavailable.
+
+Please use the
+[issue tracker](https://github.com/ineelhere/clintrialx/issues) for bug
+reports and feature requests.
+
+## Citation
+
+To cite the package in research:
+
+```r
+citation("clintrialx")
+```
+
+CRAN package DOI: <https://doi.org/10.32614/CRAN.package.clintrialx>
+
+If `clintrialx` helps your work, a GitHub star, a reproducible example,
+or a citation makes the project easier for others to discover.
